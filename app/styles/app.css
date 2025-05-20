@@ -711,3 +711,48 @@ button.reset:hover:not(:has(> *)) {
   height: auto;
   opacity: 0.8;
 }
+
+@media (max-width: 499px) {
+  .hero-section.mobile {
+    height: 55vh;
+  }
+  .hero-image.left-image {
+    height: 55vh;
+  }
+  .hero-image.right-image {
+    display: none;
+  }
+  .intro-section {
+    display: flex;
+    padding: 1rem;
+    flex-direction: column;
+    margin-top: 1.5rem;
+  }
+  .intro-left {
+    width: 100%;
+  }
+  .intro-text {
+    margin-bottom: 2rem;
+  }
+  .launch-message {
+    margin-bottom: 2rem;
+    font-size: 16px;
+  }
+  .founder-section {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+  }
+  .founder-image {
+    width: 100%;
+  }
+  .founder-quote {
+    width: 100%;
+  }
+  .quote-author {
+    margin-top: 2rem;
+  }
+  .monogram-container {
+    display: none;
+  }
+}

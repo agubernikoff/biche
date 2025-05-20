@@ -7,13 +7,17 @@ export default function ComingSoon() {
   const [data, setData] = useState(null);
 
   useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.innerWidth <= 768);
+    const mediaQuery = window.matchMedia('(max-width: 499px)');
+
+    const handleResize = () => {
+      setIsMobile(mediaQuery.matches);
     };
 
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    handleResize();
+
+    mediaQuery.addEventListener('change', handleResize);
+
+    return () => mediaQuery.removeEventListener('change', handleResize);
   }, []);
 
   useEffect(() => {
