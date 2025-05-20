@@ -702,8 +702,8 @@ button.reset:hover:not(:has(> *)) {
 
 .monogram-container {
   position: absolute;
-  bottom: 2rem;
-  right: 2rem;
+  bottom: 6rem;
+  right: 6rem;
   z-index: 10;
 }
 
