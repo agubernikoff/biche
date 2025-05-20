@@ -121,3 +121,8 @@ code {
   font-family: monospace;
   padding: 0.25rem;
 }
+
+input:focus {
+  outline: none;
+  box-shadow: none;
+}
