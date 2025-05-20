@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {sanityClient} from '../sanity/SanityClient';
+import {sanityClient} from '../sanity/sanityClient';
 import {COMING_SOON_QUERY} from '../sanity/queries/comingSoonQuery';
 
 export default function ComingSoon() {
