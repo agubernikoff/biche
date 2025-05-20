@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
-import {sanityClient} from '~/sanity/SanityClient';
-import {COMING_SOON_QUERY} from '~/sanity/queries/comingSoonQuery';
+import {sanityClient} from '../sanity/SanityClient';
+import {COMING_SOON_QUERY} from '../sanity/queries/comingSoonQuery';
 
 export default function ComingSoon() {
   const [isMobile, setIsMobile] = useState(false);
