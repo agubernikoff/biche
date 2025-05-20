@@ -600,7 +600,7 @@ button.reset:hover:not(:has(> *)) {
   background: #fff;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  padding: 2rem 1.75rem;
+  padding: 2rem;
   margin-bottom: 1.5rem;
 }
 
