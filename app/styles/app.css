@@ -714,10 +714,10 @@ button.reset:hover:not(:has(> *)) {
 
 @media (max-width: 499px) {
   .hero-section.mobile {
-    height: 55vh;
+    height: 50vh;
   }
   .hero-image.left-image {
-    height: 55vh;
+    height: 50vh;
   }
   .hero-image.right-image {
     display: none;
