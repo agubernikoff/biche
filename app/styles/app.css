@@ -8,8 +8,29 @@
   --color-light: #fff;
 }
 
-img {
-  border-radius: 4px;
+@font-face {
+  font-family: 'heldane';
+  src:
+    url('../assets/fonts/HeldaneDisplay-Regular.otf') format('otf'),
+    url('../assets/fonts/HeldaneDisplay-Regular.otf') format('otf');
+}
+@font-face {
+  font-family: 'heldane-italic';
+  src:
+    url('../assets/fonts/HeldaneDisplay-RegularItalic.otf') format('otf'),
+    url('../assets/fonts/HeldaneDisplay-RegularItalic.otf') format('otf');
+}
+@font-face {
+  font-family: 'helvetica';
+  src:
+    url('../assets/fonts/HelveticaNeue-Roman.otf') format('otf'),
+    url('../assets/fonts/HelveticaNeue-Roman.otf') format('otf');
+}
+@font-face {
+  font-family: 'helvetica-bold';
+  src:
+    url('../assets/fonts/HelveticaNeueBold.ttf') format('otf'),
+    url('../assets/fonts/HelveticaNeueBold.ttf') format('otf');
 }
 
 /*
@@ -209,7 +230,6 @@ button.reset:hover:not(:has(> *)) {
 .header-ctas > * {
   min-width: fit-content;
 }
-
 
 /*
 * --------------------------------------------------
@@ -519,4 +539,138 @@ button.reset:hover:not(:has(> *)) {
 
 .account-logout {
   display: inline-block;
+}
+
+/*
+* --------------------------------------------------
+* COMING SOON
+* --------------------------------------------------
+*/
+
+.coming-soon {
+  font-family: serif;
+}
+
+.hero-section {
+  display: flex;
+  width: 100%;
+  height: 75vh;
+  position: relative;
+}
+
+.hero-section.mobile {
+  flex-direction: column;
+  height: auto;
+}
+
+.hero-image {
+  flex: 1;
+}
+
+.hero-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-logo {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  text-align: center;
+}
+
+.hero-logo svg {
+  width: 100%;
+  height: auto;
+  display: block;
+  fill: white;
+}
+
+.logo-title {
+  font-size: 1.2rem;
+  margin-top: 0.5rem;
+}
+
+.intro-section {
+  background: #fff;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 2rem 1rem;
+  margin-bottom: 3rem;
+}
+
+.intro-heading {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.intro-left {
+  width: 75%;
+}
+
+.intro-text,
+.launch-message {
+  font-size: 1rem;
+  line-height: 1.6;
+}
+
+.email-form {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.email-input {
+  flex: 1;
+  border: none;
+  border-bottom: 1px solid #000;
+  padding: 0.5rem;
+  background: transparent;
+}
+
+.signup-button {
+  border: none;
+  border-bottom: 1px solid #000;
+  background: transparent;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+
+.founder-section {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  padding: 4rem 2rem;
+  background: #fff;
+  gap: 2rem;
+  align-items: center;
+}
+
+.founder-image img {
+  width: 100%;
+  object-fit: cover;
+}
+
+.quote-text {
+  font-style: italic;
+  line-height: 1.5;
+}
+
+.quote-author {
+  margin-top: 1rem;
+  font-weight: bold;
+}
+
+.monogram-container {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  z-index: 10;
+}
+
+.monogram-image {
+  width: 50px;
+  height: auto;
+  opacity: 0.8;
 }

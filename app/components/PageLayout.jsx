@@ -9,6 +9,7 @@ import {
   SearchFormPredictive,
 } from '~/components/SearchFormPredictive';
 import {SearchResultsPredictive} from '~/components/SearchResultsPredictive';
+import ComingSoon from '~/components/ComingSoon';
 
 /**
  * @param {PageLayoutProps}
@@ -21,6 +22,12 @@ export function PageLayout({
   isLoggedIn,
   publicStoreDomain,
 }) {
+  const SHOW_COMING_SOON = true; // <-- Toggle this off to re-enable full layout
+
+  if (SHOW_COMING_SOON) {
+    return <ComingSoon />;
+  }
+
   return (
     <Aside.Provider>
       <CartAside cart={cart} />

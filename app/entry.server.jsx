@@ -22,6 +22,22 @@ export default async function handleRequest(
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,
     },
+    connectSrc: [
+      "'self'",
+      'https://cdn.sanity.io',
+      'https://apicdn.sanity.io',
+      'https://3c8olga9.apicdn.sanity.io',
+      'http://localhost:3000',
+      'ws://localhost:*',
+      'ws://127.0.0.1:*',
+      'ws://*.tryhydrogen.dev:*',
+    ],
+    imgSrc: [
+      "'self'",
+      'https://cdn.shopify.com',
+      'https://shopify.com',
+      'https://cdn.sanity.io',
+    ],
   });
 
   const body = await renderToReadableStream(
