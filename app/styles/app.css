@@ -55,6 +55,7 @@ input {
 
 body {
   color: #3c0707;
+  position: relative;
 }
 
 aside {
@@ -700,7 +701,7 @@ button.reset:hover:not(:has(> *)) {
 }
 
 .monogram-container {
-  position: fixed;
+  position: absolute;
   bottom: 2rem;
   right: 2rem;
   z-index: 10;
