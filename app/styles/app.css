@@ -21,13 +21,13 @@
     url('../assets/fonts/HeldaneDisplay-RegularItalic.otf') format('otf');
 }
 @font-face {
-  font-family: 'helvetica';
+  font-family: 'neue';
   src:
     url('../assets/fonts/HelveticaNeue-Roman.otf') format('otf'),
     url('../assets/fonts/HelveticaNeue-Roman.otf') format('otf');
 }
 @font-face {
-  font-family: 'helvetica-bold';
+  font-family: 'neue-bold';
   src:
     url('../assets/fonts/HelveticaNeueBold.ttf') format('otf'),
     url('../assets/fonts/HelveticaNeueBold.ttf') format('otf');
@@ -52,6 +52,10 @@
   html:has(.overlay.expanded) {
     overflow: hidden;
   }
+}
+
+body {
+  color: #3c0707;
 }
 
 aside {
@@ -614,6 +618,10 @@ button.reset:hover:not(:has(> *)) {
 .launch-message {
   font-size: 1rem;
   line-height: 1.6;
+}
+
+.intro-text {
+  font-family: 'neue';
 }
 
 .email-form {

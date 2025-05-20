@@ -36,7 +36,7 @@ export default function ComingSoon() {
 
       <section className="intro-section">
         <div className="intro-left">
-          <h2 className="intro-heading">{data.heroTitle}</h2>
+          <p className="intro-heading">{data.heroTitle}</p>
           <p className="intro-text">{data.introText}</p>
         </div>
         <div className="intro-right">
