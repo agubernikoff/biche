@@ -755,4 +755,10 @@ button.reset:hover:not(:has(> *)) {
   .monogram-container {
     display: none;
   }
+  input {
+    border-radius: 0 !important;
+  }
+  button {
+    font-weight: normal !important;
+  }
 }
