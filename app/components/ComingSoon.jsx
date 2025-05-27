@@ -83,14 +83,13 @@ function HeroLogo({url}) {
 
   useEffect(() => {
     console.log('Logo URL:', url);
-    if (url && url.endsWith('.svg')) {
+    if (url && url.includes('.svg')) {
       fetch(url)
         .then((res) => res.text())
         .then(setSvg)
         .catch(console.error);
     }
   }, [url]);
-
   return (
     <div
       className="hero-logo"
