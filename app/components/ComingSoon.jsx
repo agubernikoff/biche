@@ -31,9 +31,9 @@ export default function ComingSoon() {
       <div className="coming-soon">
         <section className={`hero-section ${isMobile ? 'mobile' : ''}`}>
           <div className="hero-image left-image">
-            <img src={data.leftImage?.url} alt="Left visual" />
+            <img src={`${data.leftImage?.url}/?w=900`} alt="Left visual" />
           </div>
-          <HeroLogo url={data.logo?.url} />
+          <HeroLogo url={`${data.logo?.url}/?w=900`} />
           <div className="hero-image right-image">
             <img src={data.rightImage?.url} alt="Right visual" />
           </div>
@@ -57,7 +57,7 @@ export default function ComingSoon() {
 
         <section className="founder-section">
           <div className="founder-image">
-            <img src={data.founderImage?.url} alt="Founder" />
+            <img src={`${data.founderImage?.url}/?w=900`} alt="Founder" />
           </div>
           <div className="founder-quote">
             <p className="quote-text">{data.quote}</p>
@@ -83,14 +83,13 @@ function HeroLogo({url}) {
 
   useEffect(() => {
     console.log('Logo URL:', url);
-    if (url && url.endsWith('.svg')) {
+    if (url && url.includes('.svg')) {
       fetch(url)
         .then((res) => res.text())
         .then(setSvg)
         .catch(console.error);
     }
   }, [url]);
-
   return (
     <div
       className="hero-logo"
