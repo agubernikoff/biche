@@ -2,12 +2,17 @@ import {Await, useLoaderData, Link} from '@remix-run/react';
 import {Suspense} from 'react';
 import {Image} from '@shopify/hydrogen';
 import {ProductItem} from '~/components/ProductItem';
+import mobileIcon from '~/assets/mobile_icon.jpg';
 
 /**
  * @type {MetaFunction}
  */
 export const meta = () => {
-  return [{title: 'Hydrogen | Home'}];
+  return [
+    {title: 'Biche'},
+    {name: 'og:title', property: 'Biche'},
+    {property: 'og:image', content: mobileIcon},
+  ];
 };
 
 /**
