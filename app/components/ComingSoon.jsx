@@ -110,7 +110,7 @@ export default function ComingSoon() {
           <div className="intro-right">
             <p className="launch-message">{data.launchMessage}</p>
             {success ? (
-              <p>{success}</p>
+              <p className="intro-text">{success}</p>
             ) : (
               <form
                 className="email-form"
