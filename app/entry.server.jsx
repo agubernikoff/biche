@@ -31,6 +31,9 @@ export default async function handleRequest(
       'ws://localhost:*',
       'ws://127.0.0.1:*',
       'ws://*.tryhydrogen.dev:*',
+      'https://klaviyo.com',
+      'https://*.klaviyo.com',
+      'https://*.klaviyo.com/*',
     ],
     imgSrc: [
       "'self'",

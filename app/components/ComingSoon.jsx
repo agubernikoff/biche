@@ -5,6 +5,9 @@ import {COMING_SOON_QUERY} from '../sanity/queries/comingSoonQuery';
 export default function ComingSoon() {
   const [isMobile, setIsMobile] = useState(false);
   const [data, setData] = useState(null);
+  const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
 
   useEffect(() => {
     const mediaQuery = window.matchMedia('(max-width: 499px)');
@@ -26,6 +29,66 @@ export default function ComingSoon() {
 
   if (!data) return null;
 
+  function subscribe() {
+    if (!email) {
+      setError('please enter a valid email');
+      setTimeout(() => {
+        setError();
+      }, 1500);
+      return;
+    }
+
+    const payload = {
+      data: {
+        type: 'subscription',
+        attributes: {
+          profile: {
+            data: {
+              type: 'profile',
+              attributes: {
+                email: `${email}`,
+              },
+            },
+          },
+        },
+        relationships: {
+          list: {
+            data: {
+              type: 'list',
+              id: 'V9ZSHm',
+            },
+          },
+        },
+      },
+    };
+
+    var requestOptions = {
+      mode: 'cors',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        revision: '2025-04-15',
+      },
+      body: JSON.stringify(payload),
+    };
+
+    fetch(
+      'https://a.klaviyo.com/client/subscriptions/?company_id=Ws4Y78',
+      requestOptions,
+    ).then((result) => {
+      if (result.ok) {
+        setSuccess('Thank you for signing up!');
+      } else {
+        result.json().then((data) => {
+          setError(data.errors[0].detail);
+          setTimeout(() => {
+            setError();
+          }, 1500);
+        });
+      }
+    });
+  }
+
   return (
     <>
       <div className="coming-soon">
@@ -46,12 +109,38 @@ export default function ComingSoon() {
           </div>
           <div className="intro-right">
             <p className="launch-message">{data.launchMessage}</p>
-            <form className="email-form">
-              <input type="email" placeholder="Email" className="email-input" />
-              <button type="submit" className="signup-button">
-                Sign Up →
-              </button>
-            </form>
+            {success ? (
+              <p>{success}</p>
+            ) : (
+              <form
+                className="email-form"
+                onSubmit={(e) => {
+                  e.preventDefault();
+                  subscribe();
+                }}
+              >
+                <input
+                  placeholder="Email"
+                  className="email-input"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                />
+                <button type="submit" className="signup-button">
+                  Sign Up →
+                </button>
+              </form>
+            )}
+            <p
+              style={{
+                position: 'absolute',
+                bottom: '-2rem',
+                left: '.5rem',
+                width: '100%',
+                textAlign: 'left',
+              }}
+            >
+              {error}
+            </p>
           </div>
         </section>
 

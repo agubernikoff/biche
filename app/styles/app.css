@@ -618,6 +618,7 @@ button.reset:hover:not(:has(> *)) {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
+  position: relative;
 }
 
 .email-input::placeholder,
