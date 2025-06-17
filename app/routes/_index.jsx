@@ -1,10 +1,12 @@
-import {Await, useLoaderData, Link} from '@remix-run/react';
+import {Await, useLoaderData, Link, useRouteLoaderData} from '@remix-run/react';
 import {Suspense, useState, useEffect} from 'react';
 import {Image} from '@shopify/hydrogen';
 import {ProductItem} from '~/components/ProductItem';
 import mobileIcon from '~/assets/mobile_icon.jpg';
 import {sanityClient} from '~/sanity/sanityClient';
 import {HOME_QUERY} from '~/sanity/queries/comingSoonQuery';
+import PrimaryLogo from '~/assets/PrimaryLogo';
+import monogram from '~/assets/MONOGRAM.png';
 
 /**
  * @type {MetaFunction}
@@ -72,9 +74,16 @@ function loadDeferredData({context}) {
 export default function Homepage() {
   /** @type {LoaderReturnData} */
   const data = useLoaderData();
+  console.log(data.sanityData);
+  const {monogramData} = useRouteLoaderData('root');
+
   return (
     <div className="home">
       <Hero data={data.sanityData.hero} />
+      <FirstSection
+        data={data.sanityData.firstSection}
+        monogram={monogramData}
+      />
     </div>
   );
 }
@@ -85,32 +94,98 @@ function Hero({data}) {
       <div className="hero-image left-image">
         <img src={`${data.leftImage?.asset.url}/?w=900`} alt="Left visual" />
       </div>
-      <HeroLogo url={`${data.logo?.asset.url}/?w=900`} />
+      {/* <SVGComponent
+        url={`${data.logo?.asset.url}/?w=900`}
+        color={'white'}
+        className={'hero-logo'}
+      /> */}
+      <div className="hero-logo">
+        <PrimaryLogo color={'white'} />
+      </div>
       <div className="hero-image right-image">
         <img src={data.rightImage?.asset.url} alt="Right visual" />
       </div>
     </section>
   );
 }
-function HeroLogo({url}) {
-  const [svg, setSvg] = useState(null);
+// export function SVGComponent({url, color, className}) {
+//   const [svg, setSvg] = useState(null);
 
-  useEffect(() => {
-    if (url && url.includes('.svg')) {
-      fetch(url)
-        .then((res) => res.text())
-        .then(setSvg)
-        .catch(console.error);
-    }
-  }, [url]);
+//   useEffect(() => {
+//     if (url && url.includes('.svg')) {
+//       fetch(url)
+//         .then((res) => res.text())
+//         .then(setSvg)
+//         .catch(console.error);
+//     }
+//   }, [url]);
+//   return (
+//     <div
+//       className={className}
+//       dangerouslySetInnerHTML={{
+//         __html: svg,
+//       }}
+//       style={{color}}
+//     />
+//   );
+// }
+
+function FirstSection({data}) {
+  console.log(data);
   return (
-    <div
-      className="hero-logo"
-      dangerouslySetInnerHTML={{
-        __html: svg?.replace(/fill="[^"]*"/g, ''),
+    <section
+      style={{
+        display: 'grid',
+        gridTemplateColumns: 'repeat(8,1fr)',
+        rowGap: '4rem',
       }}
-      style={{color: 'white'}}
-    />
+    >
+      <div style={{gridColumn: 'span 4'}}>
+        <p className="intro-heading">{data.heroTitle}</p>
+      </div>
+      <div style={{gridColumn: 'span 4'}}>
+        <p className="intro-text" style={{width: '75%', marginBottom: '2rem'}}>
+          {data.introText}
+        </p>
+        <Link
+          to={'/about'}
+          className="intro-text"
+          style={{
+            color: '#3c0707',
+            padding: '.5rem',
+            borderBottom: '1px solid #3c0707',
+          }}
+        >
+          Learn More →
+        </Link>
+      </div>
+      <div
+        className="first-section-images-container"
+        style={{
+          gridColumn: 'span 8',
+          display: 'grid',
+          gridTemplateColumns: 'subgrid',
+          alignItems: 'center',
+        }}
+      >
+        <div style={{gridColumn: 'span 3'}}>
+          <img src={data.mainImage.asset.url} style={{width: '100%'}} />
+        </div>
+        <div style={{gridColumn: '5 / 7'}}>
+          <img src={data.secondaryImage.asset.url} style={{width: '100%'}} />
+        </div>
+        <div
+          style={{
+            gridColumn: '8 / 9',
+            display: 'flex',
+            alignItems: 'flex-end',
+            height: '100%',
+          }}
+        >
+          <img src={monogram} alt="" />
+        </div>
+      </div>
+    </section>
   );
 }
 

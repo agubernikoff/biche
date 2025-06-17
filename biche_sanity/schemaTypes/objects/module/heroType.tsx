@@ -17,12 +17,6 @@ export const heroType = defineField({
       type: 'image',
       options: {hotspot: true},
     },
-    {
-      name: 'logo',
-      title: 'Logo',
-      type: 'image',
-      options: {hotspot: true},
-    },
     // defineField({
     //   name: 'title',
     //   type: 'text',

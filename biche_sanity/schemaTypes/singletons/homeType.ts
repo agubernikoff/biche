@@ -17,6 +17,34 @@ export const homeType = defineField({
       group: 'editorial',
     }),
     defineField({
+      name:'firstSection',
+      type:'object',
+      group:'editorial',
+      fields:[{
+        name: 'heroTitle',
+        title: 'Hero Title',
+        type: 'string',
+        },
+      {
+        name: 'introText',
+        title: 'Intro Text',
+        type: 'text',
+      },
+      {
+        name: 'mainImage',
+        title: 'Main Image',
+        type: 'image',
+        options: {hotspot: true},
+      },
+      {
+        name: 'secondaryImage',
+        title: 'Secondary Image',
+        type: 'image',
+        options: {hotspot: true},
+      },
+    ]
+    }),
+    defineField({
       name: 'modules',
       type: 'array',
       of: [

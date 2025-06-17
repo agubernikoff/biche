@@ -402,6 +402,15 @@ button.reset:hover:not(:has(> *)) {
   height: auto;
 }
 
+.home > section {
+  margin-top: 4rem;
+}
+.home > section:first-of-type {
+  margin-top: 0;
+}
+a.intro-text:hover {
+  text-decoration: none;
+}
 /*
 * --------------------------------------------------
 * routes/collections._index.tsx

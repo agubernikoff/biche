@@ -16,5 +16,9 @@ export const HOME_QUERY = `*[_type == "home"][0]{
     leftImage{...,asset->{url}},
     rightImage{...,asset->{url}},
     logo{...,asset->{url}}
-  }
+  },
+  firstSection{..., mainImage{...,asset->{url}}, secondaryImage{...,asset->{url}},}
+}`;
+
+export const MONOGRAM_AND_FOOTER_QUERY = `*[_type == "settings"][0]{
 }`;

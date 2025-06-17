@@ -14,6 +14,8 @@ import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
 import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
 import {PageLayout} from './components/PageLayout';
+import {sanityClient} from './sanity/sanityClient';
+import {MONOGRAM_AND_FOOTER_QUERY} from './sanity/queries/comingSoonQuery';
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -107,7 +109,10 @@ async function loadCriticalData({context}) {
     // Add other queries here, so that they are loaded in parallel
   ]);
 
-  return {header};
+  return {
+    header,
+    comingSoon: process.env.NODE_ENV === 'development' ? false : true,
+  };
 }
 
 /**
@@ -132,10 +137,28 @@ function loadDeferredData({context}) {
       console.error(error);
       return null;
     });
+
+  // Single Sanity fetch, then separate the data
+  const sanityDataPromise = sanityClient
+    .fetch(MONOGRAM_AND_FOOTER_QUERY)
+    .catch((error) => {
+      console.error('Sanity query error:', error);
+      return {monogram: null, footer: null}; // Return fallback structure
+    });
+
+  // Create separate promises for each component's data
+  const monogramData = sanityDataPromise.then(
+    (data) => data?.monogramImage || null,
+  );
+  const sanityFooterData = sanityDataPromise.then(
+    (data) => data?.footer || null,
+  );
   return {
     cart: cart.get(),
     isLoggedIn: customerAccount.isLoggedIn(),
-    footer,
+    footer, // Shopify footer
+    monogramData, // Separated monogram data
+    sanityFooterData, // Separated Sanity footer data
   };
 }
 
