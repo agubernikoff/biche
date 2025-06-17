@@ -557,9 +557,10 @@ button.reset:hover:not(:has(> *)) {
 
 .hero-section {
   display: flex;
-  width: 100%;
+  width: 100vw;
   height: 75vh;
   position: relative;
+  margin-left: -1rem;
 }
 
 .hero-section.mobile {

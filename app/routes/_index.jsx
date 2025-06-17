@@ -81,7 +81,7 @@ export default function Homepage() {
 
 function Hero({data}) {
   return (
-    <section className={'hero-section'}>
+    <section className="hero-section">
       <div className="hero-image left-image">
         <img src={`${data.leftImage?.asset.url}/?w=900`} alt="Left visual" />
       </div>
