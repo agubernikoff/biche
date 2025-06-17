@@ -5,6 +5,7 @@ import home from './homeStructure'
 import pages from './pageStructure'
 import products from './productStructure'
 import settings from './settingStructure'
+import about from './aboutStructure'
 
 /**
  * Structure overrides
@@ -36,6 +37,7 @@ const hiddenDocTypes = (listItem: ListItemBuilder) => {
     'product',
     'productVariant',
     'settings',
+    'about'
   ].includes(id)
 }
 
@@ -44,6 +46,9 @@ export const structure: StructureResolver = (S, context) =>
     .title('Content')
     .items([
       home(S, context),
+      S.divider(),
+      about(S, context),
+      S.divider(),
       pages(S, context),
       S.divider(),
       collections(S, context),

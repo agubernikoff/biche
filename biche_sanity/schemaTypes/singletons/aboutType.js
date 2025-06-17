@@ -1,0 +1,169 @@
+import {HomeIcon} from '@sanity/icons'
+import {defineArrayMember, defineField} from 'sanity'
+import {GROUPS} from '../../constants'
+
+const TITLE = 'About'
+
+export const aboutType = defineField({
+  name: 'about',
+  title: TITLE,
+  type: 'document',
+  icon: HomeIcon,
+  groups: GROUPS,
+  fields: [
+    defineField({
+      name: 'hero',
+      type: 'object',
+      group: 'editorial',
+      fields: [
+        {
+          name: 'image',
+          type: 'image',
+          options: {
+            hotspot: true,
+          },
+        },
+        defineField({
+          name: 'title',
+          title: 'Title',
+          type: 'string',
+        }),
+        defineField({
+          name: 'blurb',
+          title: 'Short Blurb',
+          type: 'text',
+        }),
+      ],
+    }),
+    defineField({
+      name: 'quoteAndImage',
+      type: 'object',
+      group: 'editorial',
+      fields: [
+        {
+          name: 'quote',
+          title: 'Quote',
+          type: 'text',
+        },
+        {
+          name: 'quotee',
+          title: 'Quotee',
+          type: 'string',
+        },
+        {
+          name: 'image',
+          title: 'Image',
+          type: 'image',
+          options: {hotspot: true},
+        },
+      ],
+    }),
+    defineField({
+      name: 'imageAndCopy',
+      type: 'object',
+      group: 'editorial',
+      fields: [
+        {
+          name: 'image',
+          title: 'Image',
+          type: 'image',
+          description: 'If left empty, will fall back to logo',
+        },
+        {
+          name: 'blurb',
+          type: 'portableTextSimple',
+        },
+      ],
+    }),
+    defineField({
+      name: 'ourStandards',
+      type: 'object',
+      group: 'editorial',
+      fields: [
+        defineField({
+          name: 'title',
+          title: 'Title',
+          type: 'string',
+        }),
+        {
+          name: 'blurb',
+          type: 'portableTextSimple',
+        },
+        {
+          name: 'squareImages',
+          type: 'array',
+          description: 'Aspect ratio will be coerced to 1/1',
+          validation: (Rule) => Rule.length(2).error('Must have exactly 2 images'),
+          of: [
+            defineArrayMember({
+              name: 'image',
+              type: 'image',
+              options: {
+                hotspot: true,
+              },
+            }),
+          ],
+        },
+        {
+          name: 'primaryImage',
+          type: 'image',
+          options: {
+            hotspot: true,
+          },
+        },
+      ],
+    }),
+    defineField({
+      name: 'ourTeam',
+      type: 'array',
+      group: 'editorial',
+      of: [
+        defineArrayMember({
+          name: 'teamMember',
+          type: 'object',
+          fields: [
+            {name: 'name', type: 'string'},
+            {
+              name: 'petInfo',
+              type: 'string',
+            },
+            {
+              name: 'shortBio',
+              type: 'text',
+            },
+            {name: 'image', type: 'image'},
+          ],
+        }),
+      ],
+    }),
+    defineField({
+      name: 'modules',
+      type: 'array',
+      of: [
+        defineArrayMember({type: 'accordion'}),
+        defineArrayMember({type: 'callout'}),
+        defineArrayMember({type: 'grid'}),
+        defineArrayMember({type: 'images'}),
+        defineArrayMember({type: 'imageWithProductHotspots', title: 'Image with Hotspots'}),
+        defineArrayMember({type: 'instagram'}),
+        defineArrayMember({type: 'products'}),
+      ],
+      group: 'editorial',
+    }),
+    defineField({
+      name: 'seo',
+      title: 'SEO',
+      type: 'seo',
+      group: 'seo',
+    }),
+  ],
+  preview: {
+    prepare() {
+      return {
+        media: HomeIcon,
+        subtitle: 'Index',
+        title: TITLE,
+      }
+    },
+  },
+})
