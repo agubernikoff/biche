@@ -22,7 +22,7 @@ export function PageLayout({
   isLoggedIn,
   publicStoreDomain,
 }) {
-  const SHOW_COMING_SOON = true; // <-- Toggle this off to re-enable full layout
+  const SHOW_COMING_SOON = false; // <-- Toggle this off to re-enable full layout
 
   if (SHOW_COMING_SOON) {
     return <ComingSoon />;

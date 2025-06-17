@@ -1,8 +1,10 @@
 import {Await, useLoaderData, Link} from '@remix-run/react';
-import {Suspense} from 'react';
+import {Suspense, useState, useEffect} from 'react';
 import {Image} from '@shopify/hydrogen';
 import {ProductItem} from '~/components/ProductItem';
 import mobileIcon from '~/assets/mobile_icon.jpg';
+import {sanityClient} from '~/sanity/sanityClient';
+import {HOME_QUERY} from '~/sanity/queries/comingSoonQuery';
 
 /**
  * @type {MetaFunction}
@@ -38,9 +40,12 @@ async function loadCriticalData({context}) {
     context.storefront.query(FEATURED_COLLECTION_QUERY),
     // Add other queries here, so that they are loaded in parallel
   ]);
-
+  const sanityData = await sanityClient
+    .fetch(HOME_QUERY)
+    .then((response) => response);
   return {
     featuredCollection: collections.nodes[0],
+    sanityData,
   };
 }
 
@@ -69,9 +74,43 @@ export default function Homepage() {
   const data = useLoaderData();
   return (
     <div className="home">
-      <FeaturedCollection collection={data.featuredCollection} />
-      <RecommendedProducts products={data.recommendedProducts} />
+      <Hero data={data.sanityData.hero} />
     </div>
+  );
+}
+
+function Hero({data}) {
+  return (
+    <section className={'hero-section'}>
+      <div className="hero-image left-image">
+        <img src={`${data.leftImage?.asset.url}/?w=900`} alt="Left visual" />
+      </div>
+      <HeroLogo url={`${data.logo?.asset.url}/?w=900`} />
+      <div className="hero-image right-image">
+        <img src={data.rightImage?.asset.url} alt="Right visual" />
+      </div>
+    </section>
+  );
+}
+function HeroLogo({url}) {
+  const [svg, setSvg] = useState(null);
+
+  useEffect(() => {
+    if (url && url.includes('.svg')) {
+      fetch(url)
+        .then((res) => res.text())
+        .then(setSvg)
+        .catch(console.error);
+    }
+  }, [url]);
+  return (
+    <div
+      className="hero-logo"
+      dangerouslySetInnerHTML={{
+        __html: svg?.replace(/fill="[^"]*"/g, ''),
+      }}
+      style={{color: 'white'}}
+    />
   );
 }
 

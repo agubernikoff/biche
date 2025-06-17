@@ -171,7 +171,6 @@ function HeroLogo({url}) {
   const [svg, setSvg] = useState(null);
 
   useEffect(() => {
-    console.log('Logo URL:', url);
     if (url && url.includes('.svg')) {
       fetch(url)
         .then((res) => res.text())
