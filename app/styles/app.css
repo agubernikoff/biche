@@ -189,13 +189,76 @@ button.reset:hover:not(:has(> *)) {
 */
 .header {
   align-items: center;
-  background: #fff;
   display: flex;
   height: var(--header-height);
   padding: 0 1rem;
   position: sticky;
   top: 0;
   z-index: 1;
+  --thickness: 4px;
+
+  background: hsl(0deg 0% 100% / 0.95);
+}
+@supports (backdrop-filter: blur(16px)) or (-webkit-backdrop-filter: blur(16px)) {
+  .header {
+    background: hsl(0deg 0% 100% / 0.1);
+  }
+
+  .backdrop {
+    content: '';
+    position: absolute;
+    inset: 0;
+
+    -webkit-backdrop-filter: blur(8px);
+    backdrop-filter: blur(8px);
+    background: linear-gradient(
+      to bottom,
+      hsl(0deg 0% 95%/25%),
+      transparent 10%
+    );
+    pointer-events: none;
+  }
+
+  .backdrop-edge {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: var(--thickness);
+    background: hsl(0deg 0% 100% / 0.1);
+    -webkit-backdrop-filter: blur(4px) brightness(0.96);
+    backdrop-filter: blur(4px) brightness(0.96);
+    transform: translateY(100%);
+    pointer-events: none;
+  }
+}
+
+@supports (mask-image: none) or (-webkit-mask-image: none) {
+  .backdrop {
+    height: 200%;
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      black 0% 50%,
+      transparent 50% 100%
+    );
+    mask-image: linear-gradient(to bottom, black 0% 50%, transparent 50% 100%);
+  }
+  .backdrop-edge {
+    height: 100%;
+    inset: 0;
+    -webkit-mask-image: linear-gradient(
+      to bottom,
+      black 0,
+      black var(--thickness),
+      transparent var(--thickness)
+    );
+    mask-image: linear-gradient(
+      to bottom,
+      black 0,
+      black var(--thickness),
+      transparent var(--thickness)
+    );
+  }
 }
 
 .header-menu-mobile-toggle {
