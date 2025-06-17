@@ -7,6 +7,7 @@ import {sanityClient} from '~/sanity/sanityClient';
 import {HOME_QUERY} from '~/sanity/queries/comingSoonQuery';
 import PrimaryLogo from '~/assets/PrimaryLogo';
 import monogram from '~/assets/MONOGRAM.png';
+import {PortableText} from '@portabletext/react';
 
 /**
  * @type {MetaFunction}
@@ -75,15 +76,13 @@ export default function Homepage() {
   /** @type {LoaderReturnData} */
   const data = useLoaderData();
   console.log(data.sanityData);
-  const {monogramData} = useRouteLoaderData('root');
 
   return (
     <div className="home">
       <Hero data={data.sanityData.hero} />
-      <FirstSection
-        data={data.sanityData.firstSection}
-        monogram={monogramData}
-      />
+      <FirstSection data={data.sanityData.firstSection} />
+      <OurStandards data={data.sanityData.ourStandards} />
+      <BottomSection data={data.sanityData.bottomSection} />
     </div>
   );
 }
@@ -131,13 +130,12 @@ function Hero({data}) {
 // }
 
 function FirstSection({data}) {
-  console.log(data);
   return (
     <section
       style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(8,1fr)',
-        rowGap: '4rem',
+        rowGap: '8rem',
       }}
     >
       <div style={{gridColumn: 'span 4'}}>
@@ -183,6 +181,62 @@ function FirstSection({data}) {
           }}
         >
           <img src={monogram} alt="" />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+function OurStandards({data}) {
+  console.log(data);
+  return (
+    <section>
+      <p className="intro-heading" style={{paddingBlock: '2rem'}}>
+        {data.title}
+      </p>
+      <div className="our-standards-home">
+        {data.cards.map((card) => (
+          <OurStandardsCard key={card._key} card={card} />
+        ))}
+      </div>
+    </section>
+  );
+}
+
+function OurStandardsCard({card}) {
+  const [hovered, setHovered] = useState(false);
+  return (
+    <div
+      className="our-standards-home-card"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      <div>
+        <p>{card.title}</p>
+        <div>
+          <p>{card.blurb}</p>
+          <Link>Learn More</Link>
+        </div>
+      </div>
+      <img
+        src={card.image.asset.url}
+        style={{transition: 'all 300ms ease-in-out', opacity: hovered ? 0 : 1}}
+      />
+    </div>
+  );
+}
+
+function BottomSection({data}) {
+  console.log(data);
+  return (
+    <section>
+      <div className="bottom-section-hero-image">
+        <img src={data.bannerImage.asset.url} />
+      </div>
+      <div className="bottom-section-text-container">
+        <p>{data.title}</p>
+        <div>
+          <PortableText value={data.blurb} />
         </div>
       </div>
     </section>

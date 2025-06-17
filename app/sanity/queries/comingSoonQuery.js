@@ -17,7 +17,9 @@ export const HOME_QUERY = `*[_type == "home"][0]{
     rightImage{...,asset->{url}},
     logo{...,asset->{url}}
   },
-  firstSection{..., mainImage{...,asset->{url}}, secondaryImage{...,asset->{url}},}
+  firstSection{..., mainImage{...,asset->{url}}, secondaryImage{...,asset->{url}},},
+  ourStandards{...,cards[]{...,image{...,asset->{url}}}},
+  bottomSection{...,bannerImage{...,asset->{url}}}
 }`;
 
 export const MONOGRAM_AND_FOOTER_QUERY = `*[_type == "settings"][0]{

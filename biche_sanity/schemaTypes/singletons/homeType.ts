@@ -45,6 +45,72 @@ export const homeType = defineField({
     ]
     }),
     defineField({
+      name:'ourStandards',
+      title:'Our Standards',
+      type:'object',
+      group:'editorial',
+      fields:[{
+        name: 'title',
+        title: 'Title',
+        type: 'string',
+        },
+        {
+          name: 'cards',
+          title: 'Cards',
+          type: 'array',
+          validation: Rule => Rule.length(3).error('Must have exactly 3 cards'),
+          of: [
+            defineArrayMember({
+              type: 'object',
+              fields: [
+                defineField({
+                  name: 'image',
+                  title: 'Image',
+                  type: 'image',
+                  options: {
+                    hotspot: true
+                  }
+                }),
+                defineField({
+                  name: 'title',
+                  title: 'Title',
+                  type: 'string'
+                }),
+                defineField({
+                  name: 'blurb',
+                  title: 'Short Blurb',
+                  type: 'text'
+                })
+              ]
+            })
+          ]
+        }
+      ]
+    }),
+    defineField({
+      name:'bottomSection',
+      type:'object',
+      group:'editorial',
+      fields:[
+        {
+          name:'bannerImage',
+          type:'image',
+          options: {
+            hotspot: true
+          }
+        },
+        defineField({
+          name: 'title',
+          title: 'Title',
+          type: 'string'
+        }),
+        {
+          name:'blurb',
+          type: 'portableTextSimple'
+        }
+      ]
+    }),
+    defineField({
       name: 'modules',
       type: 'array',
       of: [
