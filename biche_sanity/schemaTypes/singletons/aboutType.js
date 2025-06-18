@@ -123,6 +123,7 @@ export const aboutType = defineField({
           type: 'object',
           fields: [
             {name: 'name', type: 'string'},
+            {name: 'title', type: 'string'},
             {
               name: 'petInfo',
               type: 'string',
@@ -133,6 +134,13 @@ export const aboutType = defineField({
             },
             {name: 'image', type: 'image'},
           ],
+          preview: {
+            select: {
+              title: 'name',
+              subtitle: 'title',
+              media: 'image',
+            },
+          },
         }),
       ],
     }),
