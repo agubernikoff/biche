@@ -24,3 +24,9 @@ export const HOME_QUERY = `*[_type == "home"][0]{
 
 export const MONOGRAM_AND_FOOTER_QUERY = `*[_type == "settings"][0]{
 }`;
+
+export const ABOUT_QUERY = `*[_type == "about"][0]{
+  ...,
+  hero{...,image{...,asset->{url}}},
+  quoteAndImage{...,image{...,asset->{url}}}
+}`;
