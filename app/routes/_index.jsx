@@ -75,7 +75,6 @@ function loadDeferredData({context}) {
 export default function Homepage() {
   /** @type {LoaderReturnData} */
   const data = useLoaderData();
-  console.log(data.sanityData);
 
   return (
     <div className="home">
@@ -188,7 +187,6 @@ function FirstSection({data}) {
 }
 
 function OurStandards({data}) {
-  console.log(data);
   return (
     <section>
       <p className="intro-heading" style={{paddingBlock: '2rem'}}>
@@ -229,7 +227,6 @@ function OurStandardsCard({card}) {
 }
 
 function BottomSection({data}) {
-  console.log(data);
   return (
     <section>
       <div className="bottom-section-hero-image">

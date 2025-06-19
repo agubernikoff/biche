@@ -6,6 +6,8 @@
   --header-height: 64px;
   --color-dark: #000;
   --color-light: #fff;
+  --color-balsamic: #3c0707;
+  --color-eggshell: #fffbf8;
 }
 
 @font-face {
@@ -30,7 +32,7 @@
 }
 
 input {
-  color: #3c0707;
+  color: var(--color-balsamic);
 }
 /*
 * --------------------------------------------------
@@ -54,7 +56,7 @@ input {
 }
 
 body {
-  color: #3c0707;
+  color: var(--color-balsamic);
   position: relative;
 }
 
@@ -507,7 +509,7 @@ button.reset:hover:not(:has(> *)) {
 
 .email-input::placeholder,
 .signup-button {
-  color: #3c0707;
+  color: var(--color-balsamic);
 }
 
 .launch-message {
@@ -733,9 +735,12 @@ a.intro-text:hover {
 .about-hero-image {
   width: 45vw;
   height: fit-content;
+  height: 100vh;
 }
 .about-hero-image > img {
   width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 .about-text-container {
   width: 50vw;
@@ -747,6 +752,81 @@ a.intro-text:hover {
 }
 .about-text-container > div:last-of-type {
   width: 70%;
+}
+.about .quote-text {
+  width: 75%;
+}
+.image-and-copy,
+.about-our-team-section {
+  padding-block: 8rem;
+  background: var(--color-eggshell);
+  display: flex;
+}
+.image-and-copy > div,
+.about-our-standards > div {
+  flex: 1;
+}
+.image-and-copy > div {
+  display: flex;
+  align-items: center;
+}
+.image-and-copy > div:first-of-type {
+  justify-content: center;
+}
+.image-and-copy .bottom-section-text-container > div {
+  width: 75%;
+}
+.about-our-standards {
+  display: flex;
+}
+.about-our-standards > .about-text-container {
+  position: relative;
+  height: calc(100vh - var(--header-height) - 4px);
+}
+.about-our-standards > .about-text-container > img {
+  width: 50px;
+  position: absolute;
+  bottom: 0;
+  right: 20%;
+  transform: translateX(45%);
+}
+.our-standards-about-images-container {
+  display: flex;
+  justify-content: space-between;
+}
+.our-standards-about-square-images-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  width: 30%;
+}
+.our-standards-about-square-images-container > img {
+  aspect-ratio: 1/1;
+  object-fit: cover;
+}
+.our-standards-about-primary-image-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+.team-member-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 4rem;
+}
+.team-member {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+.team-member-headshot-container {
+  flex: 1;
+}
+.team-member-headshot-container > img {
+  width: 100%;
+}
+.team-member-text-container {
+  flex: 1.5;
 }
 
 /*

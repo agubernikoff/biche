@@ -115,32 +115,39 @@ export const aboutType = defineField({
     }),
     defineField({
       name: 'ourTeam',
-      type: 'array',
+      type: 'object',
       group: 'editorial',
-      of: [
-        defineArrayMember({
-          name: 'teamMember',
-          type: 'object',
-          fields: [
-            {name: 'name', type: 'string'},
-            {name: 'title', type: 'string'},
-            {
-              name: 'petInfo',
-              type: 'string',
-            },
-            {
-              name: 'shortBio',
-              type: 'text',
-            },
-            {name: 'image', type: 'image'},
+      fields: [
+        {name: 'title', type: 'string'},
+        defineField({
+          name: 'ourTeam',
+          type: 'array',
+          of: [
+            defineArrayMember({
+              name: 'teamMember',
+              type: 'object',
+              fields: [
+                {name: 'name', type: 'string'},
+                {name: 'title', type: 'string'},
+                {
+                  name: 'petInfo',
+                  type: 'string',
+                },
+                {
+                  name: 'shortBio',
+                  type: 'text',
+                },
+                {name: 'image', type: 'image'},
+              ],
+              preview: {
+                select: {
+                  title: 'name',
+                  subtitle: 'title',
+                  media: 'image',
+                },
+              },
+            }),
           ],
-          preview: {
-            select: {
-              title: 'name',
-              subtitle: 'title',
-              media: 'image',
-            },
-          },
         }),
       ],
     }),

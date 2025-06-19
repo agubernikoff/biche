@@ -1,5 +1,5 @@
-import {Await, useLoaderData, Link, useRouteLoaderData} from '@remix-run/react';
-import {Suspense, useState, useEffect} from 'react';
+import {useNavigate, useLoaderData, Link, useLocation} from '@remix-run/react';
+import {useRef, useState, useEffect} from 'react';
 import {Image} from '@shopify/hydrogen';
 import {ProductItem} from '~/components/ProductItem';
 import mobileIcon from '~/assets/mobile_icon.jpg';
@@ -56,21 +56,19 @@ function loadDeferredData({context}) {
 export default function Homepage() {
   /** @type {LoaderReturnData} */
   const {sanityData} = useLoaderData();
-  console.log(sanityData);
 
   return (
-    <div className="home">
+    <div className="home about">
       <Hero data={sanityData.hero} />
       <FounderSection data={sanityData.quoteAndImage} />
-      {/* <FirstSection data={data.sanityData.firstSection} />
-      <OurStandards data={data.sanityData.ourStandards} />
-      <BottomSection data={data.sanityData.bottomSection} /> */}
+      <ImageAndCopy data={sanityData.imageAndCopy} />
+      <OurStandards data={sanityData.ourStandards} />
+      <OurTeam data={sanityData.ourTeam} />
     </div>
   );
 }
 
 function Hero({data}) {
-  console.log(data);
   return (
     <section className="about-hero-section hero-section ">
       <div className="about-hero-image">
@@ -91,7 +89,7 @@ function FounderSection({data}) {
     <section className="founder-section">
       <div className="founder-quote">
         <p className="quote-text">{data.quote}</p>
-        <p className="quote-author">{data.author}</p>
+        <p className="quote-author">{data.quotee}</p>
       </div>
       <div className="founder-image">
         <img src={`${data.image?.asset.url}/?w=900`} alt="Founder" />
@@ -100,58 +98,15 @@ function FounderSection({data}) {
   );
 }
 
-function FirstSection({data}) {
+function ImageAndCopy({data}) {
   return (
-    <section
-      style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(8,1fr)',
-        rowGap: '8rem',
-      }}
-    >
-      <div style={{gridColumn: 'span 4'}}>
-        <p className="intro-heading">{data.heroTitle}</p>
+    <section className="image-and-copy">
+      <div className="">
+        <PrimaryLogo color={'var(--color-balsamic)'} />
       </div>
-      <div style={{gridColumn: 'span 4'}}>
-        <p className="intro-text" style={{width: '75%', marginBottom: '2rem'}}>
-          {data.introText}
-        </p>
-        <Link
-          to={'/about'}
-          className="intro-text"
-          style={{
-            color: '#3c0707',
-            padding: '.5rem',
-            borderBottom: '1px solid #3c0707',
-          }}
-        >
-          Learn More →
-        </Link>
-      </div>
-      <div
-        className="first-section-images-container"
-        style={{
-          gridColumn: 'span 8',
-          display: 'grid',
-          gridTemplateColumns: 'subgrid',
-          alignItems: 'center',
-        }}
-      >
-        <div style={{gridColumn: 'span 3'}}>
-          <img src={data.mainImage.asset.url} style={{width: '100%'}} />
-        </div>
-        <div style={{gridColumn: '5 / 7'}}>
-          <img src={data.secondaryImage.asset.url} style={{width: '100%'}} />
-        </div>
-        <div
-          style={{
-            gridColumn: '8 / 9',
-            display: 'flex',
-            alignItems: 'flex-end',
-            height: '100%',
-          }}
-        >
-          <img src={monogram} alt="" />
+      <div className="bottom-section-text-container">
+        <div>
+          <PortableText value={data.blurb} />
         </div>
       </div>
     </section>
@@ -159,59 +114,105 @@ function FirstSection({data}) {
 }
 
 function OurStandards({data}) {
-  console.log(data);
+  const {hash} = useLocation();
+  const section = useRef(null);
+  const navigate = useNavigate();
+  const [allowObserver, setAllowObserver] = useState(false);
+
+  useEffect(() => {
+    // Reset observer permission when hash changes
+    setAllowObserver(false);
+
+    if (hash === '#our-standards' && section.current) {
+      const rootStyles = getComputedStyle(document.documentElement);
+      const offsetValue = rootStyles.getPropertyValue('--header-height').trim();
+      const offset = parseInt(offsetValue.replace('px', '')) || 0;
+
+      window.scrollTo({
+        top: section.current.offsetTop - offset,
+        behavior: 'smooth',
+      });
+
+      // Allow observer after scroll completes
+      setTimeout(() => {
+        setAllowObserver(true);
+      }, 1000);
+    }
+  }, [hash]);
+
+  useEffect(() => {
+    if (!section.current || !allowObserver || hash !== '#our-standards') return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        const [entry] = entries;
+        if (!entry.isIntersecting) {
+          navigate(window.location.pathname, {
+            replace: true,
+            preventScrollReset: true,
+          });
+        }
+      },
+      {threshold: 0.1},
+    );
+
+    observer.observe(section.current);
+    return () => observer.disconnect();
+  }, [allowObserver, hash, navigate]);
+
   return (
-    <section>
-      <p className="intro-heading" style={{paddingBlock: '2rem'}}>
-        {data.title}
-      </p>
-      <div className="our-standards-home">
-        {data.cards.map((card) => (
-          <OurStandardsCard key={card._key} card={card} />
-        ))}
+    <section className="about-our-standards" ref={section}>
+      <div className="about-text-container">
+        <p className="intro-heading">{data.title}</p>
+        <div className="bottom-section-text-container">
+          <div>
+            <PortableText value={data.blurb} />
+          </div>
+        </div>
+
+        <img src={monogram} alt="monogram: BNY" />
+      </div>
+      <div className="our-standards-about-images-container">
+        <div className="our-standards-about-square-images-container">
+          {data.squareImages.map((image, index) => (
+            <img key={index} src={image.asset.url} alt="" />
+          ))}
+        </div>
+        <div className="our-standards-about-primary-image-container">
+          <img src={data.primaryImage.asset.url} alt="" />
+        </div>
+      </div>
+    </section>
+  );
+}
+function OurTeam({data}) {
+  return (
+    <section className="about-our-team-section">
+      <div>
+        <p className="intro-heading">{data.title}</p>
+        <div className="team-member-container">
+          {data.ourTeam.map((member) => (
+            <TeamMember data={member} />
+          ))}
+        </div>
       </div>
     </section>
   );
 }
 
-function OurStandardsCard({card}) {
-  const [hovered, setHovered] = useState(false);
+function TeamMember({data}) {
   return (
-    <div
-      className="our-standards-home-card"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      <img
-        src={card.image.asset.url}
-        style={{transition: 'all 300ms ease-in-out', opacity: hovered ? 0 : 1}}
-      />
-      <div
-        style={{transition: 'all 300ms ease-in-out', opacity: hovered ? 1 : 0}}
-      >
-        <p>{card.title}</p>
+    <div className="team-member">
+      <div className="team-member-headshot-container">
+        <img src={data.image.asset.url} alt="" />
+      </div>
+      <div className="team-member-text-container">
         <div>
-          <p>{card.blurb}</p>
-          <Link to="/about#our-standards">Learn More</Link>
+          <p>{`${data.name}, ${data.title}`}</p>
+          <p>{data.petInfo}</p>
         </div>
+        <p>{data.shortBio}</p>
       </div>
     </div>
-  );
-}
-
-function BottomSection({data}) {
-  console.log(data);
-  return (
-    <section>
-      <div className="bottom-section-hero-image">
-        <img src={data.bannerImage.asset.url} />
-      </div>
-      <div className="bottom-section-text-container">
-        <p>{data.title}</p>
-        <div>
-          <PortableText value={data.blurb} />
-        </div>
-      </div>
-    </section>
   );
 }
