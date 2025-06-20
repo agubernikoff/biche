@@ -37,38 +37,68 @@ export const pageType = defineField({
     }),
     defineField({
       name: 'dividerSections',
-      group: 'editorial',
       type: 'array',
+      group: 'editorial',
       of: [
         defineArrayMember({
-          name: 'section',
+          name: 'dividerSection',
           type: 'object',
           fields: [
             {
               name: 'title',
-              type: 'string'
+              type: 'string',
+              title: 'Section Title'
             },
             {
-              name: 'body',
-              type: 'portableTextSimple',
-            },
-            {
-              name: 'email',
-              type: 'linkEmail'
+              name: 'content',
+              type: 'array',
+              of: [
+                defineArrayMember({
+                  name: 'contentItem',
+                  type: 'object',
+                  fields: [
+                    {
+                      name: 'title',
+                      type: 'string'
+                    },
+                    {
+                      name: 'body',
+                      type: 'portableTextSimple',
+                    },
+                    {
+                      name: 'email',
+                      type: 'linkEmail'
+                    }
+                  ],
+                  preview: {
+                    select: {
+                      title: 'title',
+                      body: 'body'
+                    },
+                    prepare({title, body}) {
+                      return {
+                        title: title || (body && body[0]?.children?.[0]?.text) || 'Untitled Content'
+                      }
+                    }
+                  }
+                }),
+              ]
             }
           ],
           preview: {
             select: {
               title: 'title',
-              body: 'body'
+              contentCount: 'content'
             },
-            prepare({title, body}) {
+            prepare({title, contentCount}) {
+              const count = contentCount ? contentCount.length : 0;
               return {
-                title: title || (body && body[0]?.children?.[0]?.text) || 'Untitled Section'
+                title: title || 'Untitled Section',
+                subtitle: `${count} content item${count !== 1 ? 's' : ''}`
               }
             }
           }
-        }),
+        })
       ]
     }),
     defineField({

@@ -22,7 +22,7 @@ export function Header({header, isLoggedIn, cart, publicStoreDomain}) {
         />
         <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
       </div>
-      <div className="backdrop-edge"></div>
+      {/* <div className="backdrop-edge"></div> */}
     </header>
   );
 }

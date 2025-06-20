@@ -41,6 +41,7 @@ import {shopifyCollectionType} from './objects/shopify/shopifyCollectionType'
 import {shopifyProductType} from './objects/shopify/shopifyProductType'
 import {shopifyProductVariantType} from './objects/shopify/shopifyProductVariantType'
 import {spotType} from './objects/hotspot/spotType'
+import {tableType} from './objects/module/tableType.js'
 
 // Objects used as annotations must be imported first
 const annotations = [linkEmailType, linkExternalType, linkInternalType, linkProductType]
@@ -84,6 +85,7 @@ const objects = [
   shopifyProductType,
   shopifyProductVariantType,
   spotType,
+  tableType,
 ]
 
 import {portableTextType} from './portableText/portableTextType'

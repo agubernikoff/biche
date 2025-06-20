@@ -6,7 +6,8 @@
   --header-height: 64px;
   --color-dark: #000;
   --color-light: #fff;
-  --color-balsamic: #3c0707;
+  --rgb-balsamic: 60, 7, 7;
+  --color-balsamic: rgb(var(--rgb-balsamic));
   --color-eggshell: #fffbf8;
 }
 
@@ -198,8 +199,8 @@ button.reset:hover:not(:has(> *)) {
   top: 0;
   z-index: 1;
   --thickness: 4px;
-
   background: hsl(0deg 0% 100% / 0.95);
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
 }
 @supports (backdrop-filter: blur(16px)) or (-webkit-backdrop-filter: blur(16px)) {
   .header {
@@ -827,6 +828,60 @@ a.intro-text:hover {
 }
 .team-member-text-container {
   flex: 1.5;
+}
+
+/*
+* --------------------------------------------------
+* routes/collections._index.tsx
+* --------------------------------------------------
+*/
+
+.page {
+  padding: 8rem 25%;
+}
+.page .intro-heading {
+  margin-bottom: 6rem;
+}
+.page-subheader {
+  font-family: 'heldane';
+  font-size: 19px;
+}
+.divider-section {
+  margin-bottom: 6rem;
+}
+.divider-content-container {
+  border-top: 1px solid rgba(var(--rgb-balsamic), 0.1);
+}
+.divider-content {
+  border-bottom: 1px solid rgba(var(--rgb-balsamic), 0.1);
+  padding-block: 1rem;
+  position: relative;
+}
+.divider-content > p {
+  margin-bottom: 1rem;
+}
+.divider-content-email {
+  position: absolute;
+  top: 1rem;
+  right: 0;
+  cursor: pointer;
+}
+.page-portable-text > * {
+  margin-bottom: 1rem;
+}
+table {
+  font-size: 13px;
+  text-align: center;
+  border-collapse: collapse;
+}
+th {
+  font-weight: normal;
+}
+td,
+th {
+  border: 1px solid var(--color-balsamic);
+  padding: 1rem;
+  width: 50%;
 }
 
 /*

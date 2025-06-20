@@ -1,7 +1,10 @@
 import {useLoaderData} from '@remix-run/react';
+import {PortableText} from 'node_modules/@portabletext/react/dist/index';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 import {SANITY_PAGE_QUERY} from '~/sanity/queries/comingSoonQuery';
 import {sanityClient} from '~/sanity/sanityClient';
+import SanityEmailLink from '~/sanity/SanityEmailLink.jsx';
+import SanityTable from '~/sanity/SanityTable.jsx';
 
 /**
  * @type {MetaFunction<typeof loader>}
@@ -72,13 +75,80 @@ function loadDeferredData({context}) {
 export default function Page() {
   /** @type {LoaderReturnData} */
   const {sanityPage} = useLoaderData();
+  console.log(sanityPage);
 
   return (
     <div className="page">
       <header>
-        <h1>{sanityPage.title}</h1>
+        <h1 className="intro-heading">{sanityPage.title}</h1>
+        <p
+          className="page-subheader"
+          style={{
+            marginBottom: '6rem',
+          }}
+        >
+          {sanityPage.subheader}
+        </p>
       </header>
-      <main dangerouslySetInnerHTML={{__html: sanityPage.body}} />
+      <main>
+        {sanityPage.dividerSections?.map((section) => (
+          <DividerSection key={section._key} section={section} />
+        ))}
+        <div className="page-portable-text">
+          <PortableText
+            value={sanityPage.body}
+            components={{
+              marks: {linkEmail: SanityEmailLink},
+              types: {table: SanityTable},
+            }}
+          />
+        </div>
+      </main>
+      {/* <main dangerouslySetInnerHTML={{__html: sanityPage.body}} /> */}
+    </div>
+  );
+}
+
+function DividerSection({section}) {
+  return (
+    <div className="divider-section">
+      <p
+        className="page-subheader"
+        style={{
+          marginBottom: '1rem',
+        }}
+      >
+        {section.title}
+      </p>
+      <div className="divider-content-container">
+        {section.content.map((content) => (
+          <DividerSectionContent key={content._key} content={content} />
+        ))}
+      </div>
+    </div>
+  );
+}
+
+function DividerSectionContent({content}) {
+  return (
+    <div className="divider-content">
+      <p>
+        <strong>{content.title}</strong>
+      </p>
+      <div>
+        <PortableText
+          value={content.body}
+          components={{marks: {linkEmail: SanityEmailLink}}}
+        />
+      </div>
+      {content.email && (
+        <a
+          href={`mailto:${content.email.email}`}
+          className="divider-content-email"
+        >
+          {content.email.email}
+        </a>
+      )}
     </div>
   );
 }

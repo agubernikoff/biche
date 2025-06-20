@@ -48,12 +48,12 @@ h5 {
 }
 
 p {
-  font-size: 1rem;
+  font-size: 13px;
   line-height: 1.4;
 }
 
 a {
-  color: #000;
+  color: var(--color-balsamic);
   text-decoration: none;
 }
 
@@ -81,6 +81,7 @@ body {
 
 body > main {
   margin: calc(var(--header-height) * -1) 1rem 1rem 1rem;
+  min-height: calc(100vh - var(--header-height));
 }
 body > main:has(> .page) {
   margin-top: 0;
@@ -106,13 +107,14 @@ legend {
 }
 
 ul {
-  list-style: none;
-  margin: 0;
+  list-style: outside;
+  margin-left: 1rem;
   padding: 0;
 }
 
 li {
   margin-bottom: 0.5rem;
+  font-size: 13px;
 }
 
 dl {
