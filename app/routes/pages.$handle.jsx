@@ -35,7 +35,7 @@ async function loadCriticalData({context, request, params}) {
   if (!params.handle) {
     throw new Error('Missing page handle');
   }
-  console.log(params.handle, SANITY_PAGE_QUERY);
+
   const [sanityPage] = await Promise.all([
     // context.storefront.query(PAGE_QUERY, {
     //   variables: {
@@ -45,8 +45,6 @@ async function loadCriticalData({context, request, params}) {
     // Add other queries here, so that they are loaded in parallel
     sanityClient.fetch(SANITY_PAGE_QUERY, {slug: params.handle}),
   ]);
-
-  console.log(sanityPage);
 
   if (!sanityPage) {
     throw new Response('Not Found', {status: 404});
@@ -75,7 +73,6 @@ function loadDeferredData({context}) {
 export default function Page() {
   /** @type {LoaderReturnData} */
   const {sanityPage} = useLoaderData();
-  console.log(sanityPage);
 
   return (
     <div className="page">
