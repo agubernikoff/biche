@@ -32,3 +32,5 @@ export const ABOUT_QUERY = `*[_type == "about"][0]{
   ourStandards{...,primaryImage{...,asset->{url}},squareImages[]{...,asset->{url}}},
   ourTeam{...,ourTeam[]{...,image{...,asset->{url}}}}
 }`;
+
+export const SANITY_PAGE_QUERY = `*[_type == "page" && slug.current == $slug][0]`;

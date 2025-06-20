@@ -10,7 +10,7 @@ export function Header({header, isLoggedIn, cart, publicStoreDomain}) {
   const {shop, menu} = header;
   return (
     <header className="header">
-      <div class="backdrop">
+      <div className="backdrop">
         <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
           <strong data-text={shop.name}>{shop.name}</strong>
         </NavLink>
@@ -22,7 +22,7 @@ export function Header({header, isLoggedIn, cart, publicStoreDomain}) {
         />
         <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
       </div>
-      <div class="backdrop-edge"></div>
+      <div className="backdrop-edge"></div>
     </header>
   );
 }

@@ -1,5 +1,5 @@
 import {DocumentIcon} from '@sanity/icons'
-import {defineField} from 'sanity'
+import {defineField, defineArrayMember} from 'sanity'
 
 import {validateSlug} from '../../utils/validateSlug'
 import { GROUPS } from '../../constants'
@@ -16,6 +16,47 @@ export const pageType = defineField({
       group: 'editorial',
       type: 'string',
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'subheader',
+      group: 'editorial',
+      type: 'text',
+    }),
+    defineField({
+      name: 'dividerSections',
+      group: 'editorial',
+      type: 'array',
+      of: [
+        defineArrayMember({
+          name: 'section',
+          type: 'object',
+          fields: [
+            {
+              name: 'title',
+              type: 'string'
+            },
+            {
+              name: 'body',
+              type: 'portableTextSimple',
+            },
+            {
+              name: 'email',
+              type: 'linkEmail'
+            }
+          ],
+          preview: {
+            select: {
+              title: 'title',
+              body: 'body'
+            },
+            prepare({title, body}) {
+              return {
+                title: title || (body && body[0]?.children?.[0]?.text) || 'Untitled Section'
+              }
+            }
+          }
+        }),
+      ]
     }),
     defineField({
       name: 'slug',

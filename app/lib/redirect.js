@@ -12,8 +12,11 @@ export function redirectIfHandleIsLocalized(request, ...localizedResources) {
   let shouldRedirect = false;
 
   localizedResources.forEach(({handle, data}) => {
-    if (handle !== data.handle) {
-      url.pathname = url.pathname.replace(handle, data.handle);
+    if (handle !== data.handle && handle !== data.slug.current) {
+      url.pathname = url.pathname.replace(
+        handle,
+        data.handle || data.slug.current,
+      );
       shouldRedirect = true;
     }
   });

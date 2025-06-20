@@ -82,6 +82,9 @@ body {
 body > main {
   margin: calc(var(--header-height) * -1) 1rem 1rem 1rem;
 }
+body > main:has(> .page) {
+  margin-top: 0;
+}
 
 fieldset {
   display: flex;

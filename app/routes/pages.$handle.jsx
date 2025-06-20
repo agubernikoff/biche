@@ -1,11 +1,13 @@
 import {useLoaderData} from '@remix-run/react';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
+import {SANITY_PAGE_QUERY} from '~/sanity/queries/comingSoonQuery';
+import {sanityClient} from '~/sanity/sanityClient';
 
 /**
  * @type {MetaFunction<typeof loader>}
  */
 export const meta = ({data}) => {
-  return [{title: `Hydrogen | ${data?.page.title ?? ''}`}];
+  return [{title: `Hydrogen | ${data?.sanityPage.title ?? ''}`}];
 };
 
 /**
@@ -30,24 +32,30 @@ async function loadCriticalData({context, request, params}) {
   if (!params.handle) {
     throw new Error('Missing page handle');
   }
-
-  const [{page}] = await Promise.all([
-    context.storefront.query(PAGE_QUERY, {
-      variables: {
-        handle: params.handle,
-      },
-    }),
+  console.log(params.handle, SANITY_PAGE_QUERY);
+  const [sanityPage] = await Promise.all([
+    // context.storefront.query(PAGE_QUERY, {
+    //   variables: {
+    //     handle: params.handle,
+    //   },
+    // }),
     // Add other queries here, so that they are loaded in parallel
+    sanityClient.fetch(SANITY_PAGE_QUERY, {slug: params.handle}),
   ]);
 
-  if (!page) {
+  console.log(sanityPage);
+
+  if (!sanityPage) {
     throw new Response('Not Found', {status: 404});
   }
 
-  redirectIfHandleIsLocalized(request, {handle: params.handle, data: page});
+  redirectIfHandleIsLocalized(request, {
+    handle: params.handle,
+    data: sanityPage,
+  });
 
   return {
-    page,
+    sanityPage,
   };
 }
 
@@ -63,14 +71,14 @@ function loadDeferredData({context}) {
 
 export default function Page() {
   /** @type {LoaderReturnData} */
-  const {page} = useLoaderData();
+  const {sanityPage} = useLoaderData();
 
   return (
     <div className="page">
       <header>
-        <h1>{page.title}</h1>
+        <h1>{sanityPage.title}</h1>
       </header>
-      <main dangerouslySetInnerHTML={{__html: page.body}} />
+      <main dangerouslySetInnerHTML={{__html: sanityPage.body}} />
     </div>
   );
 }
