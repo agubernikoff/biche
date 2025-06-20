@@ -117,12 +117,8 @@ function OurStandards({data}) {
   const {hash} = useLocation();
   const section = useRef(null);
   const navigate = useNavigate();
-  const [allowObserver, setAllowObserver] = useState(false);
 
   useEffect(() => {
-    // Reset observer permission when hash changes
-    setAllowObserver(false);
-
     if (hash === '#our-standards' && section.current) {
       const rootStyles = getComputedStyle(document.documentElement);
       const offsetValue = rootStyles.getPropertyValue('--header-height').trim();
@@ -135,30 +131,13 @@ function OurStandards({data}) {
 
       // Allow observer after scroll completes
       setTimeout(() => {
-        setAllowObserver(true);
+        navigate(window.location.pathname, {
+          replace: true,
+          preventScrollReset: true,
+        });
       }, 1000);
     }
   }, [hash]);
-
-  useEffect(() => {
-    if (!section.current || !allowObserver || hash !== '#our-standards') return;
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const [entry] = entries;
-        if (!entry.isIntersecting) {
-          navigate(window.location.pathname, {
-            replace: true,
-            preventScrollReset: true,
-          });
-        }
-      },
-      {threshold: 0.1},
-    );
-
-    observer.observe(section.current);
-    return () => observer.disconnect();
-  }, [allowObserver, hash, navigate]);
 
   return (
     <section className="about-our-standards" ref={section}>
