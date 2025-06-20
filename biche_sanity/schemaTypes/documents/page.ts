@@ -12,10 +12,23 @@ export const pageType = defineField({
   groups: GROUPS,
   fields: [
     defineField({
+      name: 'hasSideNav',
+      type: 'boolean',
+      initialValue: false,
+      group: 'editorial',
+    }),
+    defineField({
       name: 'title',
       group: 'editorial',
       type: 'string',
       validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'slug',
+      group: 'editorial',
+      type: 'slug',
+      options: {source: 'title'},
+      validation: validateSlug,
     }),
     defineField({
       name: 'subheader',
@@ -57,13 +70,6 @@ export const pageType = defineField({
           }
         }),
       ]
-    }),
-    defineField({
-      name: 'slug',
-      group: 'editorial',
-      type: 'slug',
-      options: {source: 'title'},
-      validation: validateSlug,
     }),
     defineField({
       name: 'colorTheme',
