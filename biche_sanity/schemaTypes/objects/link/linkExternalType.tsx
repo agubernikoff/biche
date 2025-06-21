@@ -22,6 +22,10 @@ export const linkExternalType = defineField({
   },
   fields: [
     defineField({
+      name:'text',
+      type:'string'
+    }),
+    defineField({
       name: 'url',
       title: 'URL',
       type: 'url',
