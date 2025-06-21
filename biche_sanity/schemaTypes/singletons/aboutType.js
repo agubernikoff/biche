@@ -1,5 +1,7 @@
-import {HomeIcon} from '@sanity/icons'
+import {HomeIcon, MenuIcon} from '@sanity/icons'
 import {defineArrayMember, defineField} from 'sanity'
+
+import {validateSlug} from '../../utils/validateSlug'
 import {GROUPS} from '../../constants'
 
 const TITLE = 'About'
@@ -9,8 +11,41 @@ export const aboutType = defineField({
   title: TITLE,
   type: 'document',
   icon: HomeIcon,
-  groups: GROUPS,
+  groups: [
+    ...GROUPS,
+    {
+      name: 'navigation',
+      title: 'Navigation',
+      icon: MenuIcon,
+    },
+  ],
   fields: [
+    defineField({
+      name: 'title',
+      group: 'navigation',
+      type: 'string',
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: 'slug',
+      group: 'navigation',
+      type: 'slug',
+      options: {
+        source: 'title',
+        slugify: (input) => {
+          const baseSlug = input
+            .toLowerCase()
+            .replace(/\s+/g, '-')
+            .replace(/[^\w\-]+/g, '')
+            .replace(/\-\-+/g, '-')
+            .replace(/^-+/, '')
+            .replace(/-+$/, '')
+
+          return `/${baseSlug}`
+        },
+      },
+      validation: validateSlug,
+    }),
     defineField({
       name: 'hero',
       type: 'object',

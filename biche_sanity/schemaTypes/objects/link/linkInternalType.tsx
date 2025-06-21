@@ -9,17 +9,24 @@ export const linkInternalType = defineField({
   icon: LinkIcon,
   components: {
     annotation: (props) => (
-      <span>
-        <LinkIcon
-          style={{
-            marginLeft: '0.05em',
-            marginRight: '0.1em',
-            width: '0.75em',
-          }}
-        />
+      <span style={{textDecoration: 'underline'}}>
         {props.renderDefault(props)}
       </span>
     ),
+  },
+  preview: {
+    select: {
+      title: 'reference.title',
+      slug: 'reference.slug.current',
+      type: 'reference._type',
+    },
+    prepare({title, slug, type}) {
+      return {
+        title: title || 'Untitled',
+        subtitle: slug ? `${slug}` : `${type || 'Unknown type'}`,
+        media: LinkIcon,
+      }
+    },
   },
   fields: [
     defineField({

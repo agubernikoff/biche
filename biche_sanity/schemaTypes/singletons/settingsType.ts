@@ -41,6 +41,11 @@ export const settingsType = defineType({
       group: 'navigation',
     }),
     defineField({
+      name: 'pagesSideNav',
+      type: 'menu',
+      group: 'navigation',
+    }),
+    defineField({
       name: 'footer',
       type: 'footerSettings',
       group: 'navigation',
