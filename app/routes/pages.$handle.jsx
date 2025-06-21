@@ -1,4 +1,4 @@
-import {useLoaderData} from '@remix-run/react';
+import {useLoaderData, useRouteLoaderData, NavLink} from '@remix-run/react';
 import {PortableText} from 'node_modules/@portabletext/react/dist/index';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 import {SANITY_PAGE_QUERY} from '~/sanity/queries/comingSoonQuery';
@@ -73,9 +73,28 @@ function loadDeferredData({context}) {
 export default function Page() {
   /** @type {LoaderReturnData} */
   const {sanityPage} = useLoaderData();
+  const {settings} = useRouteLoaderData('root');
+
+  console.log(settings);
 
   return (
     <div className="page">
+      <nav className="page-side-nav">
+        {settings?.pagesSideNav?.links
+          ?.filter(
+            (link) =>
+              link._type === 'linkInternal' && link.reference._type === 'page',
+          )
+          ?.map((link) => (
+            <NavLink
+              to={`/pages/${link.reference.slug}`}
+              style={activeLinkStyle}
+              className="page-subheader"
+            >
+              {link.reference.title}
+            </NavLink>
+          ))}
+      </nav>
       <header>
         <h1 className="intro-heading">{sanityPage.title}</h1>
         <p
@@ -148,6 +167,14 @@ function DividerSectionContent({content}) {
       )}
     </div>
   );
+}
+
+function activeLinkStyle({isActive, isPending}) {
+  return {
+    // fontWeight: isActive ? 'bold' : undefined,
+    // color: isPending ? 'grey' : '#C3F8F8',
+    textDecoration: isActive ? 'underline' : 'none',
+  };
 }
 
 const PAGE_QUERY = `#graphql

@@ -171,7 +171,7 @@ function OurTeam({data}) {
         <p className="intro-heading">{data.title}</p>
         <div className="team-member-container">
           {data.ourTeam.map((member) => (
-            <TeamMember data={member} />
+            <TeamMember data={member} key={member._key} />
           ))}
         </div>
       </div>

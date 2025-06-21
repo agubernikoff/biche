@@ -29,17 +29,6 @@ export const pageType = defineField({
       type: 'slug',
       options: {
         source: 'title',
-        slugify: (input) => {
-          const baseSlug = input
-            .toLowerCase()
-            .replace(/\s+/g, '-')
-            .replace(/[^\w\-]+/g, '')
-            .replace(/\-\-+/g, '-')
-            .replace(/^-+/, '')
-            .replace(/-+$/, '')
-          
-          return `/pages/${baseSlug}`
-        }
       },
       validation: validateSlug,
     }),
