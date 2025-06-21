@@ -12,21 +12,13 @@ export function Footer({
 }) {
   console.log(settings);
   return (
-    <Suspense>
-      <Await resolve={footerPromise}>
-        {(footer) => (
-          <footer className="footer">
-            {footer?.menu && header.shop.primaryDomain?.url && (
-              <FooterMenu
-                menu={settings.footer.linkColumns}
-                primaryDomainUrl={header.shop.primaryDomain.url}
-                publicStoreDomain={publicStoreDomain}
-              />
-            )}
-          </footer>
-        )}
-      </Await>
-    </Suspense>
+    <footer className="footer">
+      <FooterMenu
+        menu={settings.footer.linkColumns}
+        primaryDomainUrl={header.shop.primaryDomain.url}
+        publicStoreDomain={publicStoreDomain}
+      />
+    </footer>
   );
 }
 
@@ -63,7 +55,7 @@ function FooterMenu({menu, primaryDomainUrl, publicStoreDomain}) {
               ) : (
                 <NavLink
                   end
-                  key={link._id}
+                  key={link._key}
                   prefetch="intent"
                   style={activeLinkStyle}
                   to={internalPageLink}

@@ -90,6 +90,7 @@ export default function Page() {
               to={`/pages/${link.reference.slug}`}
               style={activeLinkStyle}
               className="page-subheader"
+              key={link._key}
             >
               {link.reference.title}
             </NavLink>
