@@ -42,6 +42,7 @@ import {shopifyProductType} from './objects/shopify/shopifyProductType'
 import {shopifyProductVariantType} from './objects/shopify/shopifyProductVariantType'
 import {spotType} from './objects/hotspot/spotType'
 import {tableType} from './objects/module/tableType.js'
+import {questionsAnswersType,qaObjectType} from './objects/module/questionsAnswersType.jsx'
 
 // Objects used as annotations must be imported first
 const annotations = [linkEmailType, linkExternalType, linkInternalType, linkProductType]
@@ -86,6 +87,8 @@ const objects = [
   shopifyProductVariantType,
   spotType,
   tableType,
+  questionsAnswersType,
+  qaObjectType
 ]
 
 import {portableTextType} from './portableText/portableTextType'
@@ -98,8 +101,9 @@ import {colorThemeType} from './documents/colorTheme'
 import {pageType} from './documents/page'
 import {productType} from './documents/product'
 import {productVariantType} from './documents/productVariant'
+import {editorialType} from './documents/editorial'
 
-const documents = [collectionType, colorThemeType, pageType, productType, productVariantType]
+const documents = [collectionType, colorThemeType, pageType, productType, productVariantType,editorialType]
 
 import {homeType} from './singletons/homeType'
 import {settingsType} from './singletons/settingsType'
