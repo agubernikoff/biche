@@ -4,7 +4,13 @@ import {Await, NavLink} from '@remix-run/react';
 /**
  * @param {FooterProps}
  */
-export function Footer({footer: footerPromise, header, publicStoreDomain}) {
+export function Footer({
+  footer: footerPromise,
+  header,
+  publicStoreDomain,
+  settings,
+}) {
+  console.log(settings);
   return (
     <Suspense>
       <Await resolve={footerPromise}>
@@ -12,7 +18,7 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
           <footer className="footer">
             {footer?.menu && header.shop.primaryDomain?.url && (
               <FooterMenu
-                menu={footer.menu}
+                menu={settings.footer.linkColumns}
                 primaryDomainUrl={header.shop.primaryDomain.url}
                 publicStoreDomain={publicStoreDomain}
               />
@@ -33,34 +39,49 @@ export function Footer({footer: footerPromise, header, publicStoreDomain}) {
  */
 function FooterMenu({menu, primaryDomainUrl, publicStoreDomain}) {
   return (
-    <nav className="footer-menu" role="navigation">
-      {(menu || FALLBACK_FOOTER_MENU).items.map((item) => {
-        if (!item.url) return null;
+    <div className="link-columns-container">
+      {(menu || FALLBACK_FOOTER_MENU).map((column) => {
+        if (!column.links || column.links.length === 0) return null;
         // if the url is internal, we strip the domain
+        return (
+          <nav className="footer-menu" role="navigation" key={column._key}>
+            {column.links.map((link) => {
+              const isExternal = link._type === 'linkExternal';
+              const internalPageLink =
+                link._type === 'linkInternal' && link.reference._type === 'page'
+                  ? `/pages/${link.reference.slug}`
+                  : null;
+              return isExternal ? (
+                <a
+                  href={link.url}
+                  key={link._key}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  {link.text}
+                </a>
+              ) : (
+                <NavLink
+                  end
+                  key={link._id}
+                  prefetch="intent"
+                  style={activeLinkStyle}
+                  to={internalPageLink}
+                >
+                  {link.reference.title}
+                </NavLink>
+              );
+            })}
+          </nav>
+        );
         const url =
           item.url.includes('myshopify.com') ||
           item.url.includes(publicStoreDomain) ||
           item.url.includes(primaryDomainUrl)
             ? new URL(item.url).pathname
             : item.url;
-        const isExternal = !url.startsWith('/');
-        return isExternal ? (
-          <a href={url} key={item.id} rel="noopener noreferrer" target="_blank">
-            {item.title}
-          </a>
-        ) : (
-          <NavLink
-            end
-            key={item.id}
-            prefetch="intent"
-            style={activeLinkStyle}
-            to={url}
-          >
-            {item.title}
-          </NavLink>
-        );
       })}
-    </nav>
+    </div>
   );
 }
 

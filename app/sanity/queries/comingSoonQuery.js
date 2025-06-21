@@ -46,7 +46,21 @@ export const SETTINGS_QUERY = `*[_type == "settings"][0]{
         _type,
         title,
         "slug": slug.current,
-        // add other fields you need
+      }
+    }
+  },
+  footer{
+    ...,
+    linkColumns[]{
+      ...,
+      links[]{
+        ...,
+        reference->{
+          _id,
+          _type,
+          title,
+          "slug": slug.current,
+        } 
       }
     }
   }

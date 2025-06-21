@@ -22,6 +22,7 @@ export function PageLayout({
   isLoggedIn,
   publicStoreDomain,
   comingSoon,
+  settings,
 }) {
   const SHOW_COMING_SOON = comingSoon; // <-- Toggle this off to re-enable full layout
 
@@ -47,6 +48,7 @@ export function PageLayout({
         footer={footer}
         header={header}
         publicStoreDomain={publicStoreDomain}
+        settings={settings}
       />
     </Aside.Provider>
   );

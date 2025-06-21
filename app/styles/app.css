@@ -311,9 +311,14 @@ button.reset:hover:not(:has(> *)) {
   margin-top: auto;
 }
 
-.footer-menu {
-  justify-content: center;
+.link-columns-container {
   display: flex;
+  gap: 3rem;
+}
+
+.footer-menu {
+  display: flex;
+  flex-direction: column;
   flex-wrap: wrap;
   grid-gap: 1rem;
   padding: 1rem;
