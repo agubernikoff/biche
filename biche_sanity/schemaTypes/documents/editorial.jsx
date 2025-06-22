@@ -57,8 +57,9 @@ export const editorialType = defineField({
   preview: {
     select: {
       title: 'title',
+      heroImage: 'hero',
     },
-    prepare({seoImage, title}) {
+    prepare({heroImage, title}) {
       return {
         media: heroImage,
         title,
