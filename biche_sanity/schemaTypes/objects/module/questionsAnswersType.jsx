@@ -48,7 +48,7 @@ export const questionsAnswersType = defineField({
     }),
     defineField({
       name: 'dog',
-      title: 'Dog Name',
+      title: 'Pet Name',
       type: 'string',
       validation: (Rule) => Rule.required().min(2).max(50),
     }),
@@ -67,7 +67,7 @@ export const questionsAnswersType = defineField({
           }
 
           if (questionsForYou.length !== questionsForYourDog.length) {
-            return `Questions for You (${questionsForYou.length}) must match Questions for Your Dog (${questionsForYourDog.length})`
+            return `Questions for You (${questionsForYou.length}) must match Questions for Your Pet (${questionsForYourDog.length})`
           }
 
           return true
@@ -76,11 +76,11 @@ export const questionsAnswersType = defineField({
     }),
     defineField({
       name: 'questionsForYourDog',
-      title: 'Questions for Your Dog',
+      title: 'Questions for Your Pet',
       type: 'array',
       of: [defineArrayMember({type: 'qaObject'})],
       validation: (Rule) => [
-        Rule.required().min(1).error('At least one question for the dog is required'),
+        Rule.required().min(1).error('At least one question for the pet is required'),
         Rule.custom((questionsForYourDog, context) => {
           const questionsForYou = context.document?.questionsForYou
 
@@ -89,7 +89,7 @@ export const questionsAnswersType = defineField({
           }
 
           if (questionsForYourDog.length !== questionsForYou.length) {
-            return `Questions for Your Dog (${questionsForYourDog.length}) must match Questions for You (${questionsForYou.length})`
+            return `Questions for Your Pet (${questionsForYourDog.length}) must match Questions for You (${questionsForYou.length})`
           }
 
           return true
@@ -110,7 +110,7 @@ export const questionsAnswersType = defineField({
 
       return {
         title: `${owner} & ${dog}`,
-        subtitle: `${youCount} owner questions, ${dogCount} dog questions`,
+        subtitle: `${youCount} owner questions, ${dogCount} pet questions`,
         media: () => '🐕', // You can replace with an icon
       }
     },
@@ -123,7 +123,7 @@ export const questionsAnswersType = defineField({
       }
 
       if (doc.questionsForYou.length !== doc.questionsForYourDog.length) {
-        return 'The number of questions for the owner and dog must be equal'
+        return 'The number of questions for the owner and pet must be equal'
       }
 
       return true

@@ -1,7 +1,14 @@
-import React, {useState, useRef} from 'react';
+import React, {useState, useRef, useEffect} from 'react';
 import {AnimatePresence, motion} from 'motion/react';
 import {PortableText} from '@portabletext/react';
 
+function useIsFirstRender() {
+  const isFirst = useRef(true);
+  useEffect(() => {
+    isFirst.current = false;
+  }, []);
+  return isFirst.current;
+}
 function SanityQA({value, children}) {
   const [index, setIndex] = useState(0);
   const [direction, setDirection] = useState('right');
@@ -80,6 +87,9 @@ function SanityQA({value, children}) {
     touchStartY.current = 0;
   };
 
+  const isFirstRender = useIsFirstRender();
+  const initialX = isFirstRender ? 0 : direction === 'right' ? 100 : -100;
+
   return (
     <div
       className="article-q-a-container"
@@ -100,8 +110,8 @@ function SanityQA({value, children}) {
           <motion.div
             key={`q4u-${index}`}
             initial={{
-              opacity: 0,
-              x: direction === 'right' ? 100 : -100,
+              opacity: isFirstRender ? 1 : 0,
+              x: initialX,
             }}
             animate={{opacity: 1, x: 0}}
             exit={{opacity: 0, x: direction === 'right' ? -100 : 100}}
@@ -118,8 +128,8 @@ function SanityQA({value, children}) {
           <motion.div
             key={`q4dog-${index}`}
             initial={{
-              opacity: 0,
-              x: direction === 'right' ? 100 : -100,
+              opacity: isFirstRender ? 1 : 0,
+              x: initialX,
             }}
             animate={{opacity: 1, x: 0}}
             exit={{opacity: 0, x: direction === 'right' ? -100 : 100}}
