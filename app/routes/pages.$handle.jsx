@@ -79,48 +79,55 @@ export default function Page() {
 
   return (
     <div className="page">
-      <nav className="page-side-nav">
-        {settings?.pagesSideNav?.links
-          ?.filter(
-            (link) =>
-              link._type === 'linkInternal' && link.reference._type === 'page',
-          )
-          ?.map((link) => (
-            <NavLink
-              to={`/pages/${link.reference.slug}`}
-              style={activeLinkStyle}
-              className="page-subheader"
-              key={link._key}
-            >
-              {link.reference.title}
-            </NavLink>
-          ))}
-      </nav>
-      <header>
-        <h1 className="intro-heading">{sanityPage.title}</h1>
-        <p
-          className="page-subheader"
-          style={{
-            marginBottom: '6rem',
-          }}
-        >
-          {sanityPage.subheader}
-        </p>
-      </header>
-      <main>
-        {sanityPage.dividerSections?.map((section) => (
-          <DividerSection key={section._key} section={section} />
-        ))}
-        <div className="page-portable-text">
-          <PortableText
-            value={sanityPage.body}
-            components={{
-              marks: {linkEmail: SanityEmailLink},
-              types: {table: SanityTable},
+      <div>
+        {sanityPage.hasSideNav && (
+          <nav className="page-side-nav">
+            {settings?.pagesSideNav?.links
+              ?.filter(
+                (link) =>
+                  link._type === 'linkInternal' &&
+                  link.reference._type === 'page',
+              )
+              ?.map((link) => (
+                <NavLink
+                  to={`/pages/${link.reference.slug}`}
+                  style={activeLinkStyle}
+                  className="page-subheader"
+                  key={link._key}
+                >
+                  {link.reference.title}
+                </NavLink>
+              ))}
+          </nav>
+        )}
+      </div>
+      <div>
+        <header>
+          <h1 className="intro-heading">{sanityPage.title}</h1>
+          <p
+            className="page-subheader"
+            style={{
+              marginBottom: '6rem',
             }}
-          />
-        </div>
-      </main>
+          >
+            {sanityPage.subheader}
+          </p>
+        </header>
+        <main>
+          {sanityPage.dividerSections?.map((section) => (
+            <DividerSection key={section._key} section={section} />
+          ))}
+          <div className="page-portable-text">
+            <PortableText
+              value={sanityPage.body}
+              components={{
+                marks: {linkEmail: SanityEmailLink},
+                types: {table: SanityTable},
+              }}
+            />
+          </div>
+        </main>
+      </div>
       {/* <main dangerouslySetInnerHTML={{__html: sanityPage.body}} /> */}
     </div>
   );
