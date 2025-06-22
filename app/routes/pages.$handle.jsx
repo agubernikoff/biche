@@ -75,8 +75,6 @@ export default function Page() {
   const {sanityPage} = useLoaderData();
   const {settings} = useRouteLoaderData('root');
 
-  console.log(settings);
-
   return (
     <div className="page">
       <div>

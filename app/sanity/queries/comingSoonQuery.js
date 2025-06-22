@@ -33,7 +33,10 @@ export const ABOUT_QUERY = `*[_type == "about"][0]{
   ourTeam{...,ourTeam[]{...,image{...,asset->{url}}}}
 }`;
 
-export const SANITY_PAGE_QUERY = `*[_type == "page" && slug.current == $slug][0]`;
+export const SANITY_PAGE_QUERY = `*[_type == "page" && slug.current == $slug][0]{
+  ...,
+  "slug": slug.current
+}`;
 
 export const SETTINGS_QUERY = `*[_type == "settings"][0]{
   ...,

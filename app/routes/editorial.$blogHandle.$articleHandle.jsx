@@ -1,6 +1,13 @@
 import {useLoaderData} from '@remix-run/react';
 import {Image} from '@shopify/hydrogen';
+import {PortableText} from '@portabletext/react';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
+import {sanityClient} from '~/sanity/sanityClient';
+import SanityEmailLink from '~/sanity/SanityEmailLink';
+import SanityExternalLink from '~/sanity/SanityExternalLink';
+import SanityTable from '~/sanity/SanityTable';
+import SanityArticleImage from '~/sanity/SanityArticleImage';
+import SanityQA from '~/sanity/SanityQA';
 
 /**
  * @type {MetaFunction<typeof loader>}
@@ -34,32 +41,24 @@ async function loadCriticalData({context, request, params}) {
     throw new Response('Not found', {status: 404});
   }
 
-  const [{blog}] = await Promise.all([
-    context.storefront.query(ARTICLE_QUERY, {
-      variables: {blogHandle, articleHandle},
-    }),
+  const [blog] = await Promise.all([
+    sanityClient.fetch(ARTICLE_QUERY, {slug: articleHandle}),
     // Add other queries here, so that they are loaded in parallel
   ]);
-
-  if (!blog?.articleByHandle) {
-    throw new Response(null, {status: 404});
-  }
 
   redirectIfHandleIsLocalized(
     request,
     {
       handle: articleHandle,
-      data: blog.articleByHandle,
+      data: blog[0],
     },
     {
       handle: blogHandle,
-      data: blog,
+      data: blog[0],
     },
   );
 
-  const article = blog.articleByHandle;
-
-  return {article};
+  return {article: blog[0]};
 }
 
 /**
@@ -75,66 +74,60 @@ function loadDeferredData({context}) {
 export default function Article() {
   /** @type {LoaderReturnData} */
   const {article} = useLoaderData();
-  const {title, image, contentHtml, author} = article;
+  const {title, category, hero, body} = article;
 
   const publishedDate = new Intl.DateTimeFormat('en-US', {
     year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  }).format(new Date(article.publishedAt));
+    month: '2-digit',
+    day: '2-digit',
+  })
+    .format(new Date(article._createdAt))
+    .replace(/\//g, '-');
 
   return (
     <div className="article">
-      <h1>
+      <h1 className="intro-heading">
+        {category}:
+        <br />
         {title}
-        <div>
-          <time dateTime={article.publishedAt}>{publishedDate}</time> &middot;{' '}
-          <address>{author?.name}</address>
-        </div>
       </h1>
+      <div className="article-time-and-author">
+        <time dateTime={article.publishedAt}>{publishedDate}</time>
+        {/* <address>{author?.name}</address> */}
+      </div>
 
-      {image && <Image data={image} sizes="90vw" loading="eager" />}
-      <div
-        dangerouslySetInnerHTML={{__html: contentHtml}}
-        className="article"
-      />
+      {hero && (
+        <div className="article-hero-container">
+          <img alt="" src={hero.asset.url} />
+        </div>
+      )}
+      <div className="article-body">
+        <PortableText
+          value={body}
+          components={{
+            marks: {
+              linkEmail: SanityEmailLink,
+              linkExternal: SanityExternalLink,
+            },
+            types: {
+              table: SanityTable,
+              images: SanityArticleImage,
+              questionsAnswers: SanityQA,
+            },
+          }}
+        />
+      </div>
     </div>
   );
 }
 
 // NOTE: https://shopify.dev/docs/api/storefront/latest/objects/blog#field-blog-articlebyhandle
-const ARTICLE_QUERY = `#graphql
-  query Article(
-    $articleHandle: String!
-    $blogHandle: String!
-    $country: CountryCode
-    $language: LanguageCode
-  ) @inContext(language: $language, country: $country) {
-    blog(handle: $blogHandle) {
-      handle
-      articleByHandle(handle: $articleHandle) {
-        handle
-        title
-        contentHtml
-        publishedAt
-        author: authorV2 {
-          name
-        }
-        image {
-          id
-          altText
-          url
-          width
-          height
-        }
-        seo {
-          description
-          title
-        }
-      }
-    }
-  }
-`;
+const ARTICLE_QUERY = `*[_type == "editorial" && slug.current == $slug][]{
+  ...,
+  hero{...,asset->{url}},
+  "slug": slug.current,
+  body[]{...,_type == "images" => {...,imageFeatures[]{...,image{asset->{url}}}}},
+}`;
 
 /** @typedef {import('@shopify/remix-oxygen').LoaderFunctionArgs} LoaderFunctionArgs */
 /** @template T @typedef {import('@remix-run/react').MetaFunction<T>} MetaFunction */

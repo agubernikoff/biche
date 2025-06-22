@@ -1,6 +1,5 @@
 import {Link, useLoaderData} from '@remix-run/react';
-import {getPaginationVariables} from '@shopify/hydrogen';
-import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
+import {sanityClient} from '~/sanity/sanityClient';
 
 /**
  * @type {MetaFunction}
@@ -28,16 +27,8 @@ export async function loader(args) {
  * @param {LoaderFunctionArgs}
  */
 async function loadCriticalData({context, request}) {
-  const paginationVariables = getPaginationVariables(request, {
-    pageBy: 10,
-  });
-
-  const [{blogs}] = await Promise.all([
-    context.storefront.query(BLOGS_QUERY, {
-      variables: {
-        ...paginationVariables,
-      },
-    }),
+  const [blogs] = await Promise.all([
+    sanityClient.fetch(BLOGS_QUERY),
     // Add other queries here, so that they are loaded in parallel
   ]);
 
@@ -60,58 +51,75 @@ export default function Blogs() {
 
   return (
     <div className="blogs">
-      <h1>Blogs</h1>
-      <div className="blogs-grid">
-        <PaginatedResourceSection connection={blogs}>
-          {({node: blog}) => (
-            <Link
-              className="blog"
-              key={blog.handle}
-              prefetch="intent"
-              to={`/blogs/${blog.handle}`}
-            >
-              <h2>{blog.title}</h2>
-            </Link>
-          )}
-        </PaginatedResourceSection>
+      <h1 className="intro-heading">The Biche Community</h1>
+      <div className="blog-grid">
+        {blogs.map((blog) => (
+          <Link
+            className="blog-link"
+            key={blog.slug}
+            prefetch="intent"
+            to={`/editorial/${blog.category}/${blog.slug}`}
+          >
+            <img alt="" src={blog.hero.asset.url} />
+            <div className="blog-preview-content">
+              <p className="intro-heading">{blog.title}</p>
+              <p>Read more</p>
+            </div>
+          </Link>
+        ))}
+        {blogs.map((blog) => (
+          <Link
+            className="blog-link"
+            key={blog.slug}
+            prefetch="intent"
+            to={`/editorial/${blog.category}/${blog.slug}`}
+          >
+            <img alt="" src={blog.hero.asset.url} />
+            <div className="blog-preview-content">
+              <p>{blog.title}</p>
+              <p>Read more</p>
+            </div>
+          </Link>
+        ))}
+        {blogs.map((blog) => (
+          <Link
+            className="blog-link"
+            key={blog.slug}
+            prefetch="intent"
+            to={`/editorial/${blog.category}/${blog.slug}`}
+          >
+            <img alt="" src={blog.hero.asset.url} />
+            <div className="blog-preview-content">
+              <p>{blog.title}</p>
+              <p>Read more</p>
+            </div>
+          </Link>
+        ))}
+        {blogs.map((blog) => (
+          <Link
+            className="blog-link"
+            key={blog.slug}
+            prefetch="intent"
+            to={`/editorial/${blog.category}/${blog.slug}`}
+          >
+            <img alt="" src={blog.hero.asset.url} />
+            <div className="blog-preview-content">
+              <p>{blog.title}</p>
+              <p>Read more</p>
+            </div>
+          </Link>
+        ))}
       </div>
     </div>
   );
 }
 
-// NOTE: https://shopify.dev/docs/api/storefront/latest/objects/blog
-const BLOGS_QUERY = `#graphql
-  query Blogs(
-    $country: CountryCode
-    $endCursor: String
-    $first: Int
-    $language: LanguageCode
-    $last: Int
-    $startCursor: String
-  ) @inContext(country: $country, language: $language) {
-    blogs(
-      first: $first,
-      last: $last,
-      before: $startCursor,
-      after: $endCursor
-    ) {
-      pageInfo {
-        hasNextPage
-        hasPreviousPage
-        startCursor
-        endCursor
-      }
-      nodes {
-        title
-        handle
-        seo {
-          title
-          description
-        }
-      }
-    }
-  }
-`;
+const BLOGS_QUERY = `*[_type == "editorial"][]{
+  hero{...,asset->{url}},
+  "slug": slug.current,
+  title,
+  category
+}`;
 
 /** @typedef {import('@shopify/remix-oxygen').LoaderFunctionArgs} LoaderFunctionArgs */
 /** @template T @typedef {import('@remix-run/react').MetaFunction<T>} MetaFunction */
