@@ -19,6 +19,7 @@ export function Header({
     <header className="header">
       <div className="backdrop">
         <div className="header-content">
+          <HeaderMenuMobileToggle />
           <HeaderMenu menu={settings.menu.links} viewport="desktop" />
           <NavLink
             prefetch="intent"
@@ -92,7 +93,6 @@ export function HeaderMenu({menu, viewport}) {
 function HeaderCtas({isLoggedIn, cart}) {
   return (
     <nav className="header-ctas" role="navigation">
-      <HeaderMenuMobileToggle />
       <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
         <Suspense fallback="Sign in">
           <Await resolve={isLoggedIn} errorElement="Sign in">

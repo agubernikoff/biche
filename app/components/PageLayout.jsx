@@ -34,11 +34,11 @@ export function PageLayout({
     <Aside.Provider>
       <CartAside cart={cart} />
       <SearchAside />
-      {/* <MobileMenuAside
+      <MobileMenuAside
         header={header}
         publicStoreDomain={publicStoreDomain}
         settings={settings}
-      /> */}
+      />
       {header && (
         <Header
           header={header}
@@ -164,13 +164,13 @@ function SearchAside() {
  *   publicStoreDomain: PageLayoutProps['publicStoreDomain'];
  * }}
  */
-function MobileMenuAside({header, publicStoreDomain}) {
+function MobileMenuAside({header, publicStoreDomain, settings}) {
   return (
     header.menu &&
     header.shop.primaryDomain?.url && (
       <Aside type="mobile" heading="MENU">
         <HeaderMenu
-          menu={header.menu}
+          menu={settings.menu.links}
           viewport="mobile"
           primaryDomainUrl={header.shop.primaryDomain.url}
           publicStoreDomain={publicStoreDomain}
