@@ -2,7 +2,7 @@ import {defineField} from 'sanity'
 
 export const menuType = defineField({
   name: 'menu',
-  title: 'Menu',
+  title: 'Header',
   type: 'object',
   options: {
     collapsed: false,
@@ -13,5 +13,9 @@ export const menuType = defineField({
       name: 'links',
       type: 'menuLinks',
     }),
+    defineField({
+      name:'callout',
+      type:'string'
+    })
   ],
 })

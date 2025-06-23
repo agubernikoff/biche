@@ -23,7 +23,8 @@ export const linkExternalType = defineField({
   fields: [
     defineField({
       name:'text',
-      type:'string'
+      type:'string',
+      description:'only for use on navigational links'
     }),
     defineField({
       name: 'url',
