@@ -5,6 +5,7 @@ import {useAside} from '~/components/Aside';
 import Wordmark from '~/assets/03_Wordmark';
 import {useState, useEffect} from 'react';
 import mobileBanner from '../assets/mobile-header-banner.png';
+import Newsletter from './Newsletter';
 
 /**
  * @param {HeaderProps}
@@ -107,7 +108,7 @@ export function HeaderMenu({menu, viewport}) {
               onClick={close}
               prefetch="intent"
               style={activeLinkStyle}
-              to="/contact"
+              to="/pages/contact"
             >
               Contact
             </NavLink>
@@ -116,7 +117,7 @@ export function HeaderMenu({menu, viewport}) {
               onClick={close}
               prefetch="intent"
               style={activeLinkStyle}
-              to="/faq"
+              to="/pages/faq"
             >
               FAQ
             </NavLink>
@@ -125,18 +126,18 @@ export function HeaderMenu({menu, viewport}) {
               onClick={close}
               prefetch="intent"
               style={activeLinkStyle}
-              to="/policies/shipping-policy"
+              to="/pages/shipping-and-returns"
             >
               Shipping &amp; Returns
             </NavLink>
             <hr />
-            <div>
-              <label htmlFor="newsletter-email">Newsletter</label>
-              <div className="newsletter-signup">
-                <input type="email" id="newsletter-email" placeholder="Email" />
-                <button type="submit">Sign Up →</button>
-              </div>
-            </div>
+            <Newsletter
+              data={{
+                title: 'Newsletter',
+                placeholder: 'Email',
+                submitText: 'Sign Up →',
+              }}
+            />
             <hr />
             <div className="mobile-preview">
               <img src={mobileBanner} alt="Drop preview 1" />

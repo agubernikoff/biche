@@ -1,4 +1,6 @@
 import {createContext, useContext, useEffect, useState} from 'react';
+import logo from '../assets/Isolation_Mode.png';
+import xlogo from '../assets/Menu.png';
 
 /**
  * A side bar component with Overlay
@@ -45,10 +47,11 @@ export function Aside({children, heading, type}) {
       <button className="close-outside" onClick={close} />
       <aside>
         <header>
-          {/* <h3>{heading}</h3> */}
           <button className="close reset" onClick={close} aria-label="Close">
-            &times;
+            <img src={xlogo} />
           </button>
+          <img style={{width: '61px'}} src={logo} />
+          <div className="header-spacer" />
         </header>
         <main>{children}</main>
       </aside>
