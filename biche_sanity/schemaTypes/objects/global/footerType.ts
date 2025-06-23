@@ -63,6 +63,10 @@ export const footerType = defineField({
         {
           name:'submitText',
           type:'string'
+        },
+        {
+          name:'successMessage',
+        type:'string'
         }
       ]
     }),

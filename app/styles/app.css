@@ -307,13 +307,24 @@ button.reset:hover:not(:has(> *)) {
 * --------------------------------------------------
 */
 .footer {
-  background: var(--color-dark);
-  margin-top: auto;
+  display: grid;
+  grid-template-columns: repeat(8, 1fr);
+  padding: 4rem 1rem 2rem 1rem;
+}
+.footer > svg {
+  width: 100%;
+}
+.footer-newlsetter {
+  grid-column: 3/5;
+}
+.footer-newlsetter > p:first-of-type {
+  margin-bottom: 1rem;
 }
 
 .link-columns-container {
   display: flex;
   gap: 3rem;
+  grid-column: 6/8;
 }
 
 .footer-menu {
@@ -321,12 +332,13 @@ button.reset:hover:not(:has(> *)) {
   flex-direction: column;
   flex-wrap: wrap;
   grid-gap: 1rem;
-  padding: 1rem;
 }
 
 .footer-menu a {
-  color: var(--color-light);
+  /* color: var(--color-light); */
   min-width: fit-content;
+  font-size: 13px;
+  text-wrap: nowrap;
 }
 
 /*
