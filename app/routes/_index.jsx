@@ -229,6 +229,7 @@ function OurStandardsCard({card}) {
         style={{transition: 'all 300ms ease-in-out', opacity: hovered ? 0 : 1}}
       />
       <div
+        className="standard-card-text-container"
         style={{transition: 'all 300ms ease-in-out', opacity: hovered ? 1 : 0}}
       >
         <p>{card.title}</p>

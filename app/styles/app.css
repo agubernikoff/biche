@@ -222,6 +222,9 @@ button.reset:hover:not(:has(> *)) {
     pointer-events: none;
   }
 
+  .header-spacer {
+    display: none;
+  }
   .backdrop-edge {
     position: absolute;
     left: 0;
@@ -1214,12 +1217,27 @@ th {
   .header-logo {
     width: 15vw;
   }
-
+  .header-spacer {
+    display: inline;
+  }
+  .header-spacer,
+  .header-menu-mobile-toggle.reset {
+    width: 60px;
+    text-align: left;
+    color: var(--color-balsamic);
+  }
   p {
     font-size: 10px;
   }
   body > main {
     margin: calc(var(--header-height) * -1) 0.5rem 1rem 0.5rem;
+  }
+  aside header {
+    padding: 0 0.5rem;
+  }
+  aside header .close {
+    color: var(--color-balsamic);
+    text-align: left;
   }
   .hero-section {
     margin-left: -0.5rem;
@@ -1288,7 +1306,7 @@ th {
     font-size: 30px;
   }
   .first-section-heading > p {
-    width: 90%;
+    width: 90% !important;
   }
   .bottom-section-text-container {
     width: 90%;
@@ -1333,6 +1351,9 @@ th {
   .our-standards-home-card > div > p {
     font-size: 16px !important;
   }
+  .standard-card-text-container {
+    background-color: white !important;
+  }
   .bottom-section-home {
     margin-top: 100px !important;
   }
@@ -1346,7 +1367,7 @@ th {
     display: flex;
     flex-direction: column;
     gap: 40px;
-    padding: 0rem 0.5rem 80px 0.5rem;
+    padding: 0rem 0.5rem 40px 0.5rem;
   }
   .link-columns-container {
     flex-direction: column;

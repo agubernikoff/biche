@@ -30,6 +30,7 @@ export function Header({
           >
             <Wordmark color="var(--color-balsamic)" />
           </NavLink>
+          <div className="header-spacer" />
           <p>{settings.menu.callout}</p>
           {/* <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} /> */}
         </div>
@@ -225,6 +226,61 @@ function activeLinkStyle({isActive, isPending}) {
     textDecoration: isActive ? 'underline' : 'none',
     // color: isPending ? 'grey' : '#C3F8F8',
   };
+}
+
+function HeaderMobileMenu({menu, pagesSideNav, callout}) {
+  const {close} = useAside();
+
+  return (
+    <aside className="mobile-menu">
+      <header className="mobile-menu-header">
+        <button onClick={close} aria-label="Close">
+          ×
+        </button>
+        <div className="logo">BICHE</div>
+      </header>
+
+      <nav className="mobile-menu-primary">
+        {menu.map((item) => {
+          const url =
+            item.path ||
+            (item.reference?.slug && `/${item.reference.slug.current}`);
+          const title = item.title || item.reference?.title;
+          if (!url || !title) return null;
+          return (
+            <NavLink to={url} onClick={close} key={title}>
+              {title}
+            </NavLink>
+          );
+        })}
+      </nav>
+
+      <div className="mobile-menu-secondary">
+        {pagesSideNav.map((item) => {
+          const url =
+            item.path ||
+            (item.reference?.slug && `/${item.reference.slug.current}`);
+          const title = item.title || item.reference?.title;
+          if (!url || !title) return null;
+          return (
+            <NavLink to={url} onClick={close} key={title}>
+              {title}
+            </NavLink>
+          );
+        })}
+      </div>
+
+      <div className="mobile-menu-newsletter">
+        <label htmlFor="email">Newsletter</label>
+        <input type="email" placeholder="Email" id="email" />
+        <button>Sign Up →</button>
+      </div>
+
+      <div className="mobile-menu-callout">
+        <p>{callout}</p>
+      </div>
+    </aside>
+  );
 }
 
 /** @typedef {'desktop' | 'mobile'} Viewport */
