@@ -349,7 +349,7 @@ button.reset:hover:not(:has(> *)) {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  grid-gap: 1rem;
+  grid-gap: 0.5rem;
 }
 
 .footer-menu a {
