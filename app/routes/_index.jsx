@@ -131,16 +131,17 @@ function Hero({data}) {
 function FirstSection({data}) {
   return (
     <section
+      className="second-section"
       style={{
         display: 'grid',
         gridTemplateColumns: 'repeat(8,1fr)',
         rowGap: '8rem',
       }}
     >
-      <div style={{gridColumn: 'span 4'}}>
+      <div className="first-section-heading" style={{gridColumn: 'span 4'}}>
         <p className="intro-heading">{data.heroTitle}</p>
       </div>
-      <div style={{gridColumn: 'span 4'}}>
+      <div className="first-section-heading" style={{gridColumn: 'span 4'}}>
         <p className="intro-text" style={{width: '75%', marginBottom: '2rem'}}>
           {data.introText}
         </p>
@@ -188,7 +189,7 @@ function FirstSection({data}) {
 
 function OurStandards({data}) {
   return (
-    <section>
+    <section className="our-standards-section">
       <p className="intro-heading" style={{paddingBlock: '2rem'}}>
         {data.title}
       </p>
@@ -228,7 +229,7 @@ function OurStandardsCard({card}) {
 
 function BottomSection({data}) {
   return (
-    <section>
+    <section className="bottom-section-home">
       <div className="bottom-section-hero-image">
         <img src={data.bannerImage.asset.url} />
       </div>
