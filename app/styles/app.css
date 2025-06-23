@@ -478,7 +478,7 @@ button.reset:hover:not(:has(> *)) {
 
 .hero-section {
   display: flex;
-  width: 100vw;
+  /* width: 100vw; */
   height: 100vh;
   position: relative;
   margin-left: -1rem;
@@ -1342,8 +1342,8 @@ th {
     margin-top: 100px !important;
   }
   .our-standards-section > .intro-heading {
-    padding-top: 0;
-    padding-bottom: 1rem;
+    margin-bottom: 1rem !important;
+    padding-block: 0 !important;
   }
   .our-standards-home {
     width: 100%;
@@ -1364,6 +1364,9 @@ th {
   }
   .bottom-section-hero-image {
     margin-left: -0.5rem;
+  }
+  .home > section {
+    margin-top: 100px;
   }
   .home > section:last-of-type {
     margin-bottom: 100px !important;
@@ -1432,6 +1435,7 @@ th {
   }
   .about-our-standards .about-text-container {
     width: 100%;
+    gap: 20px !important;
   }
   .about-text-container > div:last-of-type {
     width: 87.5%;
@@ -1460,6 +1464,7 @@ th {
     aspect-ratio: 1/1.2;
     object-fit: cover;
   }
+
   .team-member-container {
     display: flex;
     flex-direction: column;
@@ -1516,6 +1521,9 @@ th {
   }
   .article-q-a-container > button {
     display: none;
+  }
+  .article-q-a-container > div:first-of-type {
+    margin-bottom: 2px;
   }
   .article-images-container {
     margin-bottom: 1rem;
@@ -1643,5 +1651,27 @@ th {
   .page-portable-text > ul > li,
   .page-portable-text > a {
     font-size: 11px !important;
+  }
+  .quote-text {
+    font-size: 11px !important;
+    width: 95% !important;
+  }
+  .quote-author {
+    font-size: 16px !important;
+  }
+  .about-our-team-section {
+    padding-block: 0;
+  }
+  .team-member-text-container > div > p:first-of-type {
+    font-size: 15px;
+    font-family: 'heldane';
+  }
+  .team-member-text-container > div > p:nth-of-type(2) {
+    font-size: 15px;
+    font-family: 'heldane';
+    opacity: 0.5;
+  }
+  .team-member-text-container > p {
+    font-size: 8px;
   }
 }
