@@ -1079,8 +1079,7 @@ th {
   gap: 4rem;
   align-items: center;
 }
-.article > h1,
-.article-time-and-author,
+.article > div:has(> .article-time-and-author),
 .article-body {
   width: 37.5%;
 }

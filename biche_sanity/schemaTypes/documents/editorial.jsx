@@ -37,6 +37,15 @@ export const editorialType = defineField({
       },
     }),
     defineField({
+      name: 'author',
+      type: 'object',
+      group: 'editorial',
+      fields: [
+        {name: 'name', type: 'string', initialValue: 'The Biche Team'},
+        {name: 'link', type: 'linkExternal'},
+      ],
+    }),
+    defineField({
       name: 'hero',
       type: 'image',
       options: {withHotSpot: true},

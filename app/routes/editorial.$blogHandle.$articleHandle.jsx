@@ -74,7 +74,7 @@ function loadDeferredData({context}) {
 export default function Article() {
   /** @type {LoaderReturnData} */
   const {article} = useLoaderData();
-  const {title, category, hero, body} = article;
+  const {title, category, hero, body, author} = article;
 
   const publishedDate = new Intl.DateTimeFormat('en-US', {
     year: 'numeric',
@@ -86,14 +86,23 @@ export default function Article() {
 
   return (
     <div className="article">
-      <h1 className="intro-heading">
-        {category}:
-        <br />
-        {title}
-      </h1>
-      <div className="article-time-and-author">
-        <time dateTime={article.publishedAt}>{publishedDate}</time>
-        {/* <address>{author?.name}</address> */}
+      <div>
+        <h1 className="intro-heading">
+          {category}:
+          <br />
+          {title}
+        </h1>
+        <div className="article-time-and-author">
+          <time dateTime={article.publishedAt}>{publishedDate}</time>
+          <p>
+            <span>Written By </span>
+            {author.link ? (
+              <a href={author.link.url}>{author?.name}</a>
+            ) : (
+              <span>{author?.name}</span>
+            )}
+          </p>
+        </div>
       </div>
 
       {hero && (

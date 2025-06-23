@@ -47,7 +47,8 @@ h5 {
   margin-top: 0.5rem;
 }
 
-p {
+p,
+time {
   font-size: 13px;
   line-height: 1.4;
 }
