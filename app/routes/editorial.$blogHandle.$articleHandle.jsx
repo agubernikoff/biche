@@ -1,5 +1,4 @@
-import {useLoaderData} from '@remix-run/react';
-import {Image} from '@shopify/hydrogen';
+import {useLoaderData, NavLink} from '@remix-run/react';
 import {PortableText} from '@portabletext/react';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 import {sanityClient} from '~/sanity/sanityClient';
@@ -86,6 +85,9 @@ export default function Article() {
 
   return (
     <div className="article">
+      <NavLink to="/editorial" className="back-to-articles">
+        ← Back to articles
+      </NavLink>
       <div>
         <h1 className="intro-heading">
           {category}:

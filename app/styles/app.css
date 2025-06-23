@@ -1023,6 +1023,12 @@ th {
 * routes/blog._index.tsx
 * --------------------------------------------------
 */
+.blogs {
+  padding-top: 8rem;
+}
+.blogs .intro-heading {
+  margin-top: 0;
+}
 .blog-grid {
   display: grid;
   grid-gap: 1rem;
@@ -1078,6 +1084,14 @@ th {
   flex-direction: column;
   gap: 4rem;
   align-items: center;
+  padding-top: 8rem;
+  position: relative;
+}
+.back-to-articles {
+  position: absolute;
+  top: 8rem;
+  left: 1rem;
+  transform: translateY(50%);
 }
 .article > div:has(> .article-time-and-author),
 .article-body {
