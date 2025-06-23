@@ -72,7 +72,7 @@ export function HeaderMenu({menu, viewport}) {
           <NavLink
             className="header-menu-item"
             end
-            key={item.id}
+            key={item._key}
             onClick={close}
             prefetch="intent"
             style={activeLinkStyle}
