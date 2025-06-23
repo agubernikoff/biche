@@ -825,6 +825,10 @@ a.intro-text:hover {
 .image-and-copy .bottom-section-text-container > div {
   width: 75%;
 }
+.image-and-copy > .bottom-section-text-container > div > p {
+  font-size: 18px;
+  font-family: 'heldane' !important;
+}
 .about-our-standards {
   display: flex;
 }
@@ -1209,6 +1213,11 @@ th {
 .account-logout {
   display: inline-block;
 }
+@media (min-width: 500px) {
+  .our-standards-about-square-images-container {
+    gap: 2px;
+  }
+}
 
 @media (max-width: 499px) {
   .header-menu-mobile-toggle {
@@ -1440,10 +1449,12 @@ th {
     flex-direction: column;
     gap: 2rem;
   }
+
   .bottom-section-text-container,
   .image-and-copy .bottom-section-text-container > div {
     width: 100%;
   }
+
   .about-our-standards {
     flex-direction: column;
     gap: 2rem;
