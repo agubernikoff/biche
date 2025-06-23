@@ -920,6 +920,9 @@ a.intro-text:hover {
   padding-block: 1rem;
   position: relative;
 }
+.divider-content.Contact {
+  display: flex;
+}
 .divider-content > p {
   margin-bottom: 1rem;
 }
@@ -1393,12 +1396,24 @@ th {
   body > main:has(.about) {
     margin-top: 0;
   }
+  .home.about {
+    margin-top: 100px !important;
+  }
   .about {
     margin-top: 4rem;
   }
   .about-hero-section {
     flex-direction: column-reverse;
     gap: 2rem;
+  }
+  .about-hero-section.hero-section {
+    gap: 40px !important;
+  }
+  .about-hero-section.hero-section
+    > .about-text-container
+    > div
+    > .intro-heading {
+    margin-bottom: 10px !important;
   }
   .about-hero-image {
     width: 100vw;
