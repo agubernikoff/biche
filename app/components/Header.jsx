@@ -4,6 +4,7 @@ import {useAnalytics, useOptimisticCart} from '@shopify/hydrogen';
 import {useAside} from '~/components/Aside';
 import Wordmark from '~/assets/03_Wordmark';
 import {useState, useEffect} from 'react';
+import mobileBanner from '../assets/mobile-header-banner.png';
 
 /**
  * @param {HeaderProps}
@@ -138,7 +139,7 @@ export function HeaderMenu({menu, viewport}) {
             </div>
             <hr />
             <div className="mobile-preview">
-              <img src="/images/dog-preview-1.jpg" alt="Drop preview 1" />
+              <img src={mobileBanner} alt="Drop preview 1" />
             </div>
             <p>Drop 01: Cloud Cleanser and Après Oil coming soon!</p>
           </div>
