@@ -1173,6 +1173,7 @@ th {
   color: grey;
   border-color: grey;
   background: transparent;
+  display: none;
 }
 .article-q-a-container > button:hover {
   color: var(--color-eggshell);
@@ -1441,7 +1442,8 @@ th {
   .team-member:nth-child(even) {
     flex-direction: row-reverse;
   }
-  .blogs {
+  .blogs,
+  .article {
     padding-top: 4rem;
   }
   .blog-grid {
@@ -1469,5 +1471,33 @@ th {
   .blog-preview-content .intro-heading {
     font-size: 19px;
     text-decoration: none;
+  }
+  .article {
+    align-items: flex-start;
+  }
+  .back-to-articles {
+    position: static;
+  }
+  .article > div:has(> .article-time-and-author) {
+    width: 78%;
+  }
+  .article-time-and-author {
+    margin-top: 2rem;
+  }
+  .article-hero-container,
+  .article-body {
+    width: 100%;
+  }
+  .article-q-a-container > button {
+    display: none;
+  }
+  .article-images-container {
+    margin-bottom: 1rem;
+  }
+  .article-images-container:has(> div + div) {
+    flex-direction: column;
+    width: 100%;
+    transform: translate(0, 0);
+    margin: auto;
   }
 }
