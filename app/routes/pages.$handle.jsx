@@ -1,4 +1,9 @@
-import {useLoaderData, useRouteLoaderData, NavLink} from '@remix-run/react';
+import {
+  useLoaderData,
+  useRouteLoaderData,
+  NavLink,
+  useParams,
+} from '@remix-run/react';
 import {PortableText} from 'node_modules/@portabletext/react/dist/index';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 import {SANITY_PAGE_QUERY} from '~/sanity/queries/comingSoonQuery';
@@ -152,8 +157,13 @@ function DividerSection({section}) {
 }
 
 function DividerSectionContent({content}) {
+  const {handle} = useParams();
+  const dynamicClass = handle
+    ? `divider-content ${handle.charAt(0).toUpperCase()}${handle.slice(1)}`
+    : 'divider-content';
+
   return (
-    <div className="divider-content">
+    <div className={dynamicClass}>
       <p>
         <strong>{content.title}</strong>
       </p>

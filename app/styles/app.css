@@ -1610,4 +1610,38 @@ th {
     align-items: center;
     justify-content: center;
   }
+  .page-side-nav {
+    display: none;
+  }
+  .page {
+    display: initial;
+  }
+  .page > div {
+    width: 100% !important;
+  }
+  .page-subheader {
+    margin-bottom: 40px !important;
+    margin-top: 40px;
+  }
+  .divider-content {
+    display: flex;
+    align-items: center;
+  }
+  .divider-content.Faq,
+  .divider-content.Shipping-and-returns {
+    align-items: flex-start;
+    flex-direction: column;
+    padding-block: 20px;
+  }
+  .divider-content-email {
+    top: initial;
+    font-size: 11px;
+    text-decoration: underline;
+  }
+
+  .page-portable-text > p,
+  .page-portable-text > ul > li,
+  .page-portable-text > a {
+    font-size: 11px !important;
+  }
 }
