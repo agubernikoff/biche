@@ -3,6 +3,7 @@ import {Await, NavLink, useAsyncValue} from '@remix-run/react';
 import {useAnalytics, useOptimisticCart} from '@shopify/hydrogen';
 import {useAside} from '~/components/Aside';
 import Wordmark from '~/assets/03_Wordmark';
+import {useState, useEffect} from 'react';
 
 /**
  * @param {HeaderProps}
@@ -15,6 +16,15 @@ export function Header({
   settings,
 }) {
   const {shop, menu} = header;
+
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const checkViewport = () => setIsMobile(window.innerWidth <= 499);
+    checkViewport();
+    window.addEventListener('resize', checkViewport);
+    return () => window.removeEventListener('resize', checkViewport);
+  }, []);
   return (
     <header className="header">
       <div className="backdrop">
@@ -54,7 +64,10 @@ export function HeaderMenu({menu, viewport}) {
 
   return (
     <nav className={className} role="navigation">
-      {viewport === 'mobile' && (
+      {viewport === 'mobile' ? (
+        <hr style={{color: '1px solid #e9e9e9'}} />
+      ) : null}
+      {/* {viewport === 'mobile' && (
         <NavLink
           end
           onClick={close}
@@ -64,7 +77,7 @@ export function HeaderMenu({menu, viewport}) {
         >
           Home
         </NavLink>
-      )}
+      )} */}
       {menu.map((item) => {
         if (!item.reference?.slug && !item.path) return null;
 
@@ -84,6 +97,53 @@ export function HeaderMenu({menu, viewport}) {
           </NavLink>
         );
       })}
+      {viewport === 'mobile' && (
+        <>
+          <div className="header-menu-extra">
+            <hr />
+            <NavLink
+              className="header-menu-item"
+              onClick={close}
+              prefetch="intent"
+              style={activeLinkStyle}
+              to="/contact"
+            >
+              Contact
+            </NavLink>
+            <NavLink
+              className="header-menu-item"
+              onClick={close}
+              prefetch="intent"
+              style={activeLinkStyle}
+              to="/faq"
+            >
+              FAQ
+            </NavLink>
+            <NavLink
+              className="header-menu-item"
+              onClick={close}
+              prefetch="intent"
+              style={activeLinkStyle}
+              to="/policies/shipping-policy"
+            >
+              Shipping &amp; Returns
+            </NavLink>
+            <hr />
+            <div>
+              <label htmlFor="newsletter-email">Newsletter</label>
+              <div className="newsletter-signup">
+                <input type="email" id="newsletter-email" placeholder="Email" />
+                <button type="submit">Sign Up →</button>
+              </div>
+            </div>
+            <hr />
+            <div className="mobile-preview">
+              <img src="/images/dog-preview-1.jpg" alt="Drop preview 1" />
+            </div>
+            <p>Drop 01: Cloud Cleanser and Après Oil coming soon!</p>
+          </div>
+        </>
+      )}
     </nav>
   );
 }
@@ -226,61 +286,6 @@ function activeLinkStyle({isActive, isPending}) {
     textDecoration: isActive ? 'underline' : 'none',
     // color: isPending ? 'grey' : '#C3F8F8',
   };
-}
-
-function HeaderMobileMenu({menu, pagesSideNav, callout}) {
-  const {close} = useAside();
-
-  return (
-    <aside className="mobile-menu">
-      <header className="mobile-menu-header">
-        <button onClick={close} aria-label="Close">
-          ×
-        </button>
-        <div className="logo">BICHE</div>
-      </header>
-
-      <nav className="mobile-menu-primary">
-        {menu.map((item) => {
-          const url =
-            item.path ||
-            (item.reference?.slug && `/${item.reference.slug.current}`);
-          const title = item.title || item.reference?.title;
-          if (!url || !title) return null;
-          return (
-            <NavLink to={url} onClick={close} key={title}>
-              {title}
-            </NavLink>
-          );
-        })}
-      </nav>
-
-      <div className="mobile-menu-secondary">
-        {pagesSideNav.map((item) => {
-          const url =
-            item.path ||
-            (item.reference?.slug && `/${item.reference.slug.current}`);
-          const title = item.title || item.reference?.title;
-          if (!url || !title) return null;
-          return (
-            <NavLink to={url} onClick={close} key={title}>
-              {title}
-            </NavLink>
-          );
-        })}
-      </div>
-
-      <div className="mobile-menu-newsletter">
-        <label htmlFor="email">Newsletter</label>
-        <input type="email" placeholder="Email" id="email" />
-        <button>Sign Up →</button>
-      </div>
-
-      <div className="mobile-menu-callout">
-        <p>{callout}</p>
-      </div>
-    </aside>
-  );
 }
 
 /** @typedef {'desktop' | 'mobile'} Viewport */
