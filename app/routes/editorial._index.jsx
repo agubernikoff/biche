@@ -58,7 +58,7 @@ export default function Blogs() {
             className="blog-link"
             key={blog.slug}
             prefetch="intent"
-            to={`/editorial/${blog.category}/${blog.slug}`}
+            to={`/editorial/${blog.slug}`}
           >
             <img alt="" src={blog.hero.asset.url} />
             <div className="blog-preview-content">
@@ -72,7 +72,7 @@ export default function Blogs() {
             className="blog-link"
             key={blog.slug}
             prefetch="intent"
-            to={`/editorial/${blog.category}/${blog.slug}`}
+            to={`/editorial/${blog.slug}`}
           >
             <img alt="" src={blog.hero.asset.url} />
             <div className="blog-preview-content">
@@ -86,7 +86,7 @@ export default function Blogs() {
             className="blog-link"
             key={blog.slug}
             prefetch="intent"
-            to={`/editorial/${blog.category}/${blog.slug}`}
+            to={`/editorial/${blog.slug}`}
           >
             <img alt="" src={blog.hero.asset.url} />
             <div className="blog-preview-content">
@@ -100,7 +100,7 @@ export default function Blogs() {
             className="blog-link"
             key={blog.slug}
             prefetch="intent"
-            to={`/editorial/${blog.category}/${blog.slug}`}
+            to={`/editorial/${blog.slug}`}
           >
             <img alt="" src={blog.hero.asset.url} />
             <div className="blog-preview-content">

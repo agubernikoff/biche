@@ -26,16 +26,16 @@ export const editorialType = defineField({
       },
       validation: validateSlug,
     }),
-    defineField({
-      name: 'category',
-      title: 'Category',
-      type: 'string',
-      group: 'editorial',
-      options: {
-        list: [{title: 'Off-Leash', value: 'Off-Leash'}],
-        layout: 'dropdown',
-      },
-    }),
+    // defineField({
+    //   name: 'category',
+    //   title: 'Category',
+    //   type: 'string',
+    //   group: 'editorial',
+    //   options: {
+    //     list: [{title: 'Off-Leash', value: 'Off-Leash'}],
+    //     layout: 'dropdown',
+    //   },
+    // }),
     defineField({
       name: 'author',
       type: 'object',

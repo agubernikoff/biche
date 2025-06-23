@@ -34,9 +34,9 @@ export async function loader(args) {
  * @param {LoaderFunctionArgs}
  */
 async function loadCriticalData({context, request, params}) {
-  const {blogHandle, articleHandle} = params;
+  const {articleHandle} = params;
 
-  if (!articleHandle || !blogHandle) {
+  if (!articleHandle) {
     throw new Response('Not found', {status: 404});
   }
 
@@ -45,17 +45,10 @@ async function loadCriticalData({context, request, params}) {
     // Add other queries here, so that they are loaded in parallel
   ]);
 
-  redirectIfHandleIsLocalized(
-    request,
-    {
-      handle: articleHandle,
-      data: blog[0],
-    },
-    {
-      handle: blogHandle,
-      data: blog[0],
-    },
-  );
+  redirectIfHandleIsLocalized(request, {
+    handle: articleHandle,
+    data: blog[0],
+  });
 
   return {article: blog[0]};
 }
@@ -89,11 +82,7 @@ export default function Article() {
         ← Back to articles
       </NavLink>
       <div>
-        <p className="intro-heading">
-          {category}:
-          <br />
-          {title}
-        </p>
+        <p className="intro-heading">{title}</p>
         <div className="article-time-and-author">
           <time dateTime={article.publishedAt}>{publishedDate}</time>
           <p>
