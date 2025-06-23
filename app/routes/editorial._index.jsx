@@ -51,7 +51,7 @@ export default function Blogs() {
 
   return (
     <div className="blogs">
-      <h1 className="intro-heading">The Biche Community</h1>
+      <p className="intro-heading">The Biche Community</p>
       <div className="blog-grid">
         {blogs.map((blog) => (
           <Link

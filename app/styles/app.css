@@ -1432,4 +1432,7 @@ th {
   .team-member:nth-child(even) {
     flex-direction: row-reverse;
   }
+  .blogs {
+    padding-top: 4rem;
+  }
 }

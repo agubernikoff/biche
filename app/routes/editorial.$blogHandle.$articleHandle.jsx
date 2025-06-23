@@ -89,11 +89,11 @@ export default function Article() {
         ← Back to articles
       </NavLink>
       <div>
-        <h1 className="intro-heading">
+        <p className="intro-heading">
           {category}:
           <br />
           {title}
-        </h1>
+        </p>
         <div className="article-time-and-author">
           <time dateTime={article.publishedAt}>{publishedDate}</time>
           <p>
