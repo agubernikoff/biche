@@ -4,8 +4,6 @@ import {useAnalytics, useOptimisticCart} from '@shopify/hydrogen';
 import {useAside} from '~/components/Aside';
 import Wordmark from '~/assets/03_Wordmark';
 import {useState, useEffect} from 'react';
-import mobileBanner from '../assets/mobile-header-banner.png';
-import Newsletter from './Newsletter';
 
 /**
  * @param {HeaderProps}
@@ -66,9 +64,6 @@ export function HeaderMenu({menu, viewport}) {
 
   return (
     <nav className={className} role="navigation">
-      {viewport === 'mobile' ? (
-        <hr style={{color: '1px solid #e9e9e9'}} />
-      ) : null}
       {/* {viewport === 'mobile' && (
         <NavLink
           end
@@ -99,53 +94,6 @@ export function HeaderMenu({menu, viewport}) {
           </NavLink>
         );
       })}
-      {viewport === 'mobile' && (
-        <>
-          <div className="header-menu-extra">
-            <hr />
-            <NavLink
-              className="header-menu-item"
-              onClick={close}
-              prefetch="intent"
-              style={activeLinkStyle}
-              to="/pages/contact"
-            >
-              Contact
-            </NavLink>
-            <NavLink
-              className="header-menu-item"
-              onClick={close}
-              prefetch="intent"
-              style={activeLinkStyle}
-              to="/pages/faq"
-            >
-              FAQ
-            </NavLink>
-            <NavLink
-              className="header-menu-item"
-              onClick={close}
-              prefetch="intent"
-              style={activeLinkStyle}
-              to="/pages/shipping-and-returns"
-            >
-              Shipping &amp; Returns
-            </NavLink>
-            <hr />
-            <Newsletter
-              data={{
-                title: 'Newsletter',
-                placeholder: 'Email',
-                submitText: 'Sign Up →',
-              }}
-            />
-            <hr />
-            <div className="mobile-preview">
-              <img src={mobileBanner} alt="Drop preview 1" />
-            </div>
-            <p>Drop 01: Cloud Cleanser and Après Oil coming soon!</p>
-          </div>
-        </>
-      )}
     </nav>
   );
 }

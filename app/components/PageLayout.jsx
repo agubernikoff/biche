@@ -1,4 +1,4 @@
-import {Await, Link} from '@remix-run/react';
+import {Await, Link, NavLink} from '@remix-run/react';
 import {Suspense, useId} from 'react';
 import {Aside} from '~/components/Aside';
 import {Footer} from '~/components/Footer';
@@ -10,6 +10,9 @@ import {
 } from '~/components/SearchFormPredictive';
 import {SearchResultsPredictive} from '~/components/SearchResultsPredictive';
 import ComingSoon from '~/components/ComingSoon';
+import mobileBanner from '../assets/mobile-header-banner.png';
+import Newsletter from './Newsletter';
+import {useAside} from './Aside';
 
 /**
  * @param {PageLayoutProps}
@@ -165,19 +168,61 @@ function SearchAside() {
  * }}
  */
 function MobileMenuAside({header, publicStoreDomain, settings}) {
+  const {close} = useAside();
   return (
     header.menu &&
     header.shop.primaryDomain?.url && (
       <Aside type="mobile" heading="MENU">
+        <hr style={{color: '1px solid #e9e9e9'}} />
         <HeaderMenu
           menu={settings.menu.links}
           viewport="mobile"
           primaryDomainUrl={header.shop.primaryDomain.url}
           publicStoreDomain={publicStoreDomain}
         />
+        <div className="header-menu-extra">
+          <hr />
+          {settings?.pagesSideNav?.links
+            ?.filter(
+              (link) =>
+                link._type === 'linkInternal' &&
+                link.reference._type === 'page',
+            )
+            ?.map((link) => (
+              <NavLink
+                to={`/pages/${link.reference.slug}`}
+                style={activeLinkStyle}
+                className="header-menu-item"
+                key={link._key}
+                onClick={close}
+              >
+                {link.reference.title}
+              </NavLink>
+            ))}
+          <hr />
+          <Newsletter
+            data={{
+              title: 'Newsletter',
+              placeholder: 'Email',
+              submitText: 'Sign Up →',
+            }}
+          />
+          <hr />
+          <div className="mobile-preview">
+            <img src={mobileBanner} alt="Drop preview 1" />
+          </div>
+          <p>Drop 01: Cloud Cleanser and Après Oil coming soon!</p>
+        </div>
       </Aside>
     )
   );
+}
+function activeLinkStyle({isActive, isPending}) {
+  return {
+    // fontWeight: isActive ? 'bold' : undefined,
+    // color: isPending ? 'grey' : '#C3F8F8',
+    textDecoration: isActive ? 'underline' : 'none',
+  };
 }
 
 /**
