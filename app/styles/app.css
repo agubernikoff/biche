@@ -701,11 +701,6 @@ a.intro-text:hover {
   width: 50%;
   font-size: 12px;
 }
-@media (max-width: 1050px) {
-  .our-standards-home-card > div > div {
-    width: 100%;
-  }
-}
 .our-standards-home-card a,
 .our-standards-home-card p {
   color: inherit;
@@ -738,6 +733,24 @@ a.intro-text:hover {
 }
 .bottom-section-text-container > div > p:last-of-type {
   margin-bottom: 0;
+}
+
+@media (max-width: 1050px) {
+  .our-standards-home-card > div > div {
+    width: 100%;
+  }
+}
+@media (max-width: 687px) {
+  .our-standards-home-card > img {
+    opacity: 1 !important;
+  }
+  .our-standards-home-card > div {
+    position: static;
+    opacity: 1 !important;
+  }
+  .our-standards-home-card > div > div > p {
+    display: none;
+  }
 }
 
 /*
