@@ -531,63 +531,6 @@ export type CatalogQuery = {
   };
 };
 
-export type BlogQueryVariables = StorefrontAPI.Exact<{
-  language?: StorefrontAPI.InputMaybe<StorefrontAPI.LanguageCode>;
-  blogHandle: StorefrontAPI.Scalars['String']['input'];
-  first?: StorefrontAPI.InputMaybe<StorefrontAPI.Scalars['Int']['input']>;
-  last?: StorefrontAPI.InputMaybe<StorefrontAPI.Scalars['Int']['input']>;
-  startCursor?: StorefrontAPI.InputMaybe<
-    StorefrontAPI.Scalars['String']['input']
-  >;
-  endCursor?: StorefrontAPI.InputMaybe<
-    StorefrontAPI.Scalars['String']['input']
-  >;
-}>;
-
-export type BlogQuery = {
-  blog?: StorefrontAPI.Maybe<
-    Pick<StorefrontAPI.Blog, 'title' | 'handle'> & {
-      seo?: StorefrontAPI.Maybe<
-        Pick<StorefrontAPI.Seo, 'title' | 'description'>
-      >;
-      articles: {
-        nodes: Array<
-          Pick<
-            StorefrontAPI.Article,
-            'contentHtml' | 'handle' | 'id' | 'publishedAt' | 'title'
-          > & {
-            author?: StorefrontAPI.Maybe<
-              Pick<StorefrontAPI.ArticleAuthor, 'name'>
-            >;
-            image?: StorefrontAPI.Maybe<
-              Pick<
-                StorefrontAPI.Image,
-                'id' | 'altText' | 'url' | 'width' | 'height'
-              >
-            >;
-            blog: Pick<StorefrontAPI.Blog, 'handle'>;
-          }
-        >;
-        pageInfo: Pick<
-          StorefrontAPI.PageInfo,
-          'hasPreviousPage' | 'hasNextPage' | 'endCursor' | 'startCursor'
-        >;
-      };
-    }
-  >;
-};
-
-export type ArticleItemFragment = Pick<
-  StorefrontAPI.Article,
-  'contentHtml' | 'handle' | 'id' | 'publishedAt' | 'title'
-> & {
-  author?: StorefrontAPI.Maybe<Pick<StorefrontAPI.ArticleAuthor, 'name'>>;
-  image?: StorefrontAPI.Maybe<
-    Pick<StorefrontAPI.Image, 'id' | 'altText' | 'url' | 'width' | 'height'>
-  >;
-  blog: Pick<StorefrontAPI.Blog, 'handle'>;
-};
-
 export type PageQueryVariables = StorefrontAPI.Exact<{
   language?: StorefrontAPI.InputMaybe<StorefrontAPI.LanguageCode>;
   country?: StorefrontAPI.InputMaybe<StorefrontAPI.CountryCode>;
@@ -1155,10 +1098,6 @@ interface GeneratedQueryTypes {
   '#graphql\n  query Catalog(\n    $country: CountryCode\n    $language: LanguageCode\n    $first: Int\n    $last: Int\n    $startCursor: String\n    $endCursor: String\n  ) @inContext(country: $country, language: $language) {\n    products(first: $first, last: $last, before: $startCursor, after: $endCursor) {\n      nodes {\n        ...CollectionItem\n      }\n      pageInfo {\n        hasPreviousPage\n        hasNextPage\n        startCursor\n        endCursor\n      }\n    }\n  }\n  #graphql\n  fragment MoneyCollectionItem on MoneyV2 {\n    amount\n    currencyCode\n  }\n  fragment CollectionItem on Product {\n    id\n    handle\n    title\n    featuredImage {\n      id\n      altText\n      url\n      width\n      height\n    }\n    priceRange {\n      minVariantPrice {\n        ...MoneyCollectionItem\n      }\n      maxVariantPrice {\n        ...MoneyCollectionItem\n      }\n    }\n  }\n\n': {
     return: CatalogQuery;
     variables: CatalogQueryVariables;
-  };
-  '#graphql\n  query Blog(\n    $language: LanguageCode\n    $blogHandle: String!\n    $first: Int\n    $last: Int\n    $startCursor: String\n    $endCursor: String\n  ) @inContext(language: $language) {\n    blog(handle: $blogHandle) {\n      title\n      handle\n      seo {\n        title\n        description\n      }\n      articles(\n        first: $first,\n        last: $last,\n        before: $startCursor,\n        after: $endCursor\n      ) {\n        nodes {\n          ...ArticleItem\n        }\n        pageInfo {\n          hasPreviousPage\n          hasNextPage\n          hasNextPage\n          endCursor\n          startCursor\n        }\n\n      }\n    }\n  }\n  fragment ArticleItem on Article {\n    author: authorV2 {\n      name\n    }\n    contentHtml\n    handle\n    id\n    image {\n      id\n      altText\n      url\n      width\n      height\n    }\n    publishedAt\n    title\n    blog {\n      handle\n    }\n  }\n': {
-    return: BlogQuery;
-    variables: BlogQueryVariables;
   };
   '#graphql\n  query Page(\n    $language: LanguageCode,\n    $country: CountryCode,\n    $handle: String!\n  )\n  @inContext(language: $language, country: $country) {\n    page(handle: $handle) {\n      handle\n      id\n      title\n      body\n      seo {\n        description\n        title\n      }\n    }\n  }\n': {
     return: PageQuery;
