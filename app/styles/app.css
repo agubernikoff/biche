@@ -1256,4 +1256,23 @@ th {
   button {
     font-weight: normal !important;
   }
+  .footer {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 4rem 1rem 80px 1rem;
+  }
+  .link-columns-container {
+    flex-direction: column;
+  }
+  .email-form > input::placeholder {
+    color: #9d8383;
+  }
+
+  .footer > svg {
+    width: 180px;
+  }
+  .footer-menu {
+    grid-gap: 0.4rem;
+  }
 }
