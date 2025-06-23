@@ -771,7 +771,7 @@ a.intro-text:hover {
 
 /*
 * --------------------------------------------------
-* routes/__index
+* routes/about
 * --------------------------------------------------
 */
 
@@ -1205,6 +1205,9 @@ th {
 }
 
 @media (max-width: 499px) {
+  p {
+    font-size: 10px;
+  }
   body > main {
     margin: calc(var(--header-height) * -1) 0.5rem 1rem 0.5rem;
   }
@@ -1272,6 +1275,7 @@ th {
   }
   .intro-heading {
     margin-bottom: 0 !important;
+    font-size: 30px;
   }
   .first-section-heading > p {
     width: 90%;
@@ -1346,5 +1350,86 @@ th {
   }
   .footer-menu {
     grid-gap: 0.4rem;
+  }
+  body > main:has(.about) {
+    margin-top: 0;
+  }
+  .about {
+    margin-top: 4rem;
+  }
+  .about-hero-section {
+    flex-direction: column-reverse;
+    gap: 2rem;
+  }
+  .about-hero-image {
+    width: 100vw;
+    height: auto;
+  }
+  .about-hero-section > .about-text-container {
+    width: 75%;
+    height: auto;
+    padding-inline: 0.5rem;
+  }
+  .about .founder-section {
+    flex-direction: row-reverse;
+    padding: 0;
+    gap: 1rem;
+    align-items: start;
+  }
+  .about .founder-image {
+    width: 45vw;
+  }
+  .about .founder-quote {
+    width: 50%;
+  }
+  .image-and-copy {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .bottom-section-text-container,
+  .image-and-copy .bottom-section-text-container > div {
+    width: 100%;
+  }
+  .about-our-standards {
+    flex-direction: column;
+    gap: 2rem;
+  }
+  .about-our-standards .about-text-container {
+    width: 100%;
+  }
+  .about-text-container > div:last-of-type {
+    width: 87.5%;
+  }
+  .about-our-standards > .about-text-container > img {
+    display: none;
+  }
+  .our-standards-about-images-container {
+    gap: 2px;
+  }
+  .our-standards-about-square-images-container {
+    height: fit-content;
+    flex-direction: row;
+    flex: 2;
+    gap: 1px;
+  }
+  .our-standards-about-square-images-container > img {
+    width: calc(50%);
+    aspect-ratio: 1/1.2;
+  }
+  .our-standards-about-primary-image-container {
+    flex: 1;
+  }
+  .our-standards-about-primary-image-container > img {
+    width: 100%;
+    aspect-ratio: 1/1.2;
+    object-fit: cover;
+  }
+  .team-member-container {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+  }
+  .team-member:nth-child(even) {
+    flex-direction: row-reverse;
   }
 }
