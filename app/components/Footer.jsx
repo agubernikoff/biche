@@ -11,7 +11,6 @@ export function Footer({
   publicStoreDomain,
   settings,
 }) {
-  console.log(settings);
   return (
     <footer className="footer">
       <Logo color={'var(--color-balsamic)'} />
@@ -75,7 +74,6 @@ function FooterMenu({menu, primaryDomainUrl, publicStoreDomain}) {
 }
 
 function Newsletter({data}) {
-  console.log(data);
   const [email, setEmail] = useState('');
   const [error, setError] = useState('');
   const [success, setSuccess] = useState('');

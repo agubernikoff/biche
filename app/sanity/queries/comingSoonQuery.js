@@ -40,6 +40,18 @@ export const SANITY_PAGE_QUERY = `*[_type == "page" && slug.current == $slug][0]
 
 export const SETTINGS_QUERY = `*[_type == "settings"][0]{
   ...,
+  menu{
+    ...,
+    links[]{
+      ...,
+      reference->{
+        _id,
+        _type,
+        title,
+        "slug": slug.current,
+      }
+    }
+  },
   pagesSideNav{
     ...,
     links[]{

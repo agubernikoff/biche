@@ -29,11 +29,6 @@ export default function Wordmark({color}) {
           fill={color}
         />
       </g>
-      <defs>
-        <clipPath id="clip0_2087_4590">
-          <rect width="342" height="84" fill="white" />
-        </clipPath>
-      </defs>
     </svg>
   );
 }

@@ -2,25 +2,36 @@ import {Suspense} from 'react';
 import {Await, NavLink, useAsyncValue} from '@remix-run/react';
 import {useAnalytics, useOptimisticCart} from '@shopify/hydrogen';
 import {useAside} from '~/components/Aside';
+import Wordmark from '~/assets/03_Wordmark';
 
 /**
  * @param {HeaderProps}
  */
-export function Header({header, isLoggedIn, cart, publicStoreDomain}) {
+export function Header({
+  header,
+  isLoggedIn,
+  cart,
+  publicStoreDomain,
+  settings,
+}) {
   const {shop, menu} = header;
   return (
     <header className="header">
       <div className="backdrop">
-        <NavLink prefetch="intent" to="/" style={activeLinkStyle} end>
-          <strong data-text={shop.name}>{shop.name}</strong>
-        </NavLink>
-        <HeaderMenu
-          menu={menu}
-          viewport="desktop"
-          primaryDomainUrl={header.shop.primaryDomain.url}
-          publicStoreDomain={publicStoreDomain}
-        />
-        <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
+        <div className="header-content">
+          <HeaderMenu menu={settings.menu.links} viewport="desktop" />
+          <NavLink
+            prefetch="intent"
+            to="/"
+            style={activeLinkStyle}
+            end
+            className="header-logo"
+          >
+            <Wordmark color="var(--color-balsamic)" />
+          </NavLink>
+          <p>{settings.menu.callout}</p>
+          {/* <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} /> */}
+        </div>
       </div>
       {/* <div className="backdrop-edge"></div> */}
     </header>
@@ -35,12 +46,7 @@ export function Header({header, isLoggedIn, cart, publicStoreDomain}) {
  *   publicStoreDomain: HeaderProps['publicStoreDomain'];
  * }}
  */
-export function HeaderMenu({
-  menu,
-  primaryDomainUrl,
-  viewport,
-  publicStoreDomain,
-}) {
+export function HeaderMenu({menu, viewport}) {
   const className = `header-menu-${viewport}`;
   const {close} = useAside();
 
@@ -57,16 +63,11 @@ export function HeaderMenu({
           Home
         </NavLink>
       )}
-      {(menu || FALLBACK_HEADER_MENU).items.map((item) => {
-        if (!item.url) return null;
+      {menu.map((item) => {
+        if (!item.reference?.slug && !item.path) return null;
 
         // if the url is internal, we strip the domain
-        const url =
-          item.url.includes('myshopify.com') ||
-          item.url.includes(publicStoreDomain) ||
-          item.url.includes(primaryDomainUrl)
-            ? new URL(item.url).pathname
-            : item.url;
+        const url = item.reference?.slug || item.path;
         return (
           <NavLink
             className="header-menu-item"
@@ -77,7 +78,7 @@ export function HeaderMenu({
             style={activeLinkStyle}
             to={url}
           >
-            {item.title}
+            {item.reference?.title || item.title}
           </NavLink>
         );
       })}
@@ -221,7 +222,7 @@ const FALLBACK_HEADER_MENU = {
  */
 function activeLinkStyle({isActive, isPending}) {
   return {
-    fontWeight: isActive ? 'bold' : undefined,
+    textDecoration: isActive ? 'underline' : 'none',
     // color: isPending ? 'grey' : '#C3F8F8',
   };
 }

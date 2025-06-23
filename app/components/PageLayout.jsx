@@ -34,13 +34,18 @@ export function PageLayout({
     <Aside.Provider>
       <CartAside cart={cart} />
       <SearchAside />
-      <MobileMenuAside header={header} publicStoreDomain={publicStoreDomain} />
+      {/* <MobileMenuAside
+        header={header}
+        publicStoreDomain={publicStoreDomain}
+        settings={settings}
+      /> */}
       {header && (
         <Header
           header={header}
           cart={cart}
           isLoggedIn={isLoggedIn}
           publicStoreDomain={publicStoreDomain}
+          settings={settings}
         />
       )}
       <main>{children}</main>
