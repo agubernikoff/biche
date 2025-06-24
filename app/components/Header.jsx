@@ -4,6 +4,7 @@ import {useAnalytics, useOptimisticCart} from '@shopify/hydrogen';
 import {useAside} from '~/components/Aside';
 import Wordmark from '~/assets/03_Wordmark';
 import {useState, useEffect} from 'react';
+import {AnimatePresence, motion} from 'motion/react';
 
 /**
  * @param {HeaderProps}
@@ -80,21 +81,38 @@ export function HeaderMenu({menu, viewport}) {
 
         // if the url is internal, we strip the domain
         const url = item.reference?.slug || item.path;
-        return (
-          <NavLink
-            className="header-menu-item"
-            end
-            key={item._key}
-            onClick={close}
-            prefetch="intent"
-            style={activeLinkStyle}
-            to={url}
-          >
-            {item.reference?.title || item.title}
-          </NavLink>
-        );
+        return <HeaderMenuItem url={url} item={item} close={close} />;
       })}
     </nav>
+  );
+}
+
+function HeaderMenuItem({item, url, close}) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <NavLink
+      className="header-menu-item"
+      key={item._key}
+      onClick={close}
+      prefetch="intent"
+      style={activeLinkStyle}
+      to={url}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {item.reference?.title || item.title}
+      <AnimatePresence mode="wait">
+        {hovered && (
+          <motion.div
+            initial={{left: 0, right: '100%'}}
+            animate={{left: 0, right: 0}}
+            exit={{left: '100%', right: 0}}
+            className="header-hover-indicator"
+          />
+        )}
+      </AnimatePresence>
+    </NavLink>
   );
 }
 

@@ -222,7 +222,7 @@ function activeLinkStyle({isActive, isPending}) {
   return {
     // fontWeight: isActive ? 'bold' : undefined,
     // color: isPending ? 'grey' : '#C3F8F8',
-    textDecoration: isActive ? 'underline' : 'none',
+    // textDecoration: isActive ? 'underline' : 'none',
   };
 }
 

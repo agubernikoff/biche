@@ -300,6 +300,19 @@ button.reset:hover:not(:has(> *)) {
 .header-menu-item {
   cursor: pointer;
   transition: color 300ms ease-in-out;
+  padding-block: 0.25rem;
+  position: relative;
+}
+.header-menu-item:hover {
+  text-decoration: none;
+}
+.header-hover-indicator {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--color-balsamic);
 }
 
 .header-logo {
@@ -1300,7 +1313,8 @@ th {
     padding-inline: 0.5rem;
   }
   .header-menu-desktop,
-  .header-content > p {
+  .header-content > p,
+  .header-hover-indicator {
     display: none;
   }
   button.header-logo {
