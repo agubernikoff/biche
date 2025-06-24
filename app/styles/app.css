@@ -1254,6 +1254,38 @@ th {
 .account-logout {
   display: inline-block;
 }
+
+/*
+* --------------------------------------------------
+* cookie banner
+* --------------------------------------------------
+*/
+#shopify-pc-banner {
+  background: var(--color-eggshell);
+}
+#shopify-pc__banner__body-title,
+#shopify-pc__banner__body-policy-link {
+  display: none;
+}
+.shopify-pc__banner__dialog p,
+.shopify-pc__banner__dialog button.shopify-pc__banner__btn-manage-prefs,
+.shopify-pc__banner__dialog button.shopify-pc__banner__btn-decline {
+  color: var(--color-balsamic);
+  font-size: 13px;
+}
+.shopify-pc__banner__dialog button.shopify-pc__banner__btn-accept {
+  background: var(--color-balsamic);
+  color: var(--color-eggshell);
+}
+.shopify-pc__banner__dialog button.shopify-pc__banner__btn-decline {
+  border: 1px solid var(--color-balsamic);
+}
+
+/*
+* --------------------------------------------------
+* media queries
+* --------------------------------------------------
+*/
 @media (min-width: 500px) {
   .our-standards-about-square-images-container {
     gap: 2px;
