@@ -380,7 +380,7 @@ button.reset:hover:not(:has(> *)) {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  grid-gap: 0.5rem;
+  grid-gap: 0.125rem;
 }
 
 .footer-menu a {
@@ -577,6 +577,7 @@ button.reset:hover:not(:has(> *)) {
 .email-input::placeholder,
 .signup-button {
   color: var(--color-balsamic);
+  font-family: 'neue';
 }
 
 .launch-message {
@@ -1317,6 +1318,10 @@ th {
   border: 1px solid var(--color-balsamic) !important;
   background: transparent !important;
   border-radius: 0;
+}
+#shopify-pc__banner__btn-accept {
+  background: var(--color-balsamic) !important;
+  color: var(--color-eggshell) !important;
 }
 .shopify-pc__prefs__header-close svg path,
 .shopify-pc__prefs__option > label > span > svg > path {
