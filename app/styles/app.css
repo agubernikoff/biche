@@ -303,7 +303,7 @@ button.reset:hover:not(:has(> *)) {
 }
 
 .header-logo {
-  width: 61px;
+  width: 85px;
 }
 .header-logo > svg {
   width: 100%;
@@ -1300,9 +1300,6 @@ th {
   .header-content > p {
     display: none;
   }
-  .header-logo {
-    width: 15vw;
-  }
   button.header-logo {
     background: transparent;
     border: none;
@@ -1316,6 +1313,7 @@ th {
     width: 60px;
     text-align: left;
     color: var(--color-balsamic);
+    transform: translateY(-2px);
   }
   p {
     font-size: 10px;
