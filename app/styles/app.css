@@ -1398,6 +1398,7 @@ th {
   }
   .link-columns-container {
     flex-direction: column;
+    gap: 40px;
   }
 
   .footer > svg {
