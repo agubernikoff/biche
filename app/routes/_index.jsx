@@ -96,17 +96,7 @@ function Hero({data}) {
 
   useEffect(() => {
     const header = document.querySelector('.header-content');
-    if (isInView) {
-      header
-        .querySelectorAll('.header-menu-item')
-        .forEach((item) => (item.style.color = 'var(--color-eggshell)'));
-      header
-        .querySelectorAll('path')
-        .forEach((item) => (item.style.fill = 'var(--color-eggshell)'));
-      header.querySelector('p').style.color = 'var(--color-eggshell)';
-      header.querySelector('.header-menu-mobile-toggle').style.color =
-        'var(--color-eggshell)';
-    } else {
+    function reset() {
       header
         .querySelectorAll('.header-menu-item')
         .forEach((item) => (item.style.color = 'var(--color-balsamic)'));
@@ -117,6 +107,18 @@ function Hero({data}) {
       header.querySelector('.header-menu-mobile-toggle').style.color =
         'var(--color-balsamic)';
     }
+    if (isInView) {
+      header
+        .querySelectorAll('.header-menu-item')
+        .forEach((item) => (item.style.color = 'var(--color-eggshell)'));
+      header
+        .querySelectorAll('path')
+        .forEach((item) => (item.style.fill = 'var(--color-eggshell)'));
+      header.querySelector('p').style.color = 'var(--color-eggshell)';
+      header.querySelector('.header-menu-mobile-toggle').style.color =
+        'var(--color-eggshell)';
+    } else reset();
+    return () => reset();
   }, [isInView]);
   return (
     <section className="hero-section" ref={ref}>
