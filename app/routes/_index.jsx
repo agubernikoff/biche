@@ -277,14 +277,14 @@ function OurStandardsCard({card}) {
 function BottomSection({data}) {
   return (
     <section className="bottom-section-home">
-      <div className="bottom-section-hero-image">
-        <img src={data.bannerImage.asset.url} />
-      </div>
       <div className="bottom-section-text-container">
-        <p>{data.title}</p>
+        <p className="intro-heading">{data.title}</p>
         <div>
           <PortableText value={data.blurb} />
         </div>
+      </div>
+      <div className="bottom-section-hero-image">
+        <img src={data.bannerImage.asset.url} />
       </div>
     </section>
   );

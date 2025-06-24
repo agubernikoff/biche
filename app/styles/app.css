@@ -743,8 +743,7 @@ a.intro-text:hover {
   justify-content: space-between;
   padding: 1rem;
 }
-.our-standards-home-card > div > p,
-.bottom-section-text-container > p {
+.our-standards-home-card > div > p {
   font-size: 19px;
   font-family: 'heldane';
 }
@@ -773,7 +772,8 @@ a.intro-text:hover {
   margin-bottom: 4rem;
 }
 .bottom-section-text-container {
-  width: 25%;
+  width: 35%;
+  margin-bottom: 60px;
 }
 
 .bottom-section-text-container > p {
