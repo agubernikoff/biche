@@ -107,6 +107,7 @@ function Hero({data}) {
   });
   useEffect(() => {
     const header = document.querySelector('.header-content');
+    const root = document.documentElement;
     function reset() {
       header
         .querySelectorAll('.header-menu-item')
@@ -117,6 +118,10 @@ function Hero({data}) {
       header.querySelector('p').style.color = 'var(--color-balsamic)';
       header.querySelector('.header-menu-mobile-toggle').style.color =
         'var(--color-balsamic)';
+      root.style.setProperty(
+        '--header-hover-indicator-color',
+        'var(--color-balsamic)',
+      );
     }
     if (isInView) {
       header
@@ -128,6 +133,10 @@ function Hero({data}) {
       header.querySelector('p').style.color = 'var(--color-eggshell)';
       header.querySelector('.header-menu-mobile-toggle').style.color =
         'var(--color-eggshell)';
+      root.style.setProperty(
+        '--header-hover-indicator-color',
+        'var(--color-eggshell)',
+      );
     } else reset();
     return () => reset();
   }, [isInView]);

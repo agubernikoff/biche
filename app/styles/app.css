@@ -9,6 +9,7 @@
   --rgb-balsamic: 60, 7, 7;
   --color-balsamic: rgb(var(--rgb-balsamic));
   --color-eggshell: #fffbf8;
+  --header-hover-indicator-color: rgb(var(--rgb-balsamic));
 }
 
 @font-face {
@@ -312,7 +313,7 @@ button.reset:hover:not(:has(> *)) {
   left: 0;
   right: 0;
   height: 1px;
-  background: var(--color-balsamic);
+  background: var(--header-hover-indicator-color);
 }
 
 .header-logo {
