@@ -104,6 +104,8 @@ function Hero({data}) {
         .querySelectorAll('path')
         .forEach((item) => (item.style.fill = 'var(--color-eggshell)'));
       header.querySelector('p').style.color = 'var(--color-eggshell)';
+      header.querySelector('.header-menu-mobile-toggle').style.color =
+        'var(--color-eggshell)';
     } else {
       header
         .querySelectorAll('.header-menu-item')
@@ -112,6 +114,8 @@ function Hero({data}) {
         .querySelectorAll('path')
         .forEach((item) => (item.style.fill = 'var(--color-balsamic)'));
       header.querySelector('p').style.color = 'var(--color-balsamic)';
+      header.querySelector('.header-menu-mobile-toggle').style.color =
+        'var(--color-balsamic)';
     }
   }, [isInView]);
   return (

@@ -1296,6 +1296,7 @@ th {
   .hero-section {
     margin-left: -0.5rem;
     height: 75vh;
+    height: fit-content;
   }
   .hero-section.mobile {
     height: 60vh;
@@ -1303,9 +1304,6 @@ th {
   .hero-image.left-image {
     height: 60vh;
     width: 100vw;
-  }
-  .hero-logo {
-    top: 45%;
   }
   .hero-image.right-image {
     display: none;
@@ -1353,7 +1351,6 @@ th {
 
   .second-section {
     display: flex !important;
-    margin-top: -4rem !important;
     row-gap: 5px !important;
     flex-direction: column;
   }
@@ -1388,9 +1385,6 @@ th {
   }
   .first-section-images-container > div:nth-child(1) {
     grid-column: span 8 !important;
-  }
-  .our-standards-section {
-    margin-top: 100px !important;
   }
   .our-standards-section > .intro-heading {
     margin-bottom: 1rem !important;
