@@ -27,7 +27,7 @@ export function PageLayout({
   comingSoon,
   settings,
 }) {
-  const SHOW_COMING_SOON = comingSoon; // <-- Toggle this off to re-enable full layout
+  const SHOW_COMING_SOON = null; // <-- Toggle this off to re-enable full layout
 
   if (SHOW_COMING_SOON) {
     return <ComingSoon />;

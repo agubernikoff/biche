@@ -1247,6 +1247,12 @@ th {
   .team-member:nth-child(4) {
     flex-direction: row-reverse;
   }
+  .our-standards-about-primary-image-container {
+    align-items: center;
+  }
+  .our-standards-about-primary-image-container > img {
+    width: 50%;
+  }
 }
 
 @media (max-width: 499px) {
