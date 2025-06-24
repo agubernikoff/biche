@@ -56,6 +56,10 @@ export default async function handleRequest(
       'https://static-tracking.klaviyo.com',
       'https://klaviyo.com',
       'https://*.klaviyo.com',
+      'https://cdn.shopify.com',
+      'https://cdn.shopifycdn.net',
+      'https://shopify.dev',
+      'https://shopify.com',
     ],
     styleSrc: [
       "'self'",
