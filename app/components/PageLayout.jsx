@@ -168,7 +168,6 @@ function SearchAside() {
  * }}
  */
 function MobileMenuAside({header, publicStoreDomain, settings}) {
-  console.log(settings);
   const {close} = useAside();
   return (
     header.menu &&

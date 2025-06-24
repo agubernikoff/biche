@@ -1171,6 +1171,15 @@ th {
   top: 8rem;
   left: 1rem;
   transform: translateY(50%);
+  padding: 0.25rem;
+}
+.back-to-articles > div {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  height: 1px;
+  background: var(--color-balsamic);
 }
 .article > div:has(> .article-time-and-author),
 .article-body {
@@ -1244,7 +1253,16 @@ th {
   color: var(--color-balsamic);
   background: var(--color-eggshell);
 }
-
+.article-q-a-container div:has(> .intro-heading) {
+  min-height: 150px;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  padding-top: calc(2rem + 15px);
+}
+.mapped-indicators {
+  display: none;
+}
 /*
 * --------------------------------------------------
 * routes/account
@@ -1379,8 +1397,9 @@ th {
     color: var(--color-balsamic);
     transform: translateY(-2px);
   }
-  p {
-    font-size: 10px;
+  p,
+  time {
+    font-size: 11px;
   }
   body > main {
     margin: calc(var(--header-height) * -1) 0.5rem 1rem 0.5rem;
@@ -1659,29 +1678,43 @@ th {
     position: static;
     opacity: 1 !important;
     padding: 0;
-  }
-  .blog-preview-content .intro-heading {
-    font-size: 19px;
+    background: transparent;
   }
   .blog-preview-content .intro-heading {
     font-size: 19px;
     text-decoration: none;
   }
+  .blog-preview-content .intro-heading + p {
+    margin-top: 6px;
+  }
   .article {
     align-items: flex-start;
+    gap: 30px;
+    margin-bottom: 120px;
   }
   .back-to-articles {
-    position: static;
+    position: relative;
+    font-size: 11px;
+    transform: none;
+    top: auto;
+    left: auto;
+  }
+  .article .intro-heading {
+    font-size: 40px;
+    line-height: 50px;
   }
   .article > div:has(> .article-time-and-author) {
-    width: 78%;
+    width: 100%;
   }
   .article-time-and-author {
-    margin-top: 2rem;
+    margin-top: 30px;
   }
   .article-hero-container,
   .article-body {
     width: 100%;
+  }
+  .article-q-a-container {
+    margin-block: 30px;
   }
   .article-q-a-container > button {
     display: none;
@@ -1690,13 +1723,24 @@ th {
     margin-bottom: 2px;
   }
   .article-images-container {
-    margin-bottom: 1rem;
+    margin-block: 30px;
   }
   .article-images-container:has(> div + div) {
     flex-direction: column;
     width: 100%;
     transform: translate(0, 0);
     margin: auto;
+    gap: 30px;
+  }
+  .article-q-a-container div:has(> .intro-heading) {
+    gap: 30px;
+  }
+  .mapped-indicators {
+    display: flex;
+    gap: 2.5px;
+    justify-content: center;
+    background: transparent !important;
+    padding: 15px !important;
   }
 
   aside header {

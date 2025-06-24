@@ -90,6 +90,37 @@ function SanityQA({value, children}) {
   const isFirstRender = useIsFirstRender();
   const initialX = isFirstRender ? 0 : direction === 'right' ? 100 : -100;
 
+  const mappedIndicators =
+    value.questionsForYou.length > 1
+      ? value.questionsForYou.map((e, i) => (
+          <div
+            key={e._key}
+            className="circle"
+            style={{
+              height: '10px',
+              width: '10px',
+              position: 'relative',
+              background: 'rgba(var(--rgb-balsamic),.2)',
+              borderRadius: '10px',
+            }}
+          >
+            {i === index ? (
+              <motion.div
+                layoutId="mapped-indicator"
+                key="mapped-indicator"
+                style={{
+                  background: 'var(--color-balsamic)',
+                  height: '10px',
+                  width: '10px',
+                  position: 'absolute',
+                  borderRadius: '10px',
+                }}
+                transition={{ease: 'easeInOut', duration: 0.15}}
+              />
+            ) : null}
+          </div>
+        ))
+      : null;
   return (
     <div
       className="article-q-a-container"
@@ -140,6 +171,7 @@ function SanityQA({value, children}) {
           </motion.div>
         </AnimatePresence>
       </div>
+      <div className="mapped-indicators">{mappedIndicators}</div>
       <button
         onClick={handleNext}
         onMouseEnter={() => setDirection('right')}

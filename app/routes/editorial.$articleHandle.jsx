@@ -80,11 +80,11 @@ export default function Article() {
     <div className="article">
       <NavLink to="/editorial" className="back-to-articles">
         ← Back to articles
+        <div />
       </NavLink>
       <div>
         <p className="intro-heading">{title}</p>
         <div className="article-time-and-author">
-          <time dateTime={article.publishedAt}>{publishedDate}</time>
           <p>
             <span>Written By </span>
             {author.link ? (
@@ -93,6 +93,7 @@ export default function Article() {
               <span>{author?.name}</span>
             )}
           </p>
+          <time dateTime={article.publishedAt}>{publishedDate}</time>
         </div>
       </div>
 
