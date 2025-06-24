@@ -66,6 +66,7 @@ export default async function handleRequest(
       "'unsafe-inline'",
       'https://fonts.googleapis.com',
       'https://cdn.shopify.com',
+      'https://static.klaviyo.com',
     ],
     styleSrcElem: [
       "'self'",
