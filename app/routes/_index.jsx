@@ -91,9 +91,7 @@ function Hero({data}) {
   const ref = useRef(null);
   const isInView = useInView(ref, {
     margin: '-32px 0px 0px 0px',
-    initial: true,
   });
-
   useEffect(() => {
     const header = document.querySelector('.header-content');
     function reset() {
