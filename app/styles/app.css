@@ -305,7 +305,7 @@ button.reset:hover:not(:has(> *)) {
 .header-menu-item {
   cursor: pointer;
   transition: color 300ms ease-in-out;
-  padding-block: 0.25rem;
+  /* padding-block: 0.25rem; */
   position: relative;
   width: fit-content;
 }
