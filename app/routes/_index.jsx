@@ -77,6 +77,19 @@ export default function Homepage() {
   /** @type {LoaderReturnData} */
   const data = useLoaderData();
 
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const hasSeenPopup = sessionStorage.getItem('klaviyoPopupShown');
+      if (!hasSeenPopup) {
+        setTimeout(() => {
+          window._klOnsite = window._klOnsite || [];
+          window._klOnsite.push(['openForm', 'YeNiVu']);
+          sessionStorage.setItem('klaviyoPopupShown', 'true');
+        }, 5000); // Delay popup by 5 seconds
+      }
+    }
+  }, []);
+
   return (
     <div className="home">
       <Hero data={data.sanityData.hero} />

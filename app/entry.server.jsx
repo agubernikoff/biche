@@ -17,7 +17,7 @@ export default async function handleRequest(
   remixContext,
   context,
 ) {
-  const {nonce, header, NonceProvider} = createContentSecurityPolicy({
+  const policy = createContentSecurityPolicy({
     shop: {
       checkoutDomain: context.env.PUBLIC_CHECKOUT_DOMAIN,
       storeDomain: context.env.PUBLIC_STORE_DOMAIN,
@@ -33,15 +33,53 @@ export default async function handleRequest(
       'ws://*.tryhydrogen.dev:*',
       'https://klaviyo.com',
       'https://*.klaviyo.com',
-      'https://*.klaviyo.com/*',
     ],
     imgSrc: [
       "'self'",
       'https://cdn.shopify.com',
       'https://shopify.com',
       'https://cdn.sanity.io',
+      'https://d3k81ch9hvuctc.cloudfront.net',
+    ],
+    defaultSrc: ["'self'"],
+    scriptSrc: [
+      "'self'",
+      'https://static.klaviyo.com',
+      'https://static-tracking.klaviyo.com',
+      'https://klaviyo.com',
+      'https://*.klaviyo.com',
+    ],
+    scriptSrcElem: [
+      "'self'",
+      "'unsafe-inline'",
+      'https://static.klaviyo.com',
+      'https://static-tracking.klaviyo.com',
+      'https://klaviyo.com',
+      'https://*.klaviyo.com',
+    ],
+    styleSrc: [
+      "'self'",
+      "'unsafe-inline'",
+      'https://fonts.googleapis.com',
+      'https://cdn.shopify.com',
+    ],
+    styleSrcElem: [
+      "'self'",
+      "'unsafe-inline'",
+      'https://fonts.googleapis.com',
+      'https://cdn.shopify.com',
+      'https://static-tracking.klaviyo.com',
+      'https://static.klaviyo.com',
+    ],
+    fontSrc: [
+      "'self'",
+      'https://fonts.gstatic.com',
+      'https://cdn.shopify.com',
+      'https://shopify.com',
     ],
   });
+
+  const {nonce, NonceProvider, header} = policy;
 
   const body = await renderToReadableStream(
     <NonceProvider>

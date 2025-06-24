@@ -16,6 +16,7 @@ import appStyles from '~/styles/app.css?url';
 import {PageLayout} from './components/PageLayout';
 import {sanityClient} from './sanity/sanityClient';
 import {SETTINGS_QUERY} from './sanity/queries/comingSoonQuery';
+import {Script} from '@shopify/hydrogen';
 
 /**
  * This is important to avoid re-fetching root queries on sub-navigations
@@ -177,6 +178,11 @@ export function Layout({children}) {
             consent={data.consent}
           >
             <PageLayout {...data}>{children}</PageLayout>
+            <Script
+              async
+              type="text/javascript"
+              src="https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=Ws4Y78"
+            />
           </Analytics.Provider>
         ) : (
           children
