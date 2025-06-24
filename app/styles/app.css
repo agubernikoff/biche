@@ -1539,8 +1539,12 @@ th {
     flex-direction: column;
     margin-top: 2rem;
   }
+  .team-member {
+    margin-left: -1rem;
+  }
   .team-member:nth-child(even) {
     flex-direction: row-reverse;
+    margin-left: auto;
   }
   .blogs,
   .article {
