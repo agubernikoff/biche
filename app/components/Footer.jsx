@@ -2,6 +2,7 @@ import {useState} from 'react';
 import {NavLink} from '@remix-run/react';
 import Logo from '~/assets/03_Wordmark.jsx';
 import Newsletter from './Newsletter';
+import {AnimatePresence, motion} from 'motion/react';
 
 /**
  * @param {FooterProps}
@@ -47,30 +48,83 @@ function FooterMenu({menu, primaryDomainUrl, publicStoreDomain}) {
                   ? `/pages/${link.reference.slug}`
                   : null;
               return isExternal ? (
-                <a
-                  href={link.url}
-                  key={link._key}
-                  rel="noopener noreferrer"
-                  target="_blank"
-                >
-                  {link.text}
-                </a>
+                <FooterMenuItemExternal item={link} key={link._key} />
               ) : (
-                <NavLink
-                  end
+                // <NavLink
+                //   end
+                //
+                //   prefetch="intent"
+                //   style={activeLinkStyle}
+                //   to={internalPageLink}
+                // >
+                //   {link.reference.title}
+                // </NavLink>
+                <FooterMenuItem
                   key={link._key}
-                  prefetch="intent"
-                  style={activeLinkStyle}
-                  to={internalPageLink}
-                >
-                  {link.reference.title}
-                </NavLink>
+                  item={link}
+                  url={internalPageLink}
+                  close={() => {}}
+                />
               );
             })}
           </nav>
         );
       })}
     </div>
+  );
+}
+function FooterMenuItem({item, url, close}) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <NavLink
+      className="header-menu-item"
+      key={item._key}
+      onClick={close}
+      prefetch="intent"
+      style={activeLinkStyle}
+      to={url}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {item.reference?.title || item.title}
+      <AnimatePresence mode="wait">
+        {hovered && (
+          <motion.div
+            initial={{left: 0, right: '100%'}}
+            animate={{left: 0, right: 0}}
+            exit={{left: '100%', right: 0}}
+            className="header-hover-indicator"
+          />
+        )}
+      </AnimatePresence>
+    </NavLink>
+  );
+}
+function FooterMenuItemExternal({item}) {
+  const [hovered, setHovered] = useState(false);
+
+  return (
+    <a
+      href={item.url}
+      rel="noopener noreferrer"
+      target="_blank"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      className="header-menu-item"
+    >
+      {item.text}
+      <AnimatePresence mode="wait">
+        {hovered && (
+          <motion.div
+            initial={{left: 0, right: '100%'}}
+            animate={{left: 0, right: 0}}
+            exit={{left: '100%', right: 0}}
+            className="header-hover-indicator"
+          />
+        )}
+      </AnimatePresence>
+    </a>
   );
 }
 
