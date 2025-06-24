@@ -1265,6 +1265,25 @@ th {
   }
 }
 
+@media (max-width: 1000px) {
+  .footer {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    padding: 0rem 0.5rem 40px 0.5rem;
+  }
+  .link-columns-container {
+    flex-direction: column;
+  }
+
+  .footer > svg {
+    width: 180px;
+  }
+  .footer-menu {
+    grid-gap: 0.4rem;
+  }
+}
+
 @media (max-width: 499px) {
   a:hover {
     text-decoration: none;
@@ -1432,24 +1451,8 @@ th {
   .home > section:last-of-type {
     margin-bottom: 100px !important;
   }
-  .footer {
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
-    padding: 0rem 0.5rem 40px 0.5rem;
-  }
-  .link-columns-container {
-    flex-direction: column;
-  }
   .email-form > input::placeholder {
     color: #9d8383;
-  }
-
-  .footer > svg {
-    width: 180px;
-  }
-  .footer-menu {
-    grid-gap: 0.4rem;
   }
   body > main:has(.about) {
     margin-top: 0;
