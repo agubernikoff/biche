@@ -903,6 +903,8 @@ a.intro-text:hover {
 }
 .team-member-headshot-container > img {
   width: 100%;
+  aspect-ratio: 1 / 1.2;
+  object-fit: cover;
 }
 .team-member-text-container {
   flex: 1.5;
@@ -1564,6 +1566,9 @@ th {
     flex-direction: row-reverse;
     margin-left: auto;
     /* margin-right: -1rem; */
+  }
+  .team-member-headshot-container > img {
+    aspect-ratio: 1 / 1.5;
   }
   .blogs,
   .article {
