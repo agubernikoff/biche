@@ -380,7 +380,7 @@ button.reset:hover:not(:has(> *)) {
   display: flex;
   flex-direction: column;
   flex-wrap: wrap;
-  grid-gap: 0.5rem;
+  grid-gap: 0.125rem;
 }
 
 .footer-menu a {
