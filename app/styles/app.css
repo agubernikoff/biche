@@ -123,6 +123,10 @@ aside li {
   margin-bottom: 0.125rem;
 }
 
+strong {
+  font-family: 'neue-bold' !important;
+}
+
 .overlay {
   background: rgba(0, 0, 0, 0.2);
   bottom: 0;
