@@ -1260,7 +1260,7 @@ th {
 * cookie banner
 * --------------------------------------------------
 */
-#shopify-pc-banner {
+#shopify-pc__banner {
   background: var(--color-eggshell) !important;
 }
 #shopify-pc__banner__body-title,
@@ -1276,6 +1276,7 @@ th {
 .shopify-pc__banner__dialog button.shopify-pc__banner__btn-accept {
   background: var(--color-balsamic) !important;
   color: var(--color-eggshell) !important;
+  font-size: 13px;
 }
 .shopify-pc__banner__dialog button.shopify-pc__banner__btn-decline {
   border: 1px solid var(--color-balsamic) !important;
