@@ -389,6 +389,11 @@ button.reset:hover:not(:has(> *)) {
   font-size: 13px;
   text-wrap: nowrap;
 }
+@media (min-width: 1000px) {
+  .footer-menu a {
+    line-height: 140%;
+  }
+}
 
 /*
 * --------------------------------------------------
