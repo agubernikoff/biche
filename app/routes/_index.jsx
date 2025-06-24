@@ -1,5 +1,5 @@
 import {Await, useLoaderData, Link, useRouteLoaderData} from '@remix-run/react';
-import {Suspense, useState, useEffect} from 'react';
+import {Suspense, useState, useEffect, useRef} from 'react';
 import {Image} from '@shopify/hydrogen';
 import {ProductItem} from '~/components/ProductItem';
 import mobileIcon from '~/assets/mobile_icon.jpg';
@@ -8,7 +8,7 @@ import {HOME_QUERY} from '~/sanity/queries/comingSoonQuery';
 import PrimaryLogo from '~/assets/PrimaryLogo';
 import monogram from '~/assets/MONOGRAM.png';
 import {PortableText} from '@portabletext/react';
-// import {HOME_QUERY} from '../sanity/queries/comingSoonQuery';
+import {useInView} from 'motion/react';
 
 /**
  * @type {MetaFunction}
@@ -88,8 +88,35 @@ export default function Homepage() {
 }
 
 function Hero({data}) {
+  const ref = useRef(null);
+  const isInView = useInView(ref, {
+    margin: '-32px 0px 0px 0px',
+    initial: true,
+  });
+
+  useEffect(() => {
+    const header = document.querySelector('.header-content');
+    console.log(header.querySelector('p'));
+    if (isInView) {
+      header
+        .querySelectorAll('.header-menu-item')
+        .forEach((item) => (item.style.color = 'var(--color-eggshell)'));
+      header
+        .querySelectorAll('path')
+        .forEach((item) => (item.style.fill = 'var(--color-eggshell)'));
+      header.querySelector('p').style.color = 'var(--color-eggshell)';
+    } else {
+      header
+        .querySelectorAll('.header-menu-item')
+        .forEach((item) => (item.style.color = 'var(--color-balsamic)'));
+      header
+        .querySelectorAll('path')
+        .forEach((item) => (item.style.fill = 'var(--color-balsamic)'));
+      header.querySelector('p').style.color = 'var(--color-balsamic)';
+    }
+  }, [isInView]);
   return (
-    <section className="hero-section">
+    <section className="hero-section" ref={ref}>
       <div className="hero-image left-image">
         <img src={`${data.leftImage?.asset.url}/?w=900`} alt="Left visual" />
       </div>
