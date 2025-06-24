@@ -299,7 +299,7 @@ button.reset:hover:not(:has(> *)) {
 }
 .header-menu-item {
   cursor: pointer;
-  transition: color 150ms ease-in-out;
+  transition: color 300ms ease-in-out;
 }
 
 .header-logo {
@@ -310,13 +310,13 @@ button.reset:hover:not(:has(> *)) {
   height: fit-content;
 }
 .header-logo path {
-  transition: fill 150ms ease-in-out;
+  transition: fill 300ms ease-in-out;
 }
 
 .header-content > p {
   width: 40%;
   text-align: right;
-  transition: color 150ms ease-in-out;
+  transition: color 300ms ease-in-out;
 }
 
 .header-ctas {
