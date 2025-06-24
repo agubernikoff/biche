@@ -1297,6 +1297,7 @@ th {
 .shopify-pc__banner__dialog p,
 .shopify-pc__banner__dialog button.shopify-pc__banner__btn-manage-prefs,
 .shopify-pc__banner__dialog button.shopify-pc__banner__btn-decline,
+.shopify-pc__banner__dialog button.shopify-pc__banner__btn-accept,
 .shopify-pc__prefs__header-actions > button,
 .shopify-pc__prefs__scrollable * {
   color: var(--color-balsamic) !important;
@@ -1310,6 +1311,7 @@ th {
   font-size: 13px !important;
 }
 .shopify-pc__banner__dialog button.shopify-pc__banner__btn-decline,
+.shopify-pc__banner__dialog button.shopify-pc__banner__btn-accept,
 .shopify-pc__prefs__header-actions > button {
   border: 1px solid var(--color-balsamic) !important;
   background: transparent !important;
