@@ -577,6 +577,7 @@ button.reset:hover:not(:has(> *)) {
 .email-input::placeholder,
 .signup-button {
   color: var(--color-balsamic);
+  font-family: 'neue';
 }
 
 .launch-message {
