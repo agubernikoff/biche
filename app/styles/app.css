@@ -1563,6 +1563,7 @@ th {
   .team-member:nth-child(even) {
     flex-direction: row-reverse;
     margin-left: auto;
+    margin-right: -1rem;
   }
   .blogs,
   .article {
@@ -1752,6 +1753,9 @@ th {
   .about-our-team-section {
     padding-block: 0;
     margin-left: -0.5rem;
+  }
+  .about-our-team-section > div {
+    padding: 1rem 0 1rem 0;
   }
   .team-member-text-container > div > p:first-of-type {
     font-size: 15px;
