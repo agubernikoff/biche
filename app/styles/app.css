@@ -683,6 +683,9 @@ button.reset:hover:not(:has(> *)) {
 .home > section {
   margin-top: 8rem;
 }
+.home .hero-section {
+  width: 100vw;
+}
 .home > section:first-of-type {
   margin-top: 0;
 }
@@ -1255,6 +1258,11 @@ th {
   .header-logo {
     width: 15vw;
   }
+  button.header-logo {
+    background: transparent;
+    border: none;
+    padding: 0;
+  }
   .header-spacer {
     display: inline;
   }
@@ -1286,6 +1294,7 @@ th {
   }
   .hero-image.left-image {
     height: 60vh;
+    width: 100vw;
   }
   .hero-logo {
     top: 45%;

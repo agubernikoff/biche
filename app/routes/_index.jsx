@@ -4,7 +4,7 @@ import {Image} from '@shopify/hydrogen';
 import {ProductItem} from '~/components/ProductItem';
 import mobileIcon from '~/assets/mobile_icon.jpg';
 import {sanityClient} from '~/sanity/sanityClient';
-import {HOME_QUERY, COMING_SOON_QUERY} from '~/sanity/queries/comingSoonQuery';
+import {HOME_QUERY} from '~/sanity/queries/comingSoonQuery';
 import PrimaryLogo from '~/assets/PrimaryLogo';
 import monogram from '~/assets/MONOGRAM.png';
 import {PortableText} from '@portabletext/react';
@@ -87,35 +87,15 @@ export default function Homepage() {
   );
 }
 
-function Hero({data: initialData}) {
-  const [data, setData] = useState(initialData);
-  const [isMobile, setIsMobile] = useState(false);
-
-  useEffect(() => {
-    sanityClient.fetch(COMING_SOON_QUERY).then(setData).catch(console.error);
-  }, []);
-
-  useEffect(() => {
-    const mediaQuery = window.matchMedia('(max-width: 499px)');
-
-    const handleResize = () => {
-      setIsMobile(mediaQuery.matches);
-    };
-
-    handleResize();
-
-    mediaQuery.addEventListener('change', handleResize);
-
-    return () => mediaQuery.removeEventListener('change', handleResize);
-  }, []);
+function Hero({data}) {
   return (
     <section className="hero-section">
       <div className="hero-image left-image">
-        <img src={`${data.leftImage?.url}/?w=900`} alt="Left visual" />
+        <img src={`${data.leftImage?.asset.url}/?w=900`} alt="Left visual" />
       </div>
-      <HeroLogo url={`${data.logo?.url}/?w=900`} />
+      <HeroLogo url={`${data.logo?.asset.url}/?w=900`} />
       <div className="hero-image right-image">
-        <img src={data.rightImage?.url} alt="Right visual" />
+        <img src={data.rightImage?.asset.url} alt="Right visual" />
       </div>
     </section>
   );

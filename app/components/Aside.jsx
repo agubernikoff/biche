@@ -60,13 +60,13 @@ export function Aside({children, heading, type}) {
                 d="M3.48535 0.687988L8.67188 5.87451L13.8584 0.687988H16.4766L10.1338 7.02979L9.98047 7.18408L10.1338 7.3374L16.4766 13.6792H13.8584L8.67188 8.49268L3.48535 13.6792H0.867188L7.3623 7.18408L7.20898 7.02979L0.867188 0.687988H3.48535Z"
                 fill="#3C0707"
                 stroke="white"
-                stroke-width="0.434215"
+                strokeWidth="0.434215"
               />
             </svg>
           </button>
-          <div className="header-logo">
+          <button className="header-logo" onClick={close}>
             <Wordmark color="var(--color-balsamic)" />
-          </div>
+          </button>
           <div className="header-spacer" />
         </header>
         <main>{children}</main>
