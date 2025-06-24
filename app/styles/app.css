@@ -72,6 +72,9 @@ aside {
   top: 0;
   transition: all 200ms ease-in-out;
 }
+aside#mobile {
+  right: 0;
+}
 
 aside header {
   align-items: center;
@@ -164,6 +167,9 @@ aside li {
 /* reveal aside */
 .overlay.expanded aside {
   transform: translateX(calc(var(--aside-width) * -1));
+}
+.overlay.expanded aside#mobile {
+  transform: none;
 }
 
 button.reset {
