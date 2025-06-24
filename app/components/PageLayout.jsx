@@ -168,6 +168,7 @@ function SearchAside() {
  * }}
  */
 function MobileMenuAside({header, publicStoreDomain, settings}) {
+  console.log(settings);
   const {close} = useAside();
   return (
     header.menu &&
@@ -211,7 +212,7 @@ function MobileMenuAside({header, publicStoreDomain, settings}) {
           <div className="mobile-preview">
             <img src={mobileBanner} alt="Drop preview 1" />
           </div>
-          <p>Drop 01: Cloud Cleanser and Après Oil coming soon!</p>
+          <p>{settings.menu.callout}</p>
         </div>
       </Aside>
     )
