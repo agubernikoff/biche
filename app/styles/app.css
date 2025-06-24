@@ -1245,6 +1245,9 @@ th {
 }
 
 @media (max-width: 499px) {
+  a:hover {
+    text-decoration: none;
+  }
   .header-menu-mobile-toggle {
     display: block;
   }

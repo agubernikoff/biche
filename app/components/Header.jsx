@@ -233,7 +233,7 @@ const FALLBACK_HEADER_MENU = {
  */
 function activeLinkStyle({isActive, isPending}) {
   return {
-    textDecoration: isActive ? 'underline' : 'none',
+    // textDecoration: isActive ? 'underline' : 'none',
     // color: isPending ? 'grey' : '#C3F8F8',
   };
 }
