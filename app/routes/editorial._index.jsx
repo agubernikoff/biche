@@ -67,7 +67,7 @@ export default function Blogs() {
             </div>
           </Link>
         ))}
-        {blogs.map((blog) => (
+        {/* {blogs.map((blog) => (
           <Link
             className="blog-link"
             key={blog.slug}
@@ -108,7 +108,7 @@ export default function Blogs() {
               <p>Read more</p>
             </div>
           </Link>
-        ))}
+        ))} */}
       </div>
     </div>
   );
