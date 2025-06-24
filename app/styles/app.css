@@ -1273,14 +1273,14 @@ th {
 .shopify-pc__prefs__header-actions > button,
 .shopify-pc__prefs__scrollable * {
   color: var(--color-balsamic) !important;
-  font-size: 12px;
+  font-size: 12px !important;
 }
 .shopify-pc__prefs__scrollable h3,
 .shopify-pc__prefs__scrollable
   label
   .shopify-pc__banner__dialog
   button.shopify-pc__banner__btn-accept {
-  font-size: 13px;
+  font-size: 13px !important;
 }
 .shopify-pc__banner__dialog button.shopify-pc__banner__btn-decline,
 .shopify-pc__prefs__header-actions > button {
