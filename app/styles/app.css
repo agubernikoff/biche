@@ -59,6 +59,7 @@ input {
 body {
   color: var(--color-balsamic);
   position: relative;
+  font-family: 'neue';
 }
 
 aside {
@@ -805,11 +806,23 @@ a.intro-text:hover {
 .about .quote-text {
   width: 75%;
 }
+.image-and-copy {
+  width: 100vw;
+  margin-left: -1rem;
+  padding: 1rem;
+}
 .image-and-copy,
 .about-our-team-section {
   padding-block: 8rem;
   background: var(--color-eggshell);
   display: flex;
+}
+.about-our-team-section {
+  width: 100vw;
+  margin-left: -1rem;
+}
+.about-our-team-section > div {
+  padding: 1rem;
 }
 .image-and-copy > div,
 .about-our-standards > div {
@@ -1217,6 +1230,10 @@ th {
   .our-standards-about-square-images-container {
     gap: 2px;
   }
+  .team-member:nth-child(3),
+  .team-member:nth-child(4) {
+    flex-direction: row-reverse;
+  }
 }
 
 @media (max-width: 499px) {
@@ -1406,7 +1423,7 @@ th {
     margin-top: 0;
   }
   .home.about {
-    margin-top: 100px !important;
+    margin-top: 190px !important;
   }
   .about {
     margin-top: 4rem;
@@ -1448,6 +1465,15 @@ th {
   .image-and-copy {
     flex-direction: column;
     gap: 2rem;
+    width: 100vw !important;
+    margin-left: -0.5rem;
+    padding-block: 0;
+    padding: 40px 0rem 40px 0rem;
+  }
+
+  .image-and-copy > .bottom-section-text-container {
+    width: 80% !important;
+    margin: auto;
   }
 
   .bottom-section-text-container,
@@ -1686,6 +1712,7 @@ th {
   }
   .about-our-team-section {
     padding-block: 0;
+    margin-left: -0.5rem;
   }
   .team-member-text-container > div > p:first-of-type {
     font-size: 15px;
