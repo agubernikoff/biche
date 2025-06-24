@@ -1445,7 +1445,7 @@ th {
     margin-top: 0;
   }
   .home.about {
-    margin-top: 190px !important;
+    /* margin-top: 190px !important; */
   }
   .about {
     margin-top: 4rem;
