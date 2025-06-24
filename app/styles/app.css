@@ -110,6 +110,18 @@ aside header h2 {
 aside main {
   margin: 1rem;
 }
+aside#mobile main {
+  overflow: scroll;
+  height: calc(100svh - var(--header-height));
+  padding-bottom: 10vh;
+  box-sizing: border-box;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overscroll-behavior: none;
+}
+aside#mobile main::-webkit-scrollbar {
+  display: none;
+}
 
 aside p {
   margin: 0 0 0.25rem;
