@@ -980,6 +980,10 @@ a.intro-text:hover {
 .page-portable-text > * {
   margin-bottom: 1rem;
 }
+.page-portable-text > p > strong,
+.article-q-a-container > div > div > p:first-of-type {
+  font-family: 'neue-bold';
+}
 table {
   font-size: 13px;
   text-align: center;
