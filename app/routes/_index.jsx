@@ -96,7 +96,6 @@ function Hero({data}) {
 
   useEffect(() => {
     const header = document.querySelector('.header-content');
-    console.log(header.querySelector('p'));
     if (isInView) {
       header
         .querySelectorAll('.header-menu-item')
