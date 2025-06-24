@@ -634,6 +634,7 @@ button.reset:hover:not(:has(> *)) {
   padding: 0.5rem;
   background: transparent;
   font-size: 13px;
+  font-family: 'neue';
 }
 
 .signup-button {
@@ -1199,7 +1200,12 @@ th {
   top: 8rem;
   left: 1rem;
   transform: translateY(50%);
-  padding: 0.25rem;
+  padding: 1rem 0.5rem;
+  padding-top: 0;
+  font-size: 13px;
+}
+.back-to-articles:hover {
+  text-decoration: none;
 }
 .back-to-articles > div {
   position: absolute;
