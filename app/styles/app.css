@@ -1253,6 +1253,16 @@ th {
   .our-standards-about-primary-image-container > img {
     width: 50%;
   }
+  .team-member-text-container > div > p:first-of-type {
+    font-size: 19px;
+    font-family: 'heldane';
+  }
+  .team-member-text-container > div > p:nth-of-type(2) {
+    font-size: 19px;
+    font-family: 'heldane';
+    opacity: 0.5;
+    margin-bottom: 1rem;
+  }
 }
 
 @media (max-width: 499px) {
@@ -1751,5 +1761,13 @@ th {
   }
   .team-member-text-container > p {
     font-size: 8px;
+  }
+  .footer-newlsetter > p {
+    font-size: 12px;
+    font-family: 'neue';
+  }
+  .footer-newlsetter > form > input,
+  .footer-newlsetter > form > button {
+    font-family: 'neue';
   }
 }
