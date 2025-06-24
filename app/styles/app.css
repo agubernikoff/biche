@@ -1318,6 +1318,10 @@ th {
   background: transparent !important;
   border-radius: 0;
 }
+#shopify-pc__banner__btn-accept {
+  background: var(--color-balsamic) !important;
+  color: var(--color-eggshell) !important;
+}
 .shopify-pc__prefs__header-close svg path,
 .shopify-pc__prefs__option > label > span > svg > path {
   fill: var(--color-balsamic) !important;
