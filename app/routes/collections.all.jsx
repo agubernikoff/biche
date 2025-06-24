@@ -7,7 +7,7 @@ import {ProductItem} from '~/components/ProductItem';
  * @type {MetaFunction<typeof loader>}
  */
 export const meta = () => {
-  return [{title: `Hydrogen | Products`}];
+  return [{title: `Biche Products`}];
 };
 
 /**

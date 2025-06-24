@@ -5,7 +5,7 @@ import {sanityClient} from '~/sanity/sanityClient';
  * @type {MetaFunction}
  */
 export const meta = () => {
-  return [{title: `Hydrogen | Blogs`}];
+  return [{title: `Biche Blogs`}];
 };
 
 /**

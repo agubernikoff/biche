@@ -15,7 +15,7 @@ import SanityTable from '~/sanity/SanityTable.jsx';
  * @type {MetaFunction<typeof loader>}
  */
 export const meta = ({data}) => {
-  return [{title: `Hydrogen | ${data?.sanityPage.title ?? ''}`}];
+  return [{title: `Biche ${data?.sanityPage.title ?? ''}`}];
 };
 
 /**
