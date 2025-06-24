@@ -1265,6 +1265,9 @@ th {
     opacity: 0.5;
     margin-bottom: 1rem;
   }
+  .hero-logo {
+    width: 15%;
+  }
 }
 
 @media (max-width: 1000px) {
