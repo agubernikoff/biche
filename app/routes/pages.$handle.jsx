@@ -106,7 +106,7 @@ export default function Page() {
       </div>
       <div>
         <header>
-          <h1 className="intro-heading">{sanityPage.title}</h1>
+          <p className="intro-heading">{sanityPage.title}</p>
           <p
             className="page-subheader"
             style={{
