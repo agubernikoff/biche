@@ -1876,7 +1876,8 @@ th {
     display: none;
   }
   .page {
-    display: initial;
+    /* display: initial; */
+    padding: 60px 0;
   }
   .page > div {
     width: 100% !important;
