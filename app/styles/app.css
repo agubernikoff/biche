@@ -1438,6 +1438,7 @@ th {
   }
   .header-menu-mobile-toggle {
     display: block;
+    transition: color 300ms ease-in-out;
   }
   .header-content {
     padding-inline: 0.5rem;
