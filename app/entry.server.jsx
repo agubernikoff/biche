@@ -48,6 +48,7 @@ export default async function handleRequest(
       'https://static-tracking.klaviyo.com',
       'https://klaviyo.com',
       'https://*.klaviyo.com',
+      'https://www.googletagmanager.com',
     ],
     scriptSrcElem: [
       "'self'",
@@ -60,6 +61,7 @@ export default async function handleRequest(
       'https://cdn.shopifycdn.net',
       'https://shopify.dev',
       'https://shopify.com',
+      'https://www.googletagmanager.com',
     ],
     styleSrc: [
       "'self'",
