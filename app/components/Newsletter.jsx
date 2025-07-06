@@ -54,6 +54,14 @@ export default function Newsletter({data}) {
     ).then((result) => {
       if (result.ok) {
         setSuccess('Thank you for subscribing!');
+        if (
+          typeof window !== 'undefined' &&
+          typeof window.gtag === 'function'
+        ) {
+          window.gtag('event', 'conversion', {
+            send_to: 'AW-17280171207/09vPCNZ6t-gaEME56a9A',
+          });
+        }
       } else {
         result.json().then((data) => {
           setError(data.errors[0].detail);
