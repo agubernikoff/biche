@@ -85,6 +85,7 @@ export default async function handleRequest(
       'https://shopify.dev',
       'https://shopify.com',
       'https://www.googletagmanager.com',
+      'https://googleads.g.doubleclick.net',
     ],
     styleSrc: [
       "'self'",
