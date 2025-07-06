@@ -60,6 +60,11 @@ export default async function handleRequest(
       'https://www.googleadservices.com',
       'https://tpc.googlesyndication.com',
       'https://*.googlesyndication.com',
+      'https://www.googletagmanager.com',
+      'https://googleads.g.doubleclick.net',
+      'https://www.googleadservices.com',
+      'https://tpc.googlesyndication.com',
+      'https://*.googlesyndication.com',
     ],
     defaultSrc: ["'self'"],
     scriptSrc: [
