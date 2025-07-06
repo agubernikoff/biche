@@ -33,6 +33,9 @@ export default async function handleRequest(
       'ws://*.tryhydrogen.dev:*',
       'https://klaviyo.com',
       'https://*.klaviyo.com',
+      'https://www.google-analytics.com',
+      'https://googleads.g.doubleclick.net',
+      'https://www.google.com',
     ],
     imgSrc: [
       "'self'",
@@ -40,6 +43,16 @@ export default async function handleRequest(
       'https://shopify.com',
       'https://cdn.sanity.io',
       'https://d3k81ch9hvuctc.cloudfront.net',
+      'https://www.google.com',
+      'https://www.googleadservices.com',
+      'https://www.googleads.g.doubleclick.net',
+    ],
+    frameSrc: [
+      "'self'",
+      'https://td.doubleclick.net',
+      'https://*.doubleclick.net',
+      'https://*.google.com',
+      'https://*.googleadservices.com',
     ],
     defaultSrc: ["'self'"],
     scriptSrc: [
@@ -49,6 +62,7 @@ export default async function handleRequest(
       'https://klaviyo.com',
       'https://*.klaviyo.com',
       'https://www.googletagmanager.com',
+      'https://www.googleads.g.doubleclick.net',
     ],
     scriptSrcElem: [
       "'self'",
