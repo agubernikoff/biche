@@ -36,6 +36,8 @@ export default async function handleRequest(
       'https://www.google-analytics.com',
       'https://googleads.g.doubleclick.net',
       'https://www.google.com',
+      'https://www.googleadservices.com',
+      'https://tpc.googlesyndication.com',
     ],
     imgSrc: [
       "'self'",
@@ -46,6 +48,7 @@ export default async function handleRequest(
       'https://www.google.com',
       'https://www.googleadservices.com',
       'https://www.googleads.g.doubleclick.net',
+      'https://tpc.googlesyndication.com',
     ],
     frameSrc: [
       "'self'",
@@ -53,6 +56,10 @@ export default async function handleRequest(
       'https://*.doubleclick.net',
       'https://*.google.com',
       'https://*.googleadservices.com',
+      'https://googleads.g.doubleclick.net',
+      'https://www.googleadservices.com',
+      'https://tpc.googlesyndication.com',
+      'https://*.googlesyndication.com',
     ],
     defaultSrc: ["'self'"],
     scriptSrc: [
@@ -63,6 +70,8 @@ export default async function handleRequest(
       'https://*.klaviyo.com',
       'https://www.googletagmanager.com',
       'https://www.googleads.g.doubleclick.net',
+      'https://googleads.g.doubleclick.net',
+      'https://www.googleadservices.com',
     ],
     scriptSrcElem: [
       "'self'",
