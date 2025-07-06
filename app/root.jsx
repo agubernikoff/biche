@@ -125,9 +125,17 @@ export function Layout({children}) {
         <Meta />
         <Links />
         <script
-          async
-          src="https://www.googletagmanager.com/gtag/js?id=AW-17280171207"
-        ></script>
+          dangerouslySetInnerHTML={{
+            __html: `
+              (function(){
+                var gtagScript = document.createElement('script');
+                gtagScript.async = true;
+                gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17280171207';
+                document.head.appendChild(gtagScript);
+              })();
+            `,
+          }}
+        />
         <script
           dangerouslySetInnerHTML={{
             __html: `
