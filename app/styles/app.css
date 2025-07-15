@@ -1152,6 +1152,7 @@ th {
   width: 100%;
   object-fit: cover;
   transition: opacity 150ms ease-in-out;
+  aspect-ratio: 4/3;
 }
 .blog-preview-content {
   position: absolute;
@@ -1231,6 +1232,9 @@ th {
 }
 .article-body > * {
   margin-bottom: 1rem;
+}
+.article-body a {
+  text-decoration: underline;
 }
 .article-images-container {
   margin-block: 4rem;

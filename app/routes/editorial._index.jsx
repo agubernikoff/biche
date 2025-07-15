@@ -114,7 +114,7 @@ export default function Blogs() {
   );
 }
 
-const BLOGS_QUERY = `*[_type == "editorial"][]{
+const BLOGS_QUERY = `*[_type == "editorial"] | order(_createdAt desc)[]{
   hero{...,asset->{url}},
   "slug": slug.current,
   title,
