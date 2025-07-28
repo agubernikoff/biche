@@ -88,7 +88,7 @@ export default function Article() {
           <p>
             <span>Written By </span>
             {author.link ? (
-              <a href={author.link.url}>{author?.name}</a>
+              <a href={author.link}>{author?.name}</a>
             ) : (
               <span>{author?.name}</span>
             )}
