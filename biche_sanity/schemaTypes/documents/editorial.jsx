@@ -42,7 +42,13 @@ export const editorialType = defineField({
       group: 'editorial',
       fields: [
         {name: 'name', type: 'string', initialValue: 'The Biche Team'},
-        {name: 'link', type: 'linkExternal'},
+        {
+          name: 'link',
+          type: 'url',
+          validation: (Rule) => Rule.uri({scheme: ['http', 'https']}),
+          description:
+            "Use to link to Author's external page (ie Instagram). If present their name will be a clickable link that will open a new window with this url.",
+        },
       ],
     }),
     defineField({
