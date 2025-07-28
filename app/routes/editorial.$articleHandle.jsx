@@ -12,7 +12,7 @@ import SanityQA from '~/sanity/SanityQA';
  * @type {MetaFunction<typeof loader>}
  */
 export const meta = ({data}) => {
-  return [{title: `Biche ${data?.article.title ?? ''} article`}];
+  return [{title: `${data?.article.title ?? 'Editorial'}`}];
 };
 
 /**
