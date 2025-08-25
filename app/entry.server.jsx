@@ -39,6 +39,8 @@ export default async function handleRequest(
       'https://www.google.com',
       'https://www.googleadservices.com',
       'https://tpc.googlesyndication.com',
+      'https://*.googletagmanager.com',
+      'https://*.google-analytics.com',
     ],
     imgSrc: [
       "'self'",
@@ -52,6 +54,8 @@ export default async function handleRequest(
       'https://tpc.googlesyndication.com',
       'https://www.google-analytics.com',
       'https://www.googletagmanager.com',
+      'https://*.googletagmanager.com',
+      'https://*.google-analytics.com',
     ],
     frameSrc: [
       "'self'",
@@ -80,6 +84,8 @@ export default async function handleRequest(
       'https://www.googleads.g.doubleclick.net',
       'https://googleads.g.doubleclick.net',
       'https://www.googleadservices.com',
+      'https://*.googletagmanager.com',
+      'https://*.google-analytics.com',
     ],
     scriptSrcElem: [
       "'self'",
@@ -94,6 +100,8 @@ export default async function handleRequest(
       'https://shopify.com',
       'https://www.googletagmanager.com',
       'https://googleads.g.doubleclick.net',
+      'https://*.googletagmanager.com',
+      'https://*.google-analytics.com',
     ],
     styleSrc: [
       "'self'",
