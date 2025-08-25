@@ -34,6 +34,7 @@ export default async function handleRequest(
       'https://klaviyo.com',
       'https://*.klaviyo.com',
       'https://www.google-analytics.com',
+      'https://www.googletagmanager.com',
       'https://googleads.g.doubleclick.net',
       'https://www.google.com',
       'https://www.googleadservices.com',
@@ -49,6 +50,8 @@ export default async function handleRequest(
       'https://www.googleadservices.com',
       'https://www.googleads.g.doubleclick.net',
       'https://tpc.googlesyndication.com',
+      'https://www.google-analytics.com',
+      'https://www.googletagmanager.com',
     ],
     frameSrc: [
       "'self'",
