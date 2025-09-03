@@ -12,7 +12,31 @@ import SanityQA from '~/sanity/SanityQA';
  * @type {MetaFunction<typeof loader>}
  */
 export const meta = ({data}) => {
-  return [{title: `${data?.article.title ?? 'Editorial'}`}];
+  console.log(data);
+  return [
+    {title: `${data?.seo?.title ?? data?.article.title ?? 'Editorial'}`},
+    {
+      name: 'description',
+      content: data?.seo?.description,
+    },
+    // Open Graph (Facebook, LinkedIn, etc.)
+    {
+      property: 'og:title',
+      content: `${data?.seo?.title ?? data?.article.title ?? 'Editorial'}`,
+    },
+    {property: 'og:description', content: data?.seo?.description},
+    {property: 'og:image', content: data?.seo?.image?.asset},
+    {property: 'og:type', content: 'website'},
+
+    // Twitter Card
+    {name: 'twitter:card', content: 'summary_large_image'},
+    {
+      name: 'twitter:title',
+      content: `${data?.seo?.title ?? data?.article.title ?? 'Editorial'}`,
+    },
+    {name: 'twitter:description', content: data?.seo?.description},
+    {name: 'twitter:image', content: data?.seo?.image?.asset},
+  ];
 };
 
 /**
@@ -83,7 +107,7 @@ export default function Article() {
         <div />
       </NavLink>
       <div>
-        <p className="intro-heading">{title}</p>
+        <h1 className="intro-heading">{title}</h1>
         <div className="article-time-and-author">
           <p>
             <span>Written By </span>
@@ -128,6 +152,7 @@ const ARTICLE_QUERY = `*[_type == "editorial" && slug.current == $slug][]{
   hero{...,asset->{url}},
   "slug": slug.current,
   body[]{...,_type == "images" => {...,imageFeatures[]{...,image{asset->{url}}}}},
+  seo{...,image{...,asset->{...,url}}}
 }`;
 
 /** @typedef {import('@shopify/remix-oxygen').LoaderFunctionArgs} LoaderFunctionArgs */

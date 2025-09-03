@@ -67,6 +67,7 @@ export const editorialType = defineField({
       title: 'SEO',
       type: 'seo',
       group: 'seo',
+      description: 'Use for social sharing previews',
     }),
   ],
   preview: {
