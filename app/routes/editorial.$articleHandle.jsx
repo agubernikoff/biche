@@ -19,25 +19,25 @@ export const meta = ({data}) => {
     },
     {
       name: 'description',
-      content: data?.seo?.description,
+      content: data?.article?.seo?.description,
     },
     // Open Graph (Facebook, LinkedIn, etc.)
     {
       property: 'og:title',
-      content: `${data?.seo?.title ?? data?.article.title ?? 'Editorial'}`,
+      content: `${data?.article?.seo?.title ?? data?.article.title ?? 'Editorial'}`,
     },
-    {property: 'og:description', content: data?.seo?.description},
-    {property: 'og:image', content: data?.seo?.image?.asset},
+    {property: 'og:description', content: data?.article?.seo?.description},
+    {property: 'og:image', content: data?.article?.seo?.image?.asset},
     {property: 'og:type', content: 'website'},
 
     // Twitter Card
     {name: 'twitter:card', content: 'summary_large_image'},
     {
       name: 'twitter:title',
-      content: `${data?.seo?.title ?? data?.article.title ?? 'Editorial'}`,
+      content: `${data?.article?.seo?.title ?? data?.article.title ?? 'Editorial'}`,
     },
-    {name: 'twitter:description', content: data?.seo?.description},
-    {name: 'twitter:image', content: data?.seo?.image?.asset},
+    {name: 'twitter:description', content: data?.article?.seo?.description},
+    {name: 'twitter:image', content: data?.article?.seo?.image?.asset},
   ];
 };
 
