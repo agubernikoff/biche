@@ -23,6 +23,19 @@ export const meta = () => {
       content:
         'Biche is a clean, vegan, and cruelty-free pet grooming brand. Dog-safe, human-loved, and veterinarian-approved.',
     },
+
+    {
+      property: 'og:description',
+      content:
+        'Biche is a clean, vegan, and cruelty-free pet grooming brand. Dog-safe, human-loved, and veterinarian-approved.',
+    },
+
+    {name: 'twitter:title', content: 'Biche | Luxury Pet Grooming'},
+    {
+      name: 'twitter:description',
+      content:
+        'Biche is a clean, vegan, and cruelty-free pet grooming brand. Dog-safe, human-loved, and veterinarian-approved.',
+    },
   ];
 };
 
