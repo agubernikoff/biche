@@ -12,9 +12,11 @@ import SanityQA from '~/sanity/SanityQA';
  * @type {MetaFunction<typeof loader>}
  */
 export const meta = ({data}) => {
-  console.log(data);
+  console.log(data?.article?.seo?.title);
   return [
-    {title: `${data?.seo?.title ?? data?.article.title ?? 'Editorial'}`},
+    {
+      title: `${data?.article?.seo?.title ?? data?.article.title ?? 'Editorial'}`,
+    },
     {
       name: 'description',
       content: data?.seo?.description,
