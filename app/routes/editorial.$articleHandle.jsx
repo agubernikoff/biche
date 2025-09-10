@@ -27,7 +27,7 @@ export const meta = ({data}) => {
       content: `${data?.article?.seo?.title ?? data?.article.title ?? 'Editorial'}`,
     },
     {property: 'og:description', content: data?.article?.seo?.description},
-    {property: 'og:image', content: data?.article?.seo?.image?.asset},
+    {property: 'og:image', content: data?.article?.seo?.image?.asset.url},
     {property: 'og:type', content: 'website'},
 
     // Twitter Card
@@ -37,7 +37,7 @@ export const meta = ({data}) => {
       content: `${data?.article?.seo?.title ?? data?.article.title ?? 'Editorial'}`,
     },
     {name: 'twitter:description', content: data?.article?.seo?.description},
-    {name: 'twitter:image', content: data?.article?.seo?.image?.asset},
+    {name: 'twitter:image', content: data?.article?.seo?.image?.asset.url},
   ];
 };
 
