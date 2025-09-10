@@ -12,32 +12,61 @@ import SanityQA from '~/sanity/SanityQA';
  * @type {MetaFunction<typeof loader>}
  */
 export const meta = ({data}) => {
-  console.log(data?.article?.seo?.title);
+  if (!data?.article) {
+    return [{title: 'Editorial | Not Found'}];
+  }
+
+  const {article} = data;
+  const seoTitle = article.seo?.title ?? article.title ?? 'Editorial';
+  const seoDescription = article.seo?.description ?? '';
+  const seoImage =
+    article.seo?.image?.asset?.url ?? article.hero?.asset?.url ?? '';
+  const canonicalUrl = `https://yourdomain.com/editorial/${article.slug}`;
+
   return [
-    {
-      title: `${data?.article?.seo?.title ?? data?.article.title ?? 'Editorial'}`,
-    },
-    {
-      name: 'description',
-      content: data?.article?.seo?.description,
-    },
-    // Open Graph (Facebook, LinkedIn, etc.)
-    {
-      property: 'og:title',
-      content: `${data?.article?.seo?.title ?? data?.article.title ?? 'Editorial'}`,
-    },
-    {property: 'og:description', content: data?.article?.seo?.description},
-    {property: 'og:image', content: data?.article?.seo?.image?.asset.url},
-    {property: 'og:type', content: 'website'},
+    // Standard
+    {title: seoTitle},
+    {name: 'description', content: seoDescription},
+
+    // Canonical
+    {tagName: 'link', rel: 'canonical', href: canonicalUrl},
+
+    // Open Graph
+    {property: 'og:title', content: seoTitle},
+    {property: 'og:description', content: seoDescription},
+    {property: 'og:image', content: seoImage},
+    {property: 'og:type', content: 'article'},
+    {property: 'og:url', content: canonicalUrl},
 
     // Twitter Card
     {name: 'twitter:card', content: 'summary_large_image'},
+    {name: 'twitter:title', content: seoTitle},
+    {name: 'twitter:description', content: seoDescription},
+    {name: 'twitter:image', content: seoImage},
+
+    // JSON-LD Structured Data (output inline script tag)
     {
-      name: 'twitter:title',
-      content: `${data?.article?.seo?.title ?? data?.article.title ?? 'Editorial'}`,
+      tagName: 'script',
+      type: 'application/ld+json',
+      children: JSON.stringify({
+        '@context': 'https://schema.org',
+        '@type': 'Article',
+        headline: seoTitle,
+        description: seoDescription,
+        image: [seoImage],
+        author: {
+          '@type': 'Person',
+          name: article.author?.name,
+          url: article.author?.link,
+        },
+        datePublished: article.publishedAt,
+        dateModified: article._updatedAt ?? article.publishedAt,
+        mainEntityOfPage: {
+          '@type': 'WebPage',
+          '@id': canonicalUrl,
+        },
+      }),
     },
-    {name: 'twitter:description', content: data?.article?.seo?.description},
-    {name: 'twitter:image', content: data?.article?.seo?.image?.asset.url},
   ];
 };
 
