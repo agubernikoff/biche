@@ -21,7 +21,7 @@ export const meta = ({data}) => {
   const seoDescription = article.seo?.description ?? '';
   const seoImage =
     article.seo?.image?.asset?.url ?? article.hero?.asset?.url ?? '';
-  const canonicalUrl = `https://yourdomain.com/editorial/${article.slug}`;
+  const canonicalUrl = `https://biche.world/editorial/${article.slug}`;
 
   return [
     // Standard
