@@ -15,9 +15,14 @@ import {useInView} from 'motion/react';
  */
 export const meta = () => {
   return [
-    {title: 'Biche'},
-    {name: 'og:title', property: 'Biche'},
+    {title: 'Biche | Luxury Pet Grooming'},
+    {name: 'og:title', property: 'Biche | Luxury Pet Grooming'},
     {property: 'og:image', content: mobileIcon},
+    {
+      name: 'description',
+      content:
+        'Biche is a clean, vegan, and cruelty-free pet grooming brand. Dog-safe, human-loved, and veterinarian-approved.',
+    },
   ];
 };
 
