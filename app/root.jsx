@@ -133,7 +133,7 @@ export function Layout({children}) {
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <meta
           name="og:description"
-          content="Biche is a luxury pet grooming brand. Clean, vet-approved, and thoughtfully designed beauty essentials for your dog."
+          content="Biche is a clean, vegan, and cruelty-free pet grooming brand. Dog-safe, human-loved, and veterinarian-approved."
         />
         <link rel="stylesheet" href={resetStyles}></link>
         <link rel="stylesheet" href={appStyles}></link>
