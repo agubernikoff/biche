@@ -16,7 +16,7 @@ import {useInView} from 'motion/react';
 export const meta = () => {
   return [
     {title: 'Biche | Luxury Pet Grooming'},
-    {name: 'og:title', property: 'Biche | Luxury Pet Grooming'},
+    {property: 'og:title', content: 'Biche | Luxury Pet Grooming'},
     {property: 'og:image', content: mobileIcon},
     {
       name: 'description',
