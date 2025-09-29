@@ -217,6 +217,15 @@ const PRODUCT_FRAGMENT = `#graphql
     adjacentVariants (selectedOptions: $selectedOptions) {
       ...ProductVariant
     }
+    images(first: 2) {
+      nodes {
+        id
+        altText
+        url
+        width
+        height
+      }
+    }
     seo {
       description
       title

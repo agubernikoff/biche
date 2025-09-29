@@ -59,7 +59,6 @@ export default function Collection() {
 
   return (
     <div className="collection">
-      <h1>Products</h1>
       <PaginatedResourceSection
         connection={products}
         resourcesClassName="products-grid"
@@ -85,12 +84,25 @@ const COLLECTION_ITEM_FRAGMENT = `#graphql
     id
     handle
     title
+    tags
+    plpDescription: metafield(namespace: "custom", key: "plp_description") {
+      value
+    }
     featuredImage {
       id
       altText
       url
       width
       height
+    }
+    images(first: 2) {
+      nodes {
+        id
+        altText
+        url
+        width
+        height
+      }
     }
     priceRange {
       minVariantPrice {

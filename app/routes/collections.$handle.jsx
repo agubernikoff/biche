@@ -113,12 +113,25 @@ const PRODUCT_ITEM_FRAGMENT = `#graphql
     id
     handle
     title
+    tags
+    plpDescription: metafield(namespace: "custom", key: "plp_description") {
+      value
+    }
     featuredImage {
       id
       altText
       url
       width
       height
+    }
+    images(first: 2) {
+      nodes {
+        id
+        altText
+        url
+        width
+        height
+      }
     }
     priceRange {
       minVariantPrice {

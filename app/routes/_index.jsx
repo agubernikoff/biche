@@ -408,6 +408,10 @@ const RECOMMENDED_PRODUCTS_QUERY = `#graphql
     id
     title
     handle
+    tags
+    plpDescription: metafield(namespace: "custom", key: "plp_description") {
+      value
+    }
     priceRange {
       minVariantPrice {
         amount
@@ -420,6 +424,15 @@ const RECOMMENDED_PRODUCTS_QUERY = `#graphql
       altText
       width
       height
+    }
+    images(first: 2) {
+      nodes {
+        id
+        altText
+        url
+        width
+        height
+      }
     }
   }
   query RecommendedProducts ($country: CountryCode, $language: LanguageCode)
