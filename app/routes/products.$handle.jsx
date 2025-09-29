@@ -7,6 +7,7 @@ import {
   getAdjacentAndFirstAvailableVariants,
   useSelectedOptionInUrlParam,
 } from '@shopify/hydrogen';
+import {useState} from 'react';
 import {ProductPrice} from '~/components/ProductPrice';
 import {ProductImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
@@ -83,9 +84,114 @@ function loadDeferredData({context, params}) {
   return {};
 }
 
+function ProductDropdown({title, content}) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  // Special handling for SHIPPING - bold certain words
+  const isShipping = title === 'SHIPPING';
+
+  if (isShipping) {
+    // Replace "preorder" and dates with bold versions
+    const formattedContent = content
+      .replace(/preorder/gi, '<strong>preorder</strong>')
+      .replace(/June 1, 2025/g, '<strong>June 1, 2025</strong>');
+
+    return (
+      <div className="product-dropdown">
+        <button
+          className="product-dropdown-header"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          <span>{title}</span>
+          <span className="product-dropdown-icon">{isOpen ? '▲' : '▼'}</span>
+        </button>
+        {isOpen && (
+          <div className="product-dropdown-content">
+            <p dangerouslySetInnerHTML={{__html: formattedContent}} />
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // Special handling for Key Ingredients
+  const isKeyIngredients = title === 'KEY INGREDIENTS';
+
+  if (isKeyIngredients) {
+    const sections = [];
+    const lines = content.split('\n').filter((line) => line.trim() !== '');
+
+    for (let i = 0; i < lines.length; i += 2) {
+      if (lines[i] && lines[i + 1]) {
+        sections.push({
+          header: lines[i].trim(),
+          description: lines[i + 1].trim(),
+        });
+      }
+    }
+
+    return (
+      <div className="product-dropdown">
+        <button
+          className="product-dropdown-header"
+          onClick={() => setIsOpen(!isOpen)}
+        >
+          <span>{title}</span>
+          <span className="product-dropdown-icon">{isOpen ? '▲' : '▼'}</span>
+        </button>
+        {isOpen && (
+          <div className="product-dropdown-content">
+            {sections.map((section, index) => (
+              <div key={index} className="ingredient-section">
+                <p className="ingredient-header">{section.header}</p>
+                <p className="ingredient-description">{section.description}</p>
+              </div>
+            ))}
+          </div>
+        )}
+      </div>
+    );
+  }
+
+  // Regular handling for other dropdowns
+  const lines = content.split('\n').filter((line) => line.trim() !== '');
+  const isList = lines.length > 1;
+
+  return (
+    <div className="product-dropdown">
+      <button
+        className="product-dropdown-header"
+        onClick={() => setIsOpen(!isOpen)}
+      >
+        <span>{title}</span>
+        <span className="product-dropdown-icon">{isOpen ? '▲' : '▼'}</span>
+      </button>
+      {isOpen && (
+        <div className="product-dropdown-content">
+          {isList ? (
+            <ul>
+              {lines.map((line, index) => (
+                <li key={index}>{line}</li>
+              ))}
+            </ul>
+          ) : (
+            <p>{content}</p>
+          )}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function Product() {
   /** @type {LoaderReturnData} */
-  const {product} = useLoaderData();
+  const data = useLoaderData();
+
+  if (!data?.product) {
+    return null;
+  }
+
+  const {product} = data;
 
   // Optimistically selects a variant with given available variant information
   const selectedVariant = useOptimisticVariant(
@@ -104,29 +210,51 @@ export default function Product() {
   });
 
   const {title, descriptionHtml} = product;
+  const isPreorder = product.tags?.includes('preorder');
+
+  const keyBenefits = product.keyBenefits?.value;
+  const keyIngredients = product.keyIngredients?.value;
+  const howToUse = product.howToUse?.value;
+  const shipping = product.shipping?.value;
 
   return (
     <div className="product">
       <ProductImage image={selectedVariant?.image} />
       <div className="product-main">
-        <h1>{title}</h1>
-        <ProductPrice
-          price={selectedVariant?.price}
-          compareAtPrice={selectedVariant?.compareAtPrice}
+        <div className="product-title-price-container">
+          <div className="product-title-price">
+            <p>{title}</p>
+            {isPreorder && (
+              <div className="product-preorder-badge-pdp">
+                Preorder, Ships June 2025
+              </div>
+            )}
+          </div>
+          <ProductPrice
+            price={selectedVariant?.price}
+            compareAtPrice={selectedVariant?.compareAtPrice}
+          />
+        </div>
+        <div
+          className="product-descriptor"
+          dangerouslySetInnerHTML={{__html: descriptionHtml}}
         />
-        <br />
+        <div className="product-dropdowns">
+          {keyBenefits && (
+            <ProductDropdown title="KEY BENEFITS" content={keyBenefits} />
+          )}
+          {keyIngredients && (
+            <ProductDropdown title="KEY INGREDIENTS" content={keyIngredients} />
+          )}
+          {howToUse && (
+            <ProductDropdown title="HOW TO USE" content={howToUse} />
+          )}
+          {shipping && <ProductDropdown title="SHIPPING" content={shipping} />}
+        </div>
         <ProductForm
           productOptions={productOptions}
           selectedVariant={selectedVariant}
         />
-        <br />
-        <br />
-        <p>
-          <strong>Description</strong>
-        </p>
-        <br />
-        <div dangerouslySetInnerHTML={{__html: descriptionHtml}} />
-        <br />
       </div>
       <Analytics.ProductView
         data={{
@@ -192,6 +320,19 @@ const PRODUCT_FRAGMENT = `#graphql
     handle
     descriptionHtml
     description
+    tags
+    keyBenefits: metafield(namespace: "custom", key: "key_benefits") {
+      value
+    }
+    keyIngredients: metafield(namespace: "custom", key: "key_ingredients") {
+      value
+    }
+    howToUse: metafield(namespace: "custom", key: "how_to_use") {
+      value
+    }
+    shipping: metafield(namespace: "custom", key: "shipping") {
+      value
+    }
     encodedVariantExistence
     encodedVariantAvailability
     options {
