@@ -12,6 +12,79 @@ import {useState, useEffect} from 'react';
  *   loading?: 'eager' | 'lazy';
  * }}
  */
+
+function parseRichText(value) {
+  if (!value) return null;
+
+  try {
+    const parsed = JSON.parse(value);
+
+    const renderNode = (node) => {
+      if (node.type === 'root') {
+        return node.children.map(renderNode).join('');
+      }
+
+      if (node.type === 'paragraph') {
+        const content = node.children
+          .map((child) => {
+            if (child.type === 'text') {
+              let text = child.value;
+              // Convert line breaks to <br> tags
+              text = text.replace(/\n/g, '<br>');
+              if (child.bold) text = `<strong>${text}</strong>`;
+              if (child.italic) text = `<em>${text}</em>`;
+              return text;
+            }
+            return '';
+          })
+          .join('');
+        return `<p>${content}</p>`;
+      }
+
+      if (node.type === 'list') {
+        const listType = node.listType === 'ordered' ? 'ol' : 'ul';
+        const items = node.children
+          .map((item) => {
+            const content = item.children
+              .map((child) => {
+                if (child.type === 'text') {
+                  let text = child.value;
+                  if (child.bold) text = `<strong>${text}</strong>`;
+                  if (child.italic) text = `<em>${text}</em>`;
+                  return text;
+                }
+                return '';
+              })
+              .join('');
+            return `<li>${content}</li>`;
+          })
+          .join('');
+        return `<${listType}>${items}</${listType}>`;
+      }
+
+      if (node.type === 'heading') {
+        const level = node.level || 3;
+        const content = node.children
+          .map((child) => {
+            if (child.type === 'text') {
+              return child.value;
+            }
+            return '';
+          })
+          .join('');
+        return `<h${level}>${content}</h${level}>`;
+      }
+
+      return '';
+    };
+
+    return renderNode(parsed);
+  } catch (e) {
+    console.error('Error parsing rich text:', e);
+    return value;
+  }
+}
+
 export function ProductItem({product, loading}) {
   const variantUrl = useVariantUrl(product.handle);
   const image = product.featuredImage;
@@ -20,7 +93,7 @@ export function ProductItem({product, loading}) {
 
   const price = product.priceRange.minVariantPrice;
   const priceWithoutDecimals = Math.floor(parseFloat(price.amount));
-  const plpDescription = product.plpDescription?.value;
+  const plpDescription = parseRichText(product.descriptionPLP?.value);
 
   const [isMobile, setIsMobile] = useState(false);
 
@@ -74,11 +147,10 @@ export function ProductItem({product, loading}) {
               )}
             </div>
             {plpDescription && (
-              <div className="product-plp-description">
-                {plpDescription.split('\n').map((line, i) => (
-                  <p key={i}>{line}</p>
-                ))}
-              </div>
+              <div
+                className="product-plp-description"
+                dangerouslySetInnerHTML={{__html: plpDescription}}
+              />
             )}
           </>
         ) : (
@@ -92,11 +164,10 @@ export function ProductItem({product, loading}) {
               <div className="product-preorder-badge">Preorder</div>
             )}
             {plpDescription && (
-              <div className="product-plp-description">
-                {plpDescription.split('\n').map((line, i) => (
-                  <p key={i}>{line}</p>
-                ))}
-              </div>
+              <div
+                className="product-plp-description"
+                dangerouslySetInnerHTML={{__html: plpDescription}}
+              />
             )}
           </>
         )}

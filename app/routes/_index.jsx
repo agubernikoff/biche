@@ -409,7 +409,7 @@ const RECOMMENDED_PRODUCTS_QUERY = `#graphql
     title
     handle
     tags
-    plpDescription: metafield(namespace: "custom", key: "plp_description") {
+    descriptionPLP: metafield(namespace: "custom", key: "description_plp") {
       value
     }
     priceRange {

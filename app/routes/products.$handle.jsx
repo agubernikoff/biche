@@ -88,15 +88,10 @@ function loadDeferredData({context, params}) {
   return {};
 }
 
-function ProductDropdown({title, content}) {
-  const [isOpen, setIsOpen] = useState(false);
-
+function ProductDropdown({title, content, isOpen, onToggle}) {
   return (
     <div className="product-dropdown">
-      <button
-        className="product-dropdown-header"
-        onClick={() => setIsOpen(!isOpen)}
-      >
+      <button className="product-dropdown-header" onClick={onToggle}>
         <span>{title}</span>
         <span className="product-dropdown-icon">{isOpen ? '▲' : '▼'}</span>
       </button>
@@ -184,6 +179,7 @@ function parseRichText(value) {
 export default function Product() {
   /** @type {LoaderReturnData} */
   const data = useLoaderData();
+  const [openDropdown, setOpenDropdown] = useState(null);
 
   if (!data?.product) {
     return null;
@@ -240,21 +236,59 @@ export default function Product() {
         />
         <div className="product-dropdowns">
           {keyBenefits && (
-            <ProductDropdown title="KEY BENEFITS" content={keyBenefits} />
+            <ProductDropdown
+              title="KEY BENEFITS"
+              content={keyBenefits}
+              isOpen={openDropdown === 'benefits'}
+              onToggle={() =>
+                setOpenDropdown(openDropdown === 'benefits' ? null : 'benefits')
+              }
+            />
           )}
           {keyIngredients && (
-            <ProductDropdown title="KEY INGREDIENTS" content={keyIngredients} />
+            <ProductDropdown
+              title="KEY INGREDIENTS"
+              content={keyIngredients}
+              isOpen={openDropdown === 'ingredients'}
+              onToggle={() =>
+                setOpenDropdown(
+                  openDropdown === 'ingredients' ? null : 'ingredients',
+                )
+              }
+            />
           )}
           {howToUse && (
-            <ProductDropdown title="HOW TO USE" content={howToUse} />
+            <ProductDropdown
+              title="HOW TO USE"
+              content={howToUse}
+              isOpen={openDropdown === 'howto'}
+              onToggle={() =>
+                setOpenDropdown(openDropdown === 'howto' ? null : 'howto')
+              }
+            />
           )}
           {aboutFragrance && (
             <ProductDropdown
               title="ABOUT THE FRAGRANCE"
               content={aboutFragrance}
+              isOpen={openDropdown === 'fragrance'}
+              onToggle={() =>
+                setOpenDropdown(
+                  openDropdown === 'fragrance' ? null : 'fragrance',
+                )
+              }
             />
           )}
-          {shipping && <ProductDropdown title="SHIPPING" content={shipping} />}
+          {shipping && (
+            <ProductDropdown
+              title="SHIPPING"
+              content={shipping}
+              isOpen={openDropdown === 'shipping'}
+              onToggle={() =>
+                setOpenDropdown(openDropdown === 'shipping' ? null : 'shipping')
+              }
+            />
+          )}
         </div>
         <ProductForm
           productOptions={productOptions}
