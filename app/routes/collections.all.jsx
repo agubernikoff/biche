@@ -1,4 +1,4 @@
-import {useLoaderData} from '@remix-run/react';
+import {useLoaderData, redirect} from '@remix-run/react';
 import {getPaginationVariables} from '@shopify/hydrogen';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 import {ProductItem} from '~/components/ProductItem';
@@ -14,6 +14,7 @@ export const meta = () => {
  * @param {LoaderFunctionArgs} args
  */
 export async function loader(args) {
+  if (process.env.NODE_ENV !== 'development') return redirect('/');
   // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
 

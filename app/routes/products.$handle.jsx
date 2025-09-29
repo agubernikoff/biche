@@ -1,4 +1,4 @@
-import {useLoaderData} from '@remix-run/react';
+import {useLoaderData, redirect} from '@remix-run/react';
 import {
   getSelectedProductOptions,
   Analytics,
@@ -35,6 +35,7 @@ export const meta = ({data}) => {
  * @param {LoaderFunctionArgs} args
  */
 export async function loader(args) {
+  if (process.env.NODE_ENV !== 'development') return redirect('/');
   // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
 
