@@ -10,6 +10,7 @@ import {
   useRouteLoaderData,
   NavLink,
 } from '@remix-run/react';
+import {useEffect} from 'react';
 import favicon from '~/assets/favicon.png';
 import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
 import resetStyles from '~/styles/reset.css?url';
@@ -111,24 +112,30 @@ export function Layout({children}) {
   /** @type {RootLoader} */
   const data = useRouteLoaderData('root');
 
+  useEffect(() => {
+    // GTM Script
+    (function (w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({'gtm.start': new Date().getTime(), event: 'gtm.js'});
+      var f = d.getElementsByTagName(s)[0],
+        j = d.createElement(s),
+        dl = l != 'dataLayer' ? '&l=' + l : '';
+      j.async = true;
+      j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+      f.parentNode.insertBefore(j, f);
+    })(window, document, 'script', 'dataLayer', 'GTM-PD4QRSV3');
+
+    // Google Ads Script
+    var gtagScript = document.createElement('script');
+    gtagScript.async = true;
+    gtagScript.src =
+      'https://www.googletagmanager.com/gtag/js?id=AW-17280171207';
+    document.head.appendChild(gtagScript);
+  }, []);
+
   return (
     <html lang="en">
       <head>
-        <script
-          nonce={nonce}
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function(w,d,s,l,i){
-                w[l]=w[l]||[];w[l].push({'gtm.start':
-                new Date().getTime(),event:'gtm.js'});
-                var f=d.getElementsByTagName(s)[0],
-                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
-                j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;
-                f.parentNode.insertBefore(j,f);
-              })(window,document,'script','dataLayer','GTM-PD4QRSV3');
-            `,
-          }}
-        />
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
         <meta
@@ -139,18 +146,6 @@ export function Layout({children}) {
         <link rel="stylesheet" href={appStyles}></link>
         <Meta />
         <Links />
-        <script
-          dangerouslySetInnerHTML={{
-            __html: `
-              (function(){
-                var gtagScript = document.createElement('script');
-                gtagScript.async = true;
-                gtagScript.src = 'https://www.googletagmanager.com/gtag/js?id=AW-17280171207';
-                document.head.appendChild(gtagScript);
-              })();
-            `,
-          }}
-        />
         <script
           dangerouslySetInnerHTML={{
             __html: `

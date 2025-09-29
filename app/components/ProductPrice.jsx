@@ -7,17 +7,21 @@ import {Money} from '@shopify/hydrogen';
  * }}
  */
 export function ProductPrice({price, compareAtPrice}) {
+  const formatPrice = (priceData) => {
+    if (!priceData) return null;
+    const amount = Math.floor(parseFloat(priceData.amount));
+    return `$${amount}`;
+  };
+
   return (
     <div className="product-price">
       {compareAtPrice ? (
         <div className="product-price-on-sale">
-          {price ? <Money data={price} /> : null}
-          <s>
-            <Money data={compareAtPrice} />
-          </s>
+          {price ? <span>{formatPrice(price)}</span> : null}
+          <s>{formatPrice(compareAtPrice)}</s>
         </div>
       ) : price ? (
-        <Money data={price} />
+        <span>{formatPrice(price)}</span>
       ) : (
         <span>&nbsp;</span>
       )}

@@ -17,11 +17,15 @@ import {redirectIfHandleIsLocalized} from '~/lib/redirect';
  * @type {MetaFunction<typeof loader>}
  */
 export const meta = ({data}) => {
+  if (!data?.product) {
+    return [{title: 'Biche'}];
+  }
+
   return [
-    {title: `Biche ${data?.product.title ?? ''}`},
+    {title: `Biche ${data.product.title}`},
     {
       rel: 'canonical',
-      href: `/products/${data?.product.handle}`,
+      href: `/products/${data.product.handle}`,
     },
   ];
 };
@@ -87,76 +91,6 @@ function loadDeferredData({context, params}) {
 function ProductDropdown({title, content}) {
   const [isOpen, setIsOpen] = useState(false);
 
-  // Special handling for SHIPPING - bold certain words
-  const isShipping = title === 'SHIPPING';
-
-  if (isShipping) {
-    // Replace "preorder" and dates with bold versions
-    const formattedContent = content
-      .replace(/preorder/gi, '<strong>preorder</strong>')
-      .replace(/June 1, 2025/g, '<strong>June 1, 2025</strong>');
-
-    return (
-      <div className="product-dropdown">
-        <button
-          className="product-dropdown-header"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          <span>{title}</span>
-          <span className="product-dropdown-icon">{isOpen ? '▲' : '▼'}</span>
-        </button>
-        {isOpen && (
-          <div className="product-dropdown-content">
-            <p dangerouslySetInnerHTML={{__html: formattedContent}} />
-          </div>
-        )}
-      </div>
-    );
-  }
-
-  // Special handling for Key Ingredients
-  const isKeyIngredients = title === 'KEY INGREDIENTS';
-
-  if (isKeyIngredients) {
-    const sections = [];
-    const lines = content.split('\n').filter((line) => line.trim() !== '');
-
-    for (let i = 0; i < lines.length; i += 2) {
-      if (lines[i] && lines[i + 1]) {
-        sections.push({
-          header: lines[i].trim(),
-          description: lines[i + 1].trim(),
-        });
-      }
-    }
-
-    return (
-      <div className="product-dropdown">
-        <button
-          className="product-dropdown-header"
-          onClick={() => setIsOpen(!isOpen)}
-        >
-          <span>{title}</span>
-          <span className="product-dropdown-icon">{isOpen ? '▲' : '▼'}</span>
-        </button>
-        {isOpen && (
-          <div className="product-dropdown-content">
-            {sections.map((section, index) => (
-              <div key={index} className="ingredient-section">
-                <p className="ingredient-header">{section.header}</p>
-                <p className="ingredient-description">{section.description}</p>
-              </div>
-            ))}
-          </div>
-        )}
-      </div>
-    );
-  }
-
-  // Regular handling for other dropdowns
-  const lines = content.split('\n').filter((line) => line.trim() !== '');
-  const isList = lines.length > 1;
-
   return (
     <div className="product-dropdown">
       <button
@@ -167,22 +101,86 @@ function ProductDropdown({title, content}) {
         <span className="product-dropdown-icon">{isOpen ? '▲' : '▼'}</span>
       </button>
       {isOpen && (
-        <div className="product-dropdown-content">
-          {isList ? (
-            <ul>
-              {lines.map((line, index) => (
-                <li key={index}>{line}</li>
-              ))}
-            </ul>
-          ) : (
-            <p>{content}</p>
-          )}
-        </div>
+        <div
+          className="product-dropdown-content"
+          dangerouslySetInnerHTML={{__html: content}}
+        />
       )}
     </div>
   );
 }
 
+function parseRichText(value) {
+  if (!value) return null;
+
+  try {
+    const parsed = JSON.parse(value);
+
+    const renderNode = (node) => {
+      if (node.type === 'root') {
+        return node.children.map(renderNode).join('');
+      }
+
+      if (node.type === 'paragraph') {
+        const content = node.children
+          .map((child) => {
+            if (child.type === 'text') {
+              let text = child.value;
+              // Convert line breaks to <br> tags
+              text = text.replace(/\n/g, '<br>');
+              if (child.bold) text = `<strong>${text}</strong>`;
+              if (child.italic) text = `<em>${text}</em>`;
+              return text;
+            }
+            return '';
+          })
+          .join('');
+        return `<p>${content}</p>`;
+      }
+
+      if (node.type === 'list') {
+        const listType = node.listType === 'ordered' ? 'ol' : 'ul';
+        const items = node.children
+          .map((item) => {
+            const content = item.children
+              .map((child) => {
+                if (child.type === 'text') {
+                  let text = child.value;
+                  if (child.bold) text = `<strong>${text}</strong>`;
+                  if (child.italic) text = `<em>${text}</em>`;
+                  return text;
+                }
+                return '';
+              })
+              .join('');
+            return `<li>${content}</li>`;
+          })
+          .join('');
+        return `<${listType}>${items}</${listType}>`;
+      }
+
+      if (node.type === 'heading') {
+        const level = node.level || 3;
+        const content = node.children
+          .map((child) => {
+            if (child.type === 'text') {
+              return child.value;
+            }
+            return '';
+          })
+          .join('');
+        return `<h${level}>${content}</h${level}>`;
+      }
+
+      return '';
+    };
+
+    return renderNode(parsed);
+  } catch (e) {
+    console.error('Error parsing rich text:', e);
+    return value;
+  }
+}
 export default function Product() {
   /** @type {LoaderReturnData} */
   const data = useLoaderData();
@@ -212,14 +210,15 @@ export default function Product() {
   const {title, descriptionHtml} = product;
   const isPreorder = product.tags?.includes('preorder');
 
-  const keyBenefits = product.keyBenefits?.value;
-  const keyIngredients = product.keyIngredients?.value;
-  const howToUse = product.howToUse?.value;
-  const shipping = product.shipping?.value;
+  const keyBenefits = parseRichText(product.Benefits?.value);
+  const keyIngredients = parseRichText(product.Ingredients?.value);
+  const howToUse = parseRichText(product.howTo?.value);
+  const shipping = parseRichText(product.shippingText?.value);
+  const aboutFragrance = parseRichText(product.aboutTheFragrance?.value);
 
   return (
     <div className="product">
-      <ProductImage image={selectedVariant?.image} />
+      <ProductImage images={product.images.nodes} />
       <div className="product-main">
         <div className="product-title-price-container">
           <div className="product-title-price">
@@ -248,6 +247,12 @@ export default function Product() {
           )}
           {howToUse && (
             <ProductDropdown title="HOW TO USE" content={howToUse} />
+          )}
+          {aboutFragrance && (
+            <ProductDropdown
+              title="ABOUT THE FRAGRANCE"
+              content={aboutFragrance}
+            />
           )}
           {shipping && <ProductDropdown title="SHIPPING" content={shipping} />}
         </div>
@@ -321,16 +326,19 @@ const PRODUCT_FRAGMENT = `#graphql
     descriptionHtml
     description
     tags
-    keyBenefits: metafield(namespace: "custom", key: "key_benefits") {
+    Benefits: metafield(namespace: "custom", key: "benefits") {
       value
     }
-    keyIngredients: metafield(namespace: "custom", key: "key_ingredients") {
+    Ingredients: metafield(namespace: "custom", key: "ingredients") {
       value
     }
-    howToUse: metafield(namespace: "custom", key: "how_to_use") {
+    howTo: metafield(namespace: "custom", key: "how_to") {
       value
     }
-    shipping: metafield(namespace: "custom", key: "shipping") {
+    shippingText: metafield(namespace: "custom", key: "shipping_text") {
+      value
+    }
+    aboutTheFragrance: metafield(namespace: "custom", key: "about_the_fragrance") {
       value
     }
     encodedVariantExistence
@@ -358,7 +366,7 @@ const PRODUCT_FRAGMENT = `#graphql
     adjacentVariants (selectedOptions: $selectedOptions) {
       ...ProductVariant
     }
-    images(first: 2) {
+    images(first: 10) {
       nodes {
         id
         altText
