@@ -1240,6 +1240,12 @@ th {
 .product-dropdown-icon {
   font-size: 10px;
 }
+.icon {
+  transition: transform 300ms ease-in-out;
+}
+.icon.open {
+  transform: rotate(180deg);
+}
 
 .product-dropdown-content {
   padding-bottom: 16px;

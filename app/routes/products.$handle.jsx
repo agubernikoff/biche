@@ -12,6 +12,7 @@ import {ProductPrice} from '~/components/ProductPrice';
 import {ProductImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
+import {motion} from 'motion/react';
 
 /**
  * @type {MetaFunction<typeof loader>}
@@ -88,6 +89,133 @@ function loadDeferredData({context, params}) {
   return {};
 }
 
+export default function Product() {
+  /** @type {LoaderReturnData} */
+  const data = useLoaderData();
+  const [openDropdown, setOpenDropdown] = useState(null);
+  const toggleSection = (section) => {
+    setOpenDropdown(openDropdown === section ? null : section);
+  };
+
+  if (!data?.product) {
+    return null;
+  }
+
+  const {product} = data;
+
+  // Optimistically selects a variant with given available variant information
+  const selectedVariant = useOptimisticVariant(
+    product.selectedOrFirstAvailableVariant,
+    getAdjacentAndFirstAvailableVariants(product),
+  );
+
+  // Sets the search param to the selected variant without navigation
+  // only when no search params are set in the url
+  useSelectedOptionInUrlParam(selectedVariant.selectedOptions);
+
+  // Get the product options array
+  const productOptions = getProductOptions({
+    ...product,
+    selectedOrFirstAvailableVariant: selectedVariant,
+  });
+
+  const {title, descriptionHtml} = product;
+  const isPreorder = product.tags?.includes('preorder');
+
+  const keyBenefits = parseRichText(product.Benefits?.value);
+  const keyIngredients = parseRichText(product.Ingredients?.value);
+  const howToUse = parseRichText(product.howTo?.value);
+  const shipping = parseRichText(product.shippingText?.value);
+  const aboutFragrance = parseRichText(product.aboutTheFragrance?.value);
+
+  return (
+    <div className="product">
+      <ProductImage images={product.images.nodes} />
+      <div className="product-main">
+        <div className="product-title-price-container">
+          <div className="product-title-price">
+            <p>{title}</p>
+            {isPreorder && (
+              <div className="product-preorder-badge-pdp">
+                Preorder, Ships June 2025
+              </div>
+            )}
+          </div>
+          <ProductPrice
+            price={selectedVariant?.price}
+            compareAtPrice={selectedVariant?.compareAtPrice}
+          />
+        </div>
+        <div
+          className="product-descriptor"
+          dangerouslySetInnerHTML={{__html: descriptionHtml}}
+        />
+        <div className="product-dropdowns">
+          {keyBenefits && (
+            <Expandable
+              title="KEY BENEFITS"
+              details={keyBenefits}
+              openSection={openDropdown}
+              toggleSection={toggleSection}
+            />
+          )}
+          {keyIngredients && (
+            <Expandable
+              title="KEY INGREDIENTS"
+              details={keyIngredients}
+              openSection={openDropdown}
+              toggleSection={toggleSection}
+            />
+          )}
+          {howToUse && (
+            <Expandable
+              title="HOW TO USE"
+              details={howToUse}
+              openSection={openDropdown}
+              toggleSection={toggleSection}
+            />
+          )}
+          {aboutFragrance && (
+            <Expandable
+              title="ABOUT THE FRAGRANCE"
+              details={aboutFragrance}
+              openSection={openDropdown}
+              toggleSection={toggleSection}
+            />
+          )}
+          {shipping && (
+            <Expandable
+              title="SHIPPING"
+              details={shipping}
+              openSection={openDropdown}
+              toggleSection={toggleSection}
+            />
+          )}
+        </div>
+        <ProductForm
+          productOptions={productOptions}
+          selectedVariant={selectedVariant}
+        />
+      </div>
+      <Analytics.ProductView
+        data={{
+          products: [
+            {
+              id: product.id,
+              title: product.title,
+              price: selectedVariant?.price.amount || '0',
+              vendor: product.vendor,
+              variantId: selectedVariant?.id || '',
+              variantTitle: selectedVariant?.title || '',
+              quantity: 1,
+            },
+          ],
+        }}
+      />
+    </div>
+  );
+}
+
 function ProductDropdown({title, content, isOpen, onToggle}) {
   return (
     <div className="product-dropdown">
@@ -102,6 +230,65 @@ function ProductDropdown({title, content, isOpen, onToggle}) {
         />
       )}
     </div>
+  );
+}
+
+function Expandable({
+  openSection,
+  toggleSection,
+  title,
+  details,
+  isFirstRender,
+}) {
+  return (
+    <motion.div
+      key={title}
+      className="product-dropdown"
+      layout={!isFirstRender ? 'position' : false}
+      initial={{height: '46px'}}
+      animate={{height: openSection === title ? 'auto' : '46px'}}
+      style={{overflow: 'hidden'}}
+    >
+      <motion.p
+        layout={!isFirstRender ? 'position' : false}
+        className={`product-dropdown-header ${openSection === title ? 'open' : ''}`}
+        onClick={() => toggleSection(title)}
+      >
+        <span className="dropdown-title">{title}</span>
+        <span className={`icon ${openSection === title ? 'open' : ''}`}>
+          <SVG />
+        </span>
+      </motion.p>
+      <div style={{overflow: 'hidden'}}>
+        <motion.div
+          className="product-dropdown-content"
+          initial={{opacity: 0}}
+          animate={{opacity: openSection === title ? 1 : 0}}
+          key={title}
+          transition={{ease: 'easeOut'}}
+          dangerouslySetInnerHTML={{__html: details}}
+        ></motion.div>
+      </div>
+    </motion.div>
+  );
+}
+
+function SVG() {
+  return (
+    <svg
+      width="10"
+      height="4"
+      viewBox="0 0 10 4"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path
+        fill-rule="evenodd"
+        clip-rule="evenodd"
+        d="M5.37325 3.25842L9.85965 2.17807e-05L0.886719 2.21729e-05L5.37325 3.25842Z"
+        fill="#3C0707"
+      />
+    </svg>
   );
 }
 
@@ -175,143 +362,6 @@ function parseRichText(value) {
     console.error('Error parsing rich text:', e);
     return value;
   }
-}
-export default function Product() {
-  /** @type {LoaderReturnData} */
-  const data = useLoaderData();
-  const [openDropdown, setOpenDropdown] = useState(null);
-
-  if (!data?.product) {
-    return null;
-  }
-
-  const {product} = data;
-
-  // Optimistically selects a variant with given available variant information
-  const selectedVariant = useOptimisticVariant(
-    product.selectedOrFirstAvailableVariant,
-    getAdjacentAndFirstAvailableVariants(product),
-  );
-
-  // Sets the search param to the selected variant without navigation
-  // only when no search params are set in the url
-  useSelectedOptionInUrlParam(selectedVariant.selectedOptions);
-
-  // Get the product options array
-  const productOptions = getProductOptions({
-    ...product,
-    selectedOrFirstAvailableVariant: selectedVariant,
-  });
-
-  const {title, descriptionHtml} = product;
-  const isPreorder = product.tags?.includes('preorder');
-
-  const keyBenefits = parseRichText(product.Benefits?.value);
-  const keyIngredients = parseRichText(product.Ingredients?.value);
-  const howToUse = parseRichText(product.howTo?.value);
-  const shipping = parseRichText(product.shippingText?.value);
-  const aboutFragrance = parseRichText(product.aboutTheFragrance?.value);
-
-  return (
-    <div className="product">
-      <ProductImage images={product.images.nodes} />
-      <div className="product-main">
-        <div className="product-title-price-container">
-          <div className="product-title-price">
-            <p>{title}</p>
-            {isPreorder && (
-              <div className="product-preorder-badge-pdp">
-                Preorder, Ships June 2025
-              </div>
-            )}
-          </div>
-          <ProductPrice
-            price={selectedVariant?.price}
-            compareAtPrice={selectedVariant?.compareAtPrice}
-          />
-        </div>
-        <div
-          className="product-descriptor"
-          dangerouslySetInnerHTML={{__html: descriptionHtml}}
-        />
-        <div className="product-dropdowns">
-          {keyBenefits && (
-            <ProductDropdown
-              title="KEY BENEFITS"
-              content={keyBenefits}
-              isOpen={openDropdown === 'benefits'}
-              onToggle={() =>
-                setOpenDropdown(openDropdown === 'benefits' ? null : 'benefits')
-              }
-            />
-          )}
-          {keyIngredients && (
-            <ProductDropdown
-              title="KEY INGREDIENTS"
-              content={keyIngredients}
-              isOpen={openDropdown === 'ingredients'}
-              onToggle={() =>
-                setOpenDropdown(
-                  openDropdown === 'ingredients' ? null : 'ingredients',
-                )
-              }
-            />
-          )}
-          {howToUse && (
-            <ProductDropdown
-              title="HOW TO USE"
-              content={howToUse}
-              isOpen={openDropdown === 'howto'}
-              onToggle={() =>
-                setOpenDropdown(openDropdown === 'howto' ? null : 'howto')
-              }
-            />
-          )}
-          {aboutFragrance && (
-            <ProductDropdown
-              title="ABOUT THE FRAGRANCE"
-              content={aboutFragrance}
-              isOpen={openDropdown === 'fragrance'}
-              onToggle={() =>
-                setOpenDropdown(
-                  openDropdown === 'fragrance' ? null : 'fragrance',
-                )
-              }
-            />
-          )}
-          {shipping && (
-            <ProductDropdown
-              title="SHIPPING"
-              content={shipping}
-              isOpen={openDropdown === 'shipping'}
-              onToggle={() =>
-                setOpenDropdown(openDropdown === 'shipping' ? null : 'shipping')
-              }
-            />
-          )}
-        </div>
-        <ProductForm
-          productOptions={productOptions}
-          selectedVariant={selectedVariant}
-        />
-      </div>
-      <Analytics.ProductView
-        data={{
-          products: [
-            {
-              id: product.id,
-              title: product.title,
-              price: selectedVariant?.price.amount || '0',
-              vendor: product.vendor,
-              variantId: selectedVariant?.id || '',
-              variantTitle: selectedVariant?.title || '',
-              quantity: 1,
-            },
-          ],
-        }}
-      />
-    </div>
-  );
 }
 
 const PRODUCT_VARIANT_FRAGMENT = `#graphql
