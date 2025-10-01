@@ -97,8 +97,10 @@ async function loadCriticalData({context, request, params}) {
 
   const [blog] = await Promise.all([
     sanityClient.fetch(ARTICLE_QUERY, {slug: articleHandle}),
-    // Add other queries here, so that they are loaded in parallel
   ]);
+
+  // ADD THIS LINE TO DEBUG
+  console.log('SEO DATA:', JSON.stringify(blog[0]?.seo, null, 2));
 
   redirectIfHandleIsLocalized(request, {
     handle: articleHandle,
