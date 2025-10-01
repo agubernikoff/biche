@@ -1078,10 +1078,6 @@ th {
 .product {
   display: grid;
   margin-top: calc(var(--header-height) + 25px);
-  @media (min-width: 45em) {
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 4rem;
-  }
 }
 
 .product h1 {
@@ -1159,7 +1155,7 @@ th {
   align-self: start;
 
   margin-top: 20px;
-  width: 75%;
+  width: 100%;
 }
 
 .product-title-price-container {
@@ -1411,6 +1407,114 @@ th {
 
 .product-option-label-swatch img {
   width: 100%;
+}
+
+.notify-me-overlay {
+  position: fixed;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5px);
+  z-index: 11;
+  padding: 1rem;
+}
+.notify-me-modal {
+  max-width: 398px;
+  min-height: 398px;
+  width: 100%;
+  display: flex;
+  padding: 2rem;
+  position: relative;
+  background: var(--color-eggshell);
+  color: var(--rgb-balsamic);
+}
+.notify-me-modal > * {
+  width: 50%;
+  flex: 1;
+}
+.notify-me-modal > img {
+  height: auto;
+  object-fit: cover;
+  display: none;
+}
+.notify-me-modal > button {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: fit-content;
+  background: transparent;
+  border: none;
+  display: flex;
+  gap: 0.3rem;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  cursor: pointer;
+  padding: 0.5rem;
+}
+.early-access-content-container {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: 17px;
+  margin-block: auto;
+}
+.early-access-content-container > h3 {
+  font-family: 'Heldane Display';
+  font-size: 40px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%; /* 48px */
+  margin: auto;
+}
+.early-access-content-container > p {
+  font-family: 'Helvetica Neue';
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 16.8px */
+}
+.ea-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: 12px;
+}
+.ea-form > input {
+  padding-block: 10px;
+  color: rgb(var(--rgb-balsamic));
+  text-align: center;
+  border: 1px solid var(--Biche-Palette-Primary-Stroke, #bfadad);
+}
+.ea-form > button {
+  display: flex;
+  padding: 12px 0;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  align-self: stretch;
+  background: rgb(var(--rgb-balsamic));
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+@media (min-width: 45em) {
+  .product {
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 4rem;
+  }
+  .product-main {
+    max-width: 519px;
+  }
+  .notify-me-modal {
+    max-width: 921px;
+  }
+  .notify-me-modal > img {
+    display: block;
+  }
 }
 
 /*

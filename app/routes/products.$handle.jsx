@@ -7,12 +7,12 @@ import {
   getAdjacentAndFirstAvailableVariants,
   useSelectedOptionInUrlParam,
 } from '@shopify/hydrogen';
-import {useState} from 'react';
+import {useState, useEffect} from 'react';
 import {ProductPrice} from '~/components/ProductPrice';
 import {ProductImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
-import {motion} from 'motion/react';
+import {motion, AnimatePresence} from 'motion/react';
 
 /**
  * @type {MetaFunction<typeof loader>}
@@ -93,6 +93,7 @@ function loadDeferredData({context, params}) {
 export default function Product() {
   /** @type {LoaderReturnData} */
   const data = useLoaderData();
+  const [isEAOpen, setIsEAOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
   const toggleSection = (section) => {
     setOpenDropdown(openDropdown === section ? null : section);
@@ -196,8 +197,19 @@ export default function Product() {
         <ProductForm
           productOptions={productOptions}
           selectedVariant={selectedVariant}
+          isPreorder={isPreorder}
+          openEarlyAccess={() => setIsEAOpen(true)}
         />
       </div>
+      <AnimatePresence>
+        {isEAOpen ? (
+          <EarlyAccessPopUp
+            closePopUp={() => setIsEAOpen(false)}
+            selectedVariant={selectedVariant}
+            image={product.images.nodes[0]}
+          />
+        ) : null}
+      </AnimatePresence>
       <Analytics.ProductView
         data={{
           products: [
@@ -214,6 +226,161 @@ export default function Product() {
         }}
       />
     </div>
+  );
+}
+
+function EarlyAccessPopUp({closePopUp, selectedVariant, image}) {
+  const [success, setSuccess] = useState(false);
+  const [email, setEmail] = useState();
+  useEffect(() => {
+    const handleEscape = (event) => {
+      if (event.key === 'Escape') {
+        closePopUp();
+      }
+    };
+
+    document.addEventListener('keydown', handleEscape);
+    return () => {
+      document.removeEventListener('keydown', handleEscape);
+    };
+  }, [closePopUp]);
+
+  function subscribe(email, btn, originalText) {
+    if (!email) {
+      setSuccess(true);
+      btn.innerText = 'Please Enter An Email';
+      setTimeout(() => {
+        btn.innerText = originalText;
+      }, 1500);
+      return;
+    }
+    const payload = {
+      data: {
+        type: 'back-in-stock-subscription',
+        attributes: {
+          profile: {
+            data: {
+              type: 'profile',
+              attributes: {
+                email: `${email}`,
+              },
+            },
+          },
+          channels: ['EMAIL'],
+        },
+        relationships: {
+          variant: {
+            data: {
+              type: 'catalog-variant',
+              id: `$shopify:::$default:::${
+                selectedVariant.id.split('ProductVariant/')[1]
+              }`,
+            },
+          },
+        },
+      },
+    };
+
+    var requestOptions = {
+      mode: 'cors',
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        revision: '2023-12-15',
+      },
+      body: JSON.stringify(payload),
+    };
+    fetch(
+      'https://a.klaviyo.com/client/back-in-stock-subscriptions/?company_id=******',
+      requestOptions,
+    )
+      .then((result) => {
+        if (result.ok) {
+          setSuccess(true);
+        } else {
+          btn.innerText =
+            'YOUR REQUEST COULD NOT BE COMPLETED. PLEASE EMAIL test@test.com TO BE NOTIFIED';
+          setTimeout(() => {
+            btn.innerText = originalText;
+          }, 1500);
+        }
+      })
+      .catch((error) => console.log('error', error));
+  }
+
+  return (
+    <motion.div
+      onClick={closePopUp}
+      className="notify-me-overlay"
+      initial={{opacity: 0}}
+      animate={{opacity: 1}}
+      exit={{opacity: 0}}
+    >
+      <div className="notify-me-modal" onClick={(e) => e.stopPropagation()}>
+        <button onClick={closePopUp}>
+          Close
+          <X />
+        </button>
+        <img src={image.url} alt={image.altText} />
+        <AnimatePresence mode="popLayout">
+          <motion.div
+            className="early-access-content-container"
+            key={success}
+            initial={{opacity: !success ? 1 : 0}}
+            animate={{opacity: 1}}
+            exit={{opacity: 0}}
+          >
+            {success ? (
+              <h3>You're In!</h3>
+            ) : (
+              <>
+                <h3>Early Access</h3>
+                <p>
+                  Sign up for early access to our clean, effective, and
+                  elegantly designed pet grooming essentials, coming soon.
+                </p>
+                <div className="ea-form">
+                  <input
+                    type="email"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="Enter Email"
+                    style={{borderRadius: '0'}}
+                  ></input>
+                  <button
+                    onClick={(e) => {
+                      subscribe(email, e.target, e.target.innerText);
+                    }}
+                  >
+                    Sign Up
+                  </button>
+                </div>
+              </>
+            )}
+          </motion.div>
+        </AnimatePresence>
+      </div>
+    </motion.div>
+  );
+}
+
+function X({styles}) {
+  return (
+    <svg
+      width="10"
+      height="10"
+      viewBox="0 0 10 10"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      style={{...styles}}
+    >
+      <path
+        d="M9.21272 8.74755C9.30243 8.83726 9.30243 8.98302 9.21272 9.07272C9.16788 9.11757 9.10879 9.13999 9.05014 9.13999C8.99148 9.13999 8.93241 9.11757 8.88755 9.07272L5.14 5.32517L1.39245 9.07272C1.3476 9.11757 1.28852 9.13999 1.22986 9.13999C1.17121 9.13999 1.11213 9.11757 1.06728 9.07272C0.977575 8.98302 0.977575 8.83726 1.06728 8.74755L4.81483 5L1.06728 1.25245C0.977575 1.16275 0.977575 1.01699 1.06728 0.927291C1.15698 0.837591 1.30274 0.837591 1.39244 0.927291L5.13999 4.67484L8.88754 0.927291C8.97724 0.837591 9.123 0.837591 9.2127 0.927291C9.3024 1.01699 9.3024 1.16275 9.2127 1.25245L5.46515 5L9.21272 8.74755Z"
+        fill="black"
+        stroke="black"
+        stroke-width="0.8"
+      />
+    </svg>
   );
 }
 

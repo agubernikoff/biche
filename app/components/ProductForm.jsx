@@ -8,7 +8,12 @@ import {useAside} from './Aside';
  *   selectedVariant: ProductFragment['selectedOrFirstAvailableVariant'];
  * }}
  */
-export function ProductForm({productOptions, selectedVariant}) {
+export function ProductForm({
+  productOptions,
+  selectedVariant,
+  isPreorder,
+  openEarlyAccess,
+}) {
   const navigate = useNavigate();
   const {open} = useAside();
   return (
@@ -96,9 +101,15 @@ export function ProductForm({productOptions, selectedVariant}) {
         );
       })}
       <AddToCartButton
-        disabled={!selectedVariant || !selectedVariant.availableForSale}
-        onClick={() => {
-          open('cart');
+        disabled={
+          (!selectedVariant || !selectedVariant.availableForSale) && !isPreorder
+        }
+        onClick={(e) => {
+          if (isPreorder) {
+            console.log('something');
+            e.preventDefault();
+            openEarlyAccess();
+          } else open('cart');
         }}
         lines={
           selectedVariant
@@ -112,7 +123,11 @@ export function ProductForm({productOptions, selectedVariant}) {
             : []
         }
       >
-        {selectedVariant?.availableForSale ? 'Add to cart' : 'Sold out'}
+        {!isPreorder
+          ? selectedVariant?.availableForSale
+            ? 'Add to cart'
+            : 'Sold out'
+          : 'EARLY ACCESS'}
       </AddToCartButton>
     </div>
   );
