@@ -44,11 +44,9 @@ export const meta = ({data}) => {
     {name: 'twitter:description', content: seoDescription},
     {name: 'twitter:image', content: seoImage},
 
-    // JSON-LD Structured Data (output inline script tag)
+    // JSON-LD Structured Data
     {
-      tagName: 'script',
-      type: 'application/ld+json',
-      children: JSON.stringify({
+      'script:ld+json': {
         '@context': 'https://schema.org',
         '@type': 'Article',
         headline: seoTitle,
@@ -65,7 +63,7 @@ export const meta = ({data}) => {
           '@type': 'WebPage',
           '@id': canonicalUrl,
         },
-      }),
+      },
     },
   ];
 };
@@ -98,9 +96,6 @@ async function loadCriticalData({context, request, params}) {
   const [blog] = await Promise.all([
     sanityClient.fetch(ARTICLE_QUERY, {slug: articleHandle}),
   ]);
-
-  // ADD THIS LINE TO DEBUG
-  console.log('SEO DATA:', JSON.stringify(blog[0]?.seo, null, 2));
 
   redirectIfHandleIsLocalized(request, {
     handle: articleHandle,
