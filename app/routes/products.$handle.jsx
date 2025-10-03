@@ -1,4 +1,10 @@
-import {useLoaderData, redirect} from '@remix-run/react';
+import {
+  useLoaderData,
+  redirect,
+  useActionData,
+  Form,
+  json,
+} from '@remix-run/react';
 import {
   getSelectedProductOptions,
   Analytics,
@@ -32,6 +38,34 @@ export const meta = ({data}) => {
 };
 
 /**
+ * @param {ActionFunctionArgs} args
+ */
+export async function action({request, context}) {
+  const formData = await request.formData();
+  const password = formData.get('password');
+  const productPassword = formData.get('productPassword');
+  const productHandle = formData.get('productHandle');
+
+  if (password === productPassword) {
+    // Password is correct - set session cookie
+    const {session} = context;
+    session.set(`product_access_${productHandle}`, true);
+
+    return json(
+      {success: true},
+      {
+        headers: {
+          'Set-Cookie': await session.commit(),
+        },
+      },
+    );
+  }
+
+  // Password is incorrect
+  return json({success: false, error: 'Incorrect password. Please try again.'});
+}
+
+/**
  * @param {LoaderFunctionArgs} args
  */
 export async function loader(args) {
@@ -52,7 +86,7 @@ export async function loader(args) {
  */
 async function loadCriticalData({context, params, request}) {
   const {handle} = params;
-  const {storefront} = context;
+  const {storefront, session} = context;
 
   if (!handle) {
     throw new Error('Expected product handle to be defined');
@@ -72,8 +106,12 @@ async function loadCriticalData({context, params, request}) {
   // The API handle might be localized, so redirect to the localized handle
   redirectIfHandleIsLocalized(request, {handle, data: product});
 
+  // Check if user has access via session
+  const hasAccess = session.get(`product_access_${handle}`);
+
   return {
     product,
+    hasAccess: hasAccess || false,
   };
 }
 
@@ -93,17 +131,29 @@ function loadDeferredData({context, params}) {
 export default function Product() {
   /** @type {LoaderReturnData} */
   const data = useLoaderData();
+  const actionData = useActionData();
   const [isEAOpen, setIsEAOpen] = useState(false);
   const [openDropdown, setOpenDropdown] = useState(null);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
   const toggleSection = (section) => {
     setOpenDropdown(openDropdown === section ? null : section);
   };
+
+  // Check if password was successfully validated
+  useEffect(() => {
+    if (actionData?.success) {
+      setIsAuthenticated(true);
+    }
+  }, [actionData]);
 
   if (!data?.product) {
     return null;
   }
 
   const {product} = data;
+  const productPassword = product.password?.value;
+  const hasSessionAccess = data.hasAccess;
 
   // Optimistically selects a variant with given available variant information
   const selectedVariant = useOptimisticVariant(
@@ -120,6 +170,11 @@ export default function Product() {
     ...product,
     selectedOrFirstAvailableVariant: selectedVariant,
   });
+
+  // Show password form if product has a password and user is not authenticated
+  if (productPassword && !isAuthenticated && !hasSessionAccess) {
+    return <PasswordProtectedView product={product} actionData={actionData} />;
+  }
 
   const {title, descriptionHtml} = product;
   const isPreorder = product.tags?.includes('preorder');
@@ -226,6 +281,76 @@ export default function Product() {
         }}
       />
     </div>
+  );
+}
+
+function PasswordProtectedView({product, actionData}) {
+  const productPassword = product.password?.value;
+  const [shouldShake, setShouldShake] = useState(false);
+
+  // Trigger shake animation when there's an error
+  useEffect(() => {
+    if (actionData?.error) {
+      setShouldShake(true);
+      // Reset shake state after animation completes
+      const timer = setTimeout(() => setShouldShake(false), 500);
+      return () => clearTimeout(timer);
+    }
+  }, [actionData]);
+
+  return (
+    <motion.div
+      className="password-protected-container"
+      key="password-protected-container"
+      initial={{opacity: 1}}
+      animate={{opacity: 1}}
+      exit={{opacity: 0}}
+    >
+      <motion.div
+        className="password-form-wrapper"
+        animate={
+          shouldShake
+            ? {
+                x: [0, -10, 10, -10, 10, 0],
+              }
+            : {}
+        }
+        transition={{
+          duration: 0.4,
+          ease: 'easeInOut',
+        }}
+      >
+        <div className="password-form-content">
+          <h2>Enter Access Code</h2>
+          <p>
+            Exclusive early access to Biche’s clean, effective, and elegantly
+            designed pet grooming essentials.
+          </p>
+
+          <Form method="post" className="password-form">
+            <input
+              type="hidden"
+              name="productPassword"
+              value={productPassword}
+            />
+            <input type="hidden" name="productHandle" value={product.handle} />
+            <div className="password-input-group">
+              <input
+                type="password"
+                name="password"
+                placeholder="Access Code"
+                required
+                autoFocus
+              />
+              <button type="submit">Enter</button>
+            </div>
+            {/* {actionData?.error && (
+              <p className="password-error">{actionData.error}</p>
+            )} */}
+          </Form>
+        </div>
+      </motion.div>
+    </motion.div>
   );
 }
 
@@ -378,7 +503,7 @@ function X({styles}) {
         d="M9.21272 8.74755C9.30243 8.83726 9.30243 8.98302 9.21272 9.07272C9.16788 9.11757 9.10879 9.13999 9.05014 9.13999C8.99148 9.13999 8.93241 9.11757 8.88755 9.07272L5.14 5.32517L1.39245 9.07272C1.3476 9.11757 1.28852 9.13999 1.22986 9.13999C1.17121 9.13999 1.11213 9.11757 1.06728 9.07272C0.977575 8.98302 0.977575 8.83726 1.06728 8.74755L4.81483 5L1.06728 1.25245C0.977575 1.16275 0.977575 1.01699 1.06728 0.927291C1.15698 0.837591 1.30274 0.837591 1.39244 0.927291L5.13999 4.67484L8.88754 0.927291C8.97724 0.837591 9.123 0.837591 9.2127 0.927291C9.3024 1.01699 9.3024 1.16275 9.2127 1.25245L5.46515 5L9.21272 8.74755Z"
         fill="black"
         stroke="black"
-        stroke-width="0.8"
+        strokeWidth="0.8"
       />
     </svg>
   );
@@ -451,8 +576,8 @@ function SVG() {
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M5.37325 3.25842L9.85965 2.17807e-05L0.886719 2.21729e-05L5.37325 3.25842Z"
         fill="#3C0707"
       />
@@ -593,6 +718,9 @@ const PRODUCT_FRAGMENT = `#graphql
     aboutTheFragrance: metafield(namespace: "custom", key: "about_the_fragrance") {
       value
     }
+    password: metafield(namespace: "custom", key: "password") {
+      value
+    }
     encodedVariantExistence
     encodedVariantAvailability
     options {
@@ -650,5 +778,6 @@ const PRODUCT_QUERY = `#graphql
 `;
 
 /** @typedef {import('@shopify/remix-oxygen').LoaderFunctionArgs} LoaderFunctionArgs */
+/** @typedef {import('@shopify/remix-oxygen').ActionFunctionArgs} ActionFunctionArgs */
 /** @template T @typedef {import('@remix-run/react').MetaFunction<T>} MetaFunction */
 /** @typedef {import('@shopify/remix-oxygen').SerializeFrom<typeof loader>} LoaderReturnData */
