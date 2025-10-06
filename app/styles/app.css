@@ -1148,11 +1148,11 @@ th {
   opacity: 0;
 }
 
-.product-item-image-wrapper:hover .secondary-image {
+.product-item-image-wrapper.has-secondary-image:hover .secondary-image {
   opacity: 1;
 }
 
-.product-item-image-wrapper:hover .primary-image {
+.product-item-image-wrapper.has-secondary-image:hover .primary-image {
   opacity: 0;
 }
 
@@ -1177,7 +1177,7 @@ th {
   top: 26px;
   right: 26px;
   z-index: 0;
-  padding: 8px 16px;
+  padding: 0.3125rem 0.625rem;
   background: transparent;
   border: 1px solid var(--color-balsamic);
   font-family: 'neue';
@@ -1232,7 +1232,7 @@ th {
   font-style: normal;
   font-weight: 400;
   line-height: 140%;
-  padding: 3px 6px;
+  padding: 0.3125rem 0.625rem;
   width: fit-content;
   display: flex;
   align-items: center;
@@ -1268,7 +1268,7 @@ th {
   background: transparent;
   border: none;
   font-family: 'neue';
-  font-size: 10px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 400;
   line-height: 140%;
@@ -1290,7 +1290,7 @@ th {
 .product-dropdown-content {
   padding-bottom: 16px;
   font-family: 'neue';
-  font-size: 10px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 700;
   line-height: 140%;
@@ -1309,7 +1309,7 @@ th {
 .product-dropdown-content li {
   margin-bottom: 0px;
   font-family: 'neue';
-  font-size: 10px;
+  font-size: 12px;
   line-height: 140%;
 }
 
@@ -1329,14 +1329,14 @@ th {
   font-weight: 600;
   margin: 0 0 4px 0;
   font-family: 'neue-bold';
-  font-size: 10px;
+  font-size: 12px;
   line-height: 140%;
 }
 
 .ingredient-description {
   margin: 0;
   font-family: 'neue';
-  font-size: 10px;
+  font-size: 12px;
   line-height: 140%;
 }
 
@@ -1346,7 +1346,7 @@ th {
 }
 
 .product-dropdown-content p {
-  font-size: 10px;
+  font-size: 12px;
   font-style: normal;
   font-weight: 700;
   line-height: 140%;

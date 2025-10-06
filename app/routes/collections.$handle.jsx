@@ -118,6 +118,9 @@ const PRODUCT_ITEM_FRAGMENT = `#graphql
     descriptionPLP: metafield(namespace: "custom", key: "description_plp") {
       value
     }
+    productBadge: metafield(namespace: "custom", key: "product_badge") {
+      value
+    }
     featuredImage {
       id
       altText

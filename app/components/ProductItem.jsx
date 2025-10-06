@@ -89,7 +89,7 @@ export function ProductItem({product, loading}) {
   const variantUrl = useVariantUrl(product.handle);
   const image = product.featuredImage;
   const secondImage = product.images?.nodes?.[1];
-  const isPreorder = product.tags?.includes('preorder');
+  const productBadgeText = product.productBadge?.value;
 
   const price = product.priceRange.minVariantPrice;
   const priceWithoutDecimals = Math.floor(parseFloat(price.amount));
@@ -114,7 +114,9 @@ export function ProductItem({product, loading}) {
       prefetch="intent"
       to={variantUrl}
     >
-      <div className="product-item-image-wrapper">
+      <div
+        className={`product-item-image-wrapper ${secondImage ? 'has-secondary-image' : ''}`}
+      >
         <Image
           alt={image?.altText || product.title}
           aspectRatio="1/1"
@@ -142,8 +144,8 @@ export function ProductItem({product, loading}) {
                 <p>{product.title}</p>
                 <p>${priceWithoutDecimals}</p>
               </div>
-              {isPreorder && (
-                <div className="product-preorder-badge">Preorder</div>
+              {productBadgeText && (
+                <div className="product-preorder-badge">{productBadgeText}</div>
               )}
             </div>
             {plpDescription && (
@@ -160,8 +162,8 @@ export function ProductItem({product, loading}) {
               <p>{product.title}</p>
               <p>${priceWithoutDecimals}</p>
             </div>
-            {isPreorder && (
-              <div className="product-preorder-badge">Preorder</div>
+            {productBadgeText && (
+              <div className="product-preorder-badge">{productBadgeText}</div>
             )}
             {plpDescription && (
               <div

@@ -177,6 +177,8 @@ export default function Product() {
   }
 
   const {title, descriptionHtml} = product;
+
+  const productBadgeText = product.productBadge?.value;
   const isPreorder = product.tags?.includes('preorder');
 
   const keyBenefits = parseRichText(product.Benefits?.value);
@@ -192,9 +194,9 @@ export default function Product() {
         <div className="product-title-price-container">
           <div className="product-title-price">
             <p>{title}</p>
-            {isPreorder && (
+            {productBadgeText && (
               <div className="product-preorder-badge-pdp">
-                Preorder, Ships June 2025
+                {productBadgeText}
               </div>
             )}
           </div>
@@ -719,6 +721,9 @@ const PRODUCT_FRAGMENT = `#graphql
       value
     }
     password: metafield(namespace: "custom", key: "password") {
+      value
+    }
+    productBadge: metafield(namespace: "custom", key: "product_badge") {
       value
     }
     encodedVariantExistence
