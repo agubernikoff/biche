@@ -374,7 +374,6 @@ function EarlyAccessPopUp({closePopUp, selectedVariant, image}) {
 
   function subscribe(email, btn, originalText) {
     if (!email) {
-      setSuccess(true);
       btn.innerText = 'Please Enter An Email';
       setTimeout(() => {
         btn.innerText = originalText;

@@ -1097,7 +1097,7 @@ th {
   gap: 17px;
 }
 .password-form-content > h2 {
-  font-family: 'Heldane Display';
+  font-family: 'heldane';
   font-size: 40px;
   font-style: normal;
   font-weight: 400;
@@ -1105,7 +1105,7 @@ th {
   margin: 0;
 }
 .password-form-content > p {
-  font-family: 'Helvetica Neue';
+  font-family: 'neue';
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -1115,8 +1115,13 @@ th {
   gap: 10px;
 }
 .password-input-group > input {
+  font-family: 'neue';
   padding: 10px 0;
   text-align: center;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%; /* 16.8px */
 }
 
 .product {
@@ -1408,6 +1413,10 @@ th {
   font-size: 12px;
   cursor: pointer;
 }
+.password-input-group > button {
+  padding: 12px 0;
+  line-height: 140%;
+}
 
 .product-form form button:hover,
 .password-input-group > button:hover {
@@ -1472,6 +1481,7 @@ th {
   width: 100%;
   display: flex;
   padding: 2rem;
+  gap: 2rem;
   position: relative;
   background: var(--color-eggshell);
   color: var(--rgb-balsamic);
@@ -1499,6 +1509,7 @@ th {
   font-size: 12px;
   cursor: pointer;
   padding: 0.5rem;
+  color: black;
 }
 .early-access-content-container {
   display: flex;
@@ -1508,7 +1519,7 @@ th {
   margin-block: auto;
 }
 .early-access-content-container > h3 {
-  font-family: 'Heldane Display';
+  font-family: 'heldane';
   font-size: 40px;
   font-style: normal;
   font-weight: 400;
@@ -1516,7 +1527,7 @@ th {
   margin: auto;
 }
 .early-access-content-container > p {
-  font-family: 'Helvetica Neue';
+  font-family: 'neue';
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
