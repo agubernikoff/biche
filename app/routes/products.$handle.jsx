@@ -374,7 +374,7 @@ function EarlyAccessPopUp({closePopUp, selectedVariant, image}) {
 
   function subscribe(email, btn, originalText) {
     if (!email) {
-      btn.innerText = 'Please Enter An Email';
+      btn.innerText = 'Please Enter A Valid Email';
       setTimeout(() => {
         btn.innerText = originalText;
       }, 1500);
@@ -382,7 +382,7 @@ function EarlyAccessPopUp({closePopUp, selectedVariant, image}) {
     }
     const payload = {
       data: {
-        type: 'back-in-stock-subscription',
+        type: 'subscription',
         attributes: {
           profile: {
             data: {
@@ -392,15 +392,12 @@ function EarlyAccessPopUp({closePopUp, selectedVariant, image}) {
               },
             },
           },
-          channels: ['EMAIL'],
         },
         relationships: {
-          variant: {
+          list: {
             data: {
-              type: 'catalog-variant',
-              id: `$shopify:::$default:::${
-                selectedVariant.id.split('ProductVariant/')[1]
-              }`,
+              type: 'list',
+              id: 'V9ZSHm',
             },
           },
         },
@@ -412,12 +409,12 @@ function EarlyAccessPopUp({closePopUp, selectedVariant, image}) {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        revision: '2023-12-15',
+        revision: '2025-04-15',
       },
       body: JSON.stringify(payload),
     };
     fetch(
-      'https://a.klaviyo.com/client/back-in-stock-subscriptions/?company_id=******',
+      'https://a.klaviyo.com/client/subscriptions/?company_id=Ws4Y78',
       requestOptions,
     )
       .then((result) => {
