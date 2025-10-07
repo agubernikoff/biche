@@ -69,7 +69,7 @@ export async function action({request, context}) {
  * @param {LoaderFunctionArgs} args
  */
 export async function loader(args) {
-  if (process.env.NODE_ENV !== 'development') return redirect('/');
+  // if (process.env.NODE_ENV !== 'development') return redirect('/');
   // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
 
@@ -324,10 +324,7 @@ function PasswordProtectedView({product, actionData}) {
       >
         <div className="password-form-content">
           <h2>Enter Access Code</h2>
-          <p>
-            Exclusive early access to Biche’s clean, effective, and elegantly
-            designed pet grooming essentials.
-          </p>
+          <p>Unlock early access to our debut products.</p>
 
           <Form method="post" className="password-form">
             <input
@@ -459,8 +456,8 @@ function EarlyAccessPopUp({closePopUp, selectedVariant, image}) {
               <>
                 <h3>Early Access</h3>
                 <p>
-                  Sign up for early access to our clean, effective, and
-                  elegantly designed pet grooming essentials, coming soon.
+                  Sign up to unlock early access to our debut products, coming
+                  soon.
                 </p>
                 <div className="ea-form">
                   <input

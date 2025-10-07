@@ -14,7 +14,7 @@ export const meta = () => {
  * @param {LoaderFunctionArgs} args
  */
 export async function loader(args) {
-  if (process.env.NODE_ENV !== 'development') return redirect('/');
+  // if (process.env.NODE_ENV !== 'development') return redirect('/');
   // Start fetching non-critical data without blocking time to first byte
   const deferredData = loadDeferredData(args);
 
