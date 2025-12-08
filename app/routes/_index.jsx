@@ -203,7 +203,7 @@ function FirstSection({data}) {
       }}
     >
       <div className="first-section-heading" style={{gridColumn: 'span 4'}}>
-        <p className="intro-heading">{data.heroTitle}</p>
+        <h1 className="intro-heading">{data.heroTitle}</h1>
       </div>
       <div className="first-section-heading" style={{gridColumn: 'span 4'}}>
         <p className="intro-text" style={{width: '75%', marginBottom: '2rem'}}>
@@ -231,10 +231,14 @@ function FirstSection({data}) {
         }}
       >
         <div style={{gridColumn: 'span 3'}}>
-          <img src={data.mainImage.asset.url} style={{width: '100%'}} />
+          <img src={data.mainImage.asset.url} style={{width: '100%'}} alt="" />
         </div>
         <div style={{gridColumn: '5 / 7'}}>
-          <img src={data.secondaryImage.asset.url} style={{width: '100%'}} />
+          <img
+            src={data.secondaryImage.asset.url}
+            style={{width: '100%'}}
+            alt=""
+          />
         </div>
         <div
           style={{
@@ -267,25 +271,13 @@ function OurStandards({data}) {
 }
 
 function OurStandardsCard({card}) {
-  const [hovered, setHovered] = useState(false);
   return (
-    <div
-      className="our-standards-home-card"
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
-    >
-      <img
-        src={card.image.asset.url}
-        style={{transition: 'all 300ms ease-in-out', opacity: hovered ? 0 : 1}}
-      />
-      <div
-        className="standard-card-text-container"
-        style={{transition: 'all 300ms ease-in-out', opacity: hovered ? 1 : 0}}
-      >
+    <div className="our-standards-home-card">
+      <img src={card.image.asset.url} alt="" />
+      <div className="standard-card-text-container">
         <p>{card.title}</p>
         <div>
           <p>{card.blurb}</p>
-          <Link to="/about#our-standards">Learn More</Link>
         </div>
       </div>
     </div>

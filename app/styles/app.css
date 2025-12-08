@@ -758,11 +758,7 @@ a.intro-text:hover {
   width: 100%;
 }
 .our-standards-home-card > div {
-  position: absolute;
-  inset: 0;
   display: flex;
-  /* z-index: -1; */
-  background: #fffbf8;
   flex-direction: column;
   justify-content: space-between;
   padding: 1rem;
