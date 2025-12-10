@@ -152,6 +152,7 @@ function OurStandards({data}) {
             className="intro-text"
             style={{
               color: '#3c0707',
+              padding: '.5rem',
               borderBottom: '1px solid #3c0707',
             }}
           >
