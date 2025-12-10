@@ -144,9 +144,19 @@ function OurStandards({data}) {
       <div className="about-text-container">
         <p className="intro-heading">{data.title}</p>
         <div className="bottom-section-text-container">
-          <div>
+          <div style={{marginBottom: '1rem'}}>
             <PortableText value={data.blurb} />
           </div>
+          <Link
+            to={'/pages/faq'}
+            className="intro-text"
+            style={{
+              color: '#3c0707',
+              borderBottom: '1px solid #3c0707',
+            }}
+          >
+            Learn More →
+          </Link>
         </div>
 
         <img src={monogram} alt="monogram: BNY" />
