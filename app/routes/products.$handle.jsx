@@ -161,9 +161,13 @@ export default function Product() {
     getAdjacentAndFirstAvailableVariants(product),
   );
 
+  // Remove default Title option from URL params
+  const selectedOptionsForUrl = selectedVariant.selectedOptions.filter(
+    (option) => !(option.name === 'Title' && option.value === 'Default Title'),
+  );
+
   // Sets the search param to the selected variant without navigation
-  // only when no search params are set in the url
-  useSelectedOptionInUrlParam(selectedVariant.selectedOptions);
+  useSelectedOptionInUrlParam(selectedOptionsForUrl);
 
   // Get the product options array
   const productOptions = getProductOptions({
