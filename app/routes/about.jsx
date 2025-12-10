@@ -8,6 +8,7 @@ import {ABOUT_QUERY} from '~/sanity/queries/comingSoonQuery';
 import PrimaryLogo from '~/assets/PrimaryLogo';
 import monogram from '~/assets/MONOGRAM.png';
 import {PortableText} from '@portabletext/react';
+import SanityInternalLink from '~/sanity/SanityInternalLink';
 
 /**
  * @type {MetaFunction}
@@ -145,19 +146,11 @@ function OurStandards({data}) {
         <p className="intro-heading">{data.title}</p>
         <div className="bottom-section-text-container">
           <div style={{marginBottom: '1rem'}}>
-            <PortableText value={data.blurb} />
+            <PortableText
+              value={data.blurb}
+              components={{marks: {linkInternal: SanityInternalLink}}}
+            />
           </div>
-          <Link
-            to={'/pages/faq'}
-            className="intro-text"
-            style={{
-              color: '#3c0707',
-              padding: '.5rem',
-              borderBottom: '1px solid #3c0707',
-            }}
-          >
-            Learn More →
-          </Link>
         </div>
 
         <img src={monogram} alt="monogram: BNY" />

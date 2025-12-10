@@ -29,7 +29,16 @@ export const ABOUT_QUERY = `*[_type == "about"][0]{
   ...,
   hero{...,image{...,asset->{url}}},
   quoteAndImage{...,image{...,asset->{url}}},
-  ourStandards{...,primaryImage{...,asset->{url}},squareImages[]{...,asset->{url}}},
+  ourStandards{...,blurb[]{
+      ...,
+      markDefs[]{
+        ...,
+        _type == "linkInternal" => {
+          "slug": @.reference->slug.current,
+          "type": @.reference->_type
+        }
+      }
+    },primaryImage{...,asset->{url}},squareImages[]{...,asset->{url}}},
   ourTeam{...,ourTeam[]{...,image{...,asset->{url}}}}
 }`;
 

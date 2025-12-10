@@ -1213,6 +1213,7 @@ th {
 .product-title-price {
   display: flex;
   justify-content: space-between;
+  gap: 1rem;
 }
 
 .product-title-price,
@@ -1223,6 +1224,9 @@ th {
   font-weight: 400;
   line-height: 120%;
   font-family: 'heldane';
+}
+.product-title-price p {
+  max-width: 400px;
 }
 
 .product-preorder-badge-pdp {
@@ -1237,6 +1241,8 @@ th {
   width: fit-content;
   display: flex;
   align-items: center;
+  flex-shrink: 0;
+  height: fit-content;
 }
 
 .product-descriptor {
@@ -1940,6 +1946,9 @@ th {
     width: 100vw;
   }
   .hero-image.right-image {
+    display: none;
+  }
+  .hero-logo {
     display: none;
   }
   .intro-section {
