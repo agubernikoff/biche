@@ -12,6 +12,7 @@ import {
 } from '@remix-run/react';
 import {useEffect} from 'react';
 import favicon from '~/assets/favicon.png';
+import mobileIcon from '~/assets/mobile_icon.jpg';
 import {FOOTER_QUERY, HEADER_QUERY} from '~/lib/fragments';
 import resetStyles from '~/styles/reset.css?url';
 import appStyles from '~/styles/app.css?url';
@@ -44,9 +45,14 @@ export function links() {
   ];
 }
 
-// Add this meta function for site-wide defaults
+/**
+ * @type {MetaFunction}
+ */
 export const meta = () => {
   return [
+    {title: 'Biche | Luxury Pet Grooming'},
+    {property: 'og:title', content: 'Biche | Luxury Pet Grooming'},
+    {property: 'og:image', content: mobileIcon},
     {
       name: 'description',
       content:
@@ -57,9 +63,11 @@ export const meta = () => {
       content:
         'Biche is a clean, vegan, and cruelty-free pet grooming brand. Dog-safe, human-loved, and veterinarian-approved.',
     },
+    {name: 'twitter:title', content: 'Biche | Luxury Pet Grooming'},
     {
-      property: 'og:type',
-      content: 'website',
+      name: 'twitter:description',
+      content:
+        'Biche is a clean, vegan, and cruelty-free pet grooming brand. Dog-safe, human-loved, and veterinarian-approved.',
     },
   ];
 };
