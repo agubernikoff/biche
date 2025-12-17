@@ -161,9 +161,9 @@ function Hero({data}) {
   return (
     <section className="hero-section" ref={ref}>
       <div className="hero-image left-image">
-        <img src={`${data.leftImage?.asset.url}/?w=900`} alt="Left visual" />
+        <img src={`${data.leftImage?.asset.url}`} alt="Left visual" />
       </div>
-      <HeroLogo url={`${data.logo?.asset.url}/?w=900`} />
+      <HeroLogo url={`${data.logo?.asset.url}`} />
       <div className="hero-image right-image">
         <img src={data.rightImage?.asset.url} alt="Right visual" />
       </div>
