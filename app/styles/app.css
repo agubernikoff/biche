@@ -910,6 +910,7 @@ a.intro-text:hover {
 .our-standards-about-images-container {
   display: flex;
   justify-content: space-between;
+  width: 50%;
 }
 .our-standards-about-square-images-container {
   display: flex;
