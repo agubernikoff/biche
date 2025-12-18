@@ -1839,7 +1839,7 @@ th {
 * media queries
 * --------------------------------------------------
 */
-@media (min-width: 500px) {
+@media (min-width: 768px) {
   .our-standards-about-square-images-container {
     gap: 2px;
   }
@@ -1888,7 +1888,7 @@ th {
   }
 }
 
-@media (max-width: 499px) {
+@media (max-width: 767px) {
   a:hover {
     text-decoration: none;
   }
@@ -2141,6 +2141,11 @@ th {
   }
   .our-standards-about-images-container {
     gap: 2px;
+    width: 100%;
+  }
+  .about-text-container:has(+ .our-standards-about-images-container)
+    > .bottom-section-text-container {
+    margin-bottom: 0;
   }
   .our-standards-about-square-images-container {
     height: fit-content;
@@ -2408,7 +2413,7 @@ th {
     opacity: 0.5;
   }
   .team-member-text-container > p {
-    font-size: 8px;
+    font-size: clamp(8px, 2vw, 13px);
   }
   .footer-newlsetter > p {
     font-size: 12px;
