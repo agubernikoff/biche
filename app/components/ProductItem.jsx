@@ -122,7 +122,7 @@ export function ProductItem({product, loading}) {
           aspectRatio="1/1"
           data={image}
           loading={loading}
-          sizes="(min-width: 45em) 400px, 100vw"
+          sizes="(min-width: 45em) 50vw, 100vw"
           className="product-image primary-image"
         />
         {secondImage && (
@@ -131,7 +131,7 @@ export function ProductItem({product, loading}) {
             aspectRatio="1/1"
             data={secondImage}
             loading={loading}
-            sizes="(min-width: 45em) 400px, 100vw"
+            sizes="(min-width: 45em) 50vw, 100vw"
             className="product-image secondary-image"
           />
         )}
