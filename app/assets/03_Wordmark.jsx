@@ -1,9 +1,9 @@
 export default function Wordmark({color}) {
   return (
     <svg
-      width="342"
-      height="84"
-      viewBox="0 0 342 84"
+      width="346"
+      height="88"
+      viewBox="0 0 346 88"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
