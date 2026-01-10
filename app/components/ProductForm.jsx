@@ -1,4 +1,6 @@
 import {Link, useNavigate} from '@remix-run/react';
+import {motion, useMotionValue, useSpring} from 'motion/react';
+import {useEffect} from 'react';
 import {AddToCartButton} from './AddToCartButton';
 import {useAside} from './Aside';
 
@@ -16,8 +18,48 @@ export function ProductForm({
 }) {
   const navigate = useNavigate();
   const {open} = useAside();
+
+  const targetY = useMotionValue(0);
+  const smoothY = useSpring(targetY, {
+    stiffness: 200,
+    damping: 30,
+    mass: 1,
+  });
+
+  useEffect(() => {
+    let animationFrame;
+    let lastScrollY = window.scrollY;
+    let velocity = 0;
+
+    const handleScroll = () => {
+      const currentScrollY = window.scrollY;
+      const scrollDiff = currentScrollY - lastScrollY;
+
+      // Update velocity based on scroll direction and speed
+      velocity = scrollDiff * 0.3;
+
+      // Apply the velocity offset
+      targetY.set(-velocity);
+
+      lastScrollY = currentScrollY;
+
+      // Gradually decelerate back to 0
+      if (animationFrame) cancelAnimationFrame(animationFrame);
+      animationFrame = requestAnimationFrame(() => {
+        targetY.set(0);
+      });
+    };
+
+    window.addEventListener('scroll', handleScroll, {passive: true});
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+      if (animationFrame) cancelAnimationFrame(animationFrame);
+    };
+  }, [targetY]);
+
   return (
-    <div className="product-form">
+    <motion.div className="product-form" style={{y: smoothY}}>
       {productOptions.map((option) => {
         // If there is only a single value in the option values, don't display the option
         if (option.optionValues.length === 1) return null;
@@ -129,7 +171,7 @@ export function ProductForm({
             : 'Sold out'
           : 'EARLY ACCESS'}
       </AddToCartButton>
-    </div>
+    </motion.div>
   );
 }
 
