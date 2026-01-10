@@ -2482,3 +2482,23 @@ th {
     margin-bottom: 220px;
   }
 }
+
+@media (max-width: 500px) {
+  .product-content-track {
+    display: flex;
+    flex-direction: column-reverse;
+    position: relative;
+    margin-top: -80px;
+    margin-bottom: 154px;
+  }
+
+  .product-descriptor {
+    margin-bottom: 94px;
+  }
+
+  .product-form {
+    position: sticky;
+    top: calc(97.5dvh - 54px);
+    margin-bottom: 0;
+  }
+}

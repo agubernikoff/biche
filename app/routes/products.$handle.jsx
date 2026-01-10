@@ -209,58 +209,60 @@ export default function Product() {
             compareAtPrice={selectedVariant?.compareAtPrice}
           /> */}
         </div>
-        <div
-          className="product-descriptor"
-          dangerouslySetInnerHTML={{__html: descriptionHtml}}
-        />
-        <div className="product-dropdowns">
-          {keyBenefits && (
-            <Expandable
-              title="KEY BENEFITS"
-              details={keyBenefits}
-              openSection={openDropdown}
-              toggleSection={toggleSection}
-            />
-          )}
-          {keyIngredients && (
-            <Expandable
-              title="KEY INGREDIENTS"
-              details={keyIngredients}
-              openSection={openDropdown}
-              toggleSection={toggleSection}
-            />
-          )}
-          {howToUse && (
-            <Expandable
-              title="HOW TO USE"
-              details={howToUse}
-              openSection={openDropdown}
-              toggleSection={toggleSection}
-            />
-          )}
-          {aboutFragrance && (
-            <Expandable
-              title="ABOUT THE FRAGRANCE"
-              details={aboutFragrance}
-              openSection={openDropdown}
-              toggleSection={toggleSection}
-            />
-          )}
-          {shipping && (
-            <Expandable
-              title="SHIPPING"
-              details={shipping}
-              openSection={openDropdown}
-              toggleSection={toggleSection}
-            />
-          )}
+        <div className="product-content-track">
+          <div
+            className="product-descriptor"
+            dangerouslySetInnerHTML={{__html: descriptionHtml}}
+          />
+          <div className="product-dropdowns">
+            {keyBenefits && (
+              <Expandable
+                title="KEY BENEFITS"
+                details={keyBenefits}
+                openSection={openDropdown}
+                toggleSection={toggleSection}
+              />
+            )}
+            {keyIngredients && (
+              <Expandable
+                title="KEY INGREDIENTS"
+                details={keyIngredients}
+                openSection={openDropdown}
+                toggleSection={toggleSection}
+              />
+            )}
+            {howToUse && (
+              <Expandable
+                title="HOW TO USE"
+                details={howToUse}
+                openSection={openDropdown}
+                toggleSection={toggleSection}
+              />
+            )}
+            {aboutFragrance && (
+              <Expandable
+                title="ABOUT THE FRAGRANCE"
+                details={aboutFragrance}
+                openSection={openDropdown}
+                toggleSection={toggleSection}
+              />
+            )}
+            {shipping && (
+              <Expandable
+                title="SHIPPING"
+                details={shipping}
+                openSection={openDropdown}
+                toggleSection={toggleSection}
+              />
+            )}
+          </div>
+          <ProductForm
+            productOptions={productOptions}
+            selectedVariant={selectedVariant}
+            isPreorder={isPreorder}
+            openEarlyAccess={() => setIsEAOpen(true)}
+          />
         </div>
-        <ProductForm
-          productOptions={productOptions}
-          selectedVariant={selectedVariant}
-          isPreorder={isPreorder}
-          openEarlyAccess={() => setIsEAOpen(true)}
-        />
       </div>
       <AnimatePresence>
         {isEAOpen ? (
