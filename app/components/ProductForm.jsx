@@ -144,7 +144,8 @@ export function ProductForm({
       })}
       <AddToCartButton
         disabled={
-          (!selectedVariant || !selectedVariant.availableForSale) && !isPreorder
+          false
+          // (!selectedVariant || !selectedVariant.availableForSale) && !isPreorder
         }
         onClick={(e) => {
           if (isPreorder) {

@@ -1,5 +1,6 @@
 import {CartForm, Money} from '@shopify/hydrogen';
-import {useRef} from 'react';
+import {useRef, useState} from 'react';
+import {motion} from 'motion/react';
 
 /**
  * @param {CartSummaryProps}
@@ -7,10 +8,10 @@ import {useRef} from 'react';
 export function CartSummary({cart, layout}) {
   const className =
     layout === 'page' ? 'cart-summary-page' : 'cart-summary-aside';
+  const [isOpen, setIsOpen] = useState(false);
 
   return (
     <div aria-labelledby="cart-summary" className={className}>
-      <h4>Totals</h4>
       <dl className="cart-subtotal">
         <dt>Subtotal</dt>
         <dd>
@@ -21,8 +22,55 @@ export function CartSummary({cart, layout}) {
           )}
         </dd>
       </dl>
-      <CartDiscounts discountCodes={cart.discountCodes} />
-      <CartGiftCard giftCardCodes={cart.appliedGiftCards} />
+      <p className="cart-subtotal">
+        Taxes and shipping calculated at checkout.
+      </p>
+      {/* <motion.div
+        style={{position: 'relative', overflow: 'hidden'}}
+        initial={{height: 0, width: 0}}
+        animate={{
+          height: isOpen ? 'auto' : 0,
+          width: isOpen ? 'auto' : 0,
+        }}
+        transition={{duration: 0.3, ease: 'easeInOut'}}
+      >
+        <CartDiscounts discountCodes={cart.discountCodes} />
+        <CartGiftCard giftCardCodes={cart.appliedGiftCards} />
+      </motion.div>
+      <div
+        style={{
+          position: 'relative',
+          width: '100%',
+          height: '24px',
+        }}
+      >
+        <motion.button
+          onClick={() => setIsOpen(!isOpen)}
+          layout
+          style={{
+            position: 'absolute',
+            left: isOpen ? 'auto' : 0,
+            right: isOpen ? 0 : 'auto',
+            width: 'fit-content',
+          }}
+          animate={{left: isOpen ? 'auto' : 0, right: isOpen ? 0 : 'auto'}}
+          transition={{duration: 0.3, ease: 'easeInOut'}}
+          aria-label={isOpen ? 'Collapse' : 'Expand'}
+        >
+          <motion.svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            animate={{rotate: isOpen ? 180 : 0}}
+            transition={{duration: 0.3}}
+          >
+            <polyline points="6 9 12 15 18 9" />
+          </motion.svg>
+        </motion.button>
+      </div> */}
       <CartCheckoutActions checkoutUrl={cart.checkoutUrl} />
     </div>
   );
@@ -35,8 +83,8 @@ function CartCheckoutActions({checkoutUrl}) {
 
   return (
     <div>
-      <a href={checkoutUrl} target="_self">
-        <p>Continue to Checkout &rarr;</p>
+      <a href={checkoutUrl} target="_self" className="checkout-btn">
+        Checkout
       </a>
       <br />
     </div>
@@ -72,7 +120,7 @@ function CartDiscounts({discountCodes}) {
 
       {/* Show an input to apply a discount */}
       <UpdateDiscountForm discountCodes={codes}>
-        <div>
+        <div className="discount-and-gift-card">
           <input type="text" name="discountCode" placeholder="Discount code" />
           &nbsp;
           <button type="submit">Apply</button>
@@ -146,7 +194,7 @@ function CartGiftCard({giftCardCodes}) {
         giftCardCodes={appliedGiftCardCodes.current}
         saveAppliedCode={saveAppliedCode}
       >
-        <div>
+        <div className="discount-and-gift-card">
           <input
             type="text"
             name="giftCardCode"
