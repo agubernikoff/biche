@@ -133,7 +133,8 @@ function Hero({data}) {
       header
         .querySelectorAll('path')
         .forEach((item) => (item.style.fill = 'var(--color-balsamic)'));
-      header.querySelector('p').style.color = 'var(--color-balsamic)';
+      const p = header.querySelector('p');
+      if (p) p.style.color = 'var(--color-balsamic)';
       header.querySelector('.header-menu-mobile-toggle').style.color =
         'var(--color-balsamic)';
       root.style.setProperty(
@@ -148,7 +149,8 @@ function Hero({data}) {
       header
         .querySelectorAll('path')
         .forEach((item) => (item.style.fill = 'var(--color-eggshell)'));
-      header.querySelector('p').style.color = 'var(--color-eggshell)';
+      const p = header.querySelector('p');
+      if (p) p.style.color = 'var(--color-eggshell)';
       header.querySelector('.header-menu-mobile-toggle').style.color =
         'var(--color-eggshell)';
       root.style.setProperty(

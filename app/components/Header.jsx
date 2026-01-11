@@ -80,7 +80,7 @@ export function HeaderMenu({menu, viewport}) {
 
         // if the url is internal, we strip the domain
         const url = item.reference?.slug || item.path;
-        return <HeaderMenuItem url={url} item={item} close={close} />;
+        return <HeaderMenuItem key={item._key} url={url} item={item} close={close} />;
       })}
     </nav>
   );
@@ -92,7 +92,6 @@ function HeaderMenuItem({item, url, close}) {
   return (
     <NavLink
       className="header-menu-item"
-      key={item._key}
       onClick={close}
       prefetch="intent"
       style={activeLinkStyle}
@@ -234,7 +233,7 @@ function CartBadge({count, inAside}) {
           gap: '0.25rem',
         }}
       >
-        <AnimatePresence mode="wait" initial={false}>
+        <AnimatePresence mode="popLayout" initial={false}>
           {isOpen && !inAside ? (
             <motion.span
               key="close"
@@ -245,6 +244,7 @@ function CartBadge({count, inAside}) {
                 display: 'inline-flex',
                 alignItems: 'center',
                 gap: '0.25rem',
+                opacity: 1,
               }}
             >
               {'Close '}
@@ -269,6 +269,7 @@ function CartBadge({count, inAside}) {
               initial={{opacity: 0}}
               animate={{opacity: 1}}
               exit={{opacity: 0}}
+              style={{opacity: 1}}
             >
               {`Bag — ${count === null ? 0 : count}`}
             </motion.span>

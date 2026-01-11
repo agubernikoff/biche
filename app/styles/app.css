@@ -352,6 +352,11 @@ button.reset:hover:not(:has(> *)) {
 .header-menu-item:hover {
   text-decoration: none;
 }
+.header-menu-item * {
+  stroke: currentColor;
+  fill: currentColor;
+  stroke-width: 0;
+}
 .header-hover-indicator {
   position: absolute;
   bottom: 0;
