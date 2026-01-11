@@ -130,6 +130,7 @@ aside main {
 }
 aside#cart main {
   margin-top: 0;
+  margin-inline: 28px;
 }
 aside#mobile main {
   overflow: scroll;
@@ -520,7 +521,7 @@ ul:has(.cart-line) {
   bottom: 0;
   padding-top: 0.75rem;
   position: absolute;
-  width: calc(var(--aside-width) - 40px);
+  width: calc(var(--aside-width) - 56px);
 }
 
 .cart-line-quantity,

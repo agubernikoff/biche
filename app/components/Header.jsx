@@ -129,7 +129,7 @@ function HeaderCtas({isLoggedIn, cart}) {
         </Suspense>
       </NavLink>
       <SearchToggle /> */}
-      <CartToggle cart={cart} layoutId="cart-toggle" />
+      <CartToggle cart={cart} />
     </nav>
   );
 }
@@ -203,9 +203,9 @@ function SearchToggle() {
 }
 
 /**
- * @param {{count: number | null, inAside: boolean, layoutId: string | undefined}}
+ * @param {{count: number | null, inAside: boolean}}
  */
-function CartBadge({count, inAside, layoutId}) {
+function CartBadge({count, inAside}) {
   const {open, close, type} = useAside();
   const isOpen = type === 'cart';
   const {publish, shop, cart, prevCart} = useAnalytics();
@@ -241,7 +241,6 @@ function CartBadge({count, inAside, layoutId}) {
               initial={{opacity: 0}}
               animate={{opacity: 1}}
               exit={{opacity: 0}}
-              layoutId={layoutId ? layoutId : undefined}
               style={{
                 display: 'inline-flex',
                 alignItems: 'center',
@@ -270,11 +269,11 @@ function CartBadge({count, inAside, layoutId}) {
               initial={{opacity: 0}}
               animate={{opacity: 1}}
               exit={{opacity: 0}}
-              layoutId={inAside ? 'cart-toggle' : undefined}
             >
               {`Bag — ${count === null ? 0 : count}`}
             </motion.span>
           )}
+        </AnimatePresence>
       </span>
     </a>
   );
@@ -283,26 +282,20 @@ function CartBadge({count, inAside, layoutId}) {
 /**
  * @param {Pick<HeaderProps, 'cart'>}
  */
-export function CartToggle({cart, inAside, layoutId}) {
+export function CartToggle({cart, inAside}) {
   return (
     <Suspense fallback={<CartBadge count={null} />}>
       <Await resolve={cart}>
-        <CartBanner inAside={inAside} layoutId={layoutId} />
+        <CartBanner inAside={inAside} />
       </Await>
     </Suspense>
   );
 }
 
-function CartBanner({inAside, layoutId}) {
+function CartBanner({inAside}) {
   const originalCart = useAsyncValue();
   const cart = useOptimisticCart(originalCart);
-  return (
-    <CartBadge
-      count={cart?.totalQuantity ?? 0}
-      inAside={inAside}
-      layoutId={layoutId}
-    />
-  );
+  return <CartBadge count={cart?.totalQuantity ?? 0} inAside={inAside} />;
 }
 
 const FALLBACK_HEADER_MENU = {
