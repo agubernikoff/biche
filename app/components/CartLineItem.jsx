@@ -193,7 +193,6 @@ function Svg() {
           filterUnits="userSpaceOnUse"
           // color-interpolation-filters="sRGB"
         >
-          <feFlood f result="BackgroundImageFix" />
           <feColorMatrix
             in="SourceAlpha"
             type="matrix"

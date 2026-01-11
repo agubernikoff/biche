@@ -41,9 +41,8 @@ export function Header({
           >
             <Wordmark color="var(--color-balsamic)" />
           </NavLink>
-          <div className="header-spacer" />
-          <p>{settings.menu.callout}</p>
-          {/* <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} /> */}
+          {/* <p>{settings.menu.callout}</p> */}
+          <HeaderCtas isLoggedIn={isLoggedIn} cart={cart} />
         </div>
       </div>
       {/* <div className="backdrop-edge"></div> */}
@@ -122,27 +121,74 @@ function HeaderMenuItem({item, url, close}) {
 function HeaderCtas({isLoggedIn, cart}) {
   return (
     <nav className="header-ctas" role="navigation">
-      <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
+      {/* <NavLink prefetch="intent" to="/account" style={activeLinkStyle}>
         <Suspense fallback="Sign in">
           <Await resolve={isLoggedIn} errorElement="Sign in">
             {(isLoggedIn) => (isLoggedIn ? 'Account' : 'Sign in')}
           </Await>
         </Suspense>
       </NavLink>
-      <SearchToggle />
-      <CartToggle cart={cart} />
+      <SearchToggle /> */}
+      <CartToggle cart={cart} layoutId="cart-toggle" />
     </nav>
   );
 }
 
 function HeaderMenuMobileToggle() {
-  const {open} = useAside();
+  const {open, close, type} = useAside();
+  const isOpen = type === 'mobile';
+
   return (
     <button
       className="header-menu-mobile-toggle reset"
-      onClick={() => open('mobile')}
+      onClick={() => (isOpen ? close() : open('mobile'))}
     >
-      <h3>☰</h3>
+      <h3>
+        <svg
+          width="24"
+          height="13"
+          viewBox="0 0 24 13"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <g>
+            <motion.line
+              y1="0.5"
+              x2="24"
+              y2="0.5"
+              stroke="currentColor"
+              animate={{
+                rotate: isOpen ? 45 : 0,
+                y: isOpen ? 5.79 : 0,
+              }}
+              transition={{duration: 0.3, ease: 'easeInOut'}}
+              style={{originX: '50%', originY: '50%'}}
+            />
+            <motion.line
+              y1="6.28955"
+              x2="24"
+              y2="6.28955"
+              stroke="currentColor"
+              animate={{
+                opacity: isOpen ? 0 : 1,
+              }}
+              transition={{duration: 0.2}}
+            />
+            <motion.line
+              y1="12.0791"
+              x2="24"
+              y2="12.0791"
+              stroke="currentColor"
+              animate={{
+                rotate: isOpen ? -45 : 0,
+                y: isOpen ? -5.79 : 0,
+              }}
+              transition={{duration: 0.3, ease: 'easeInOut'}}
+              style={{originX: '50%', originY: '50%'}}
+            />
+          </g>
+        </svg>
+      </h3>
     </button>
   );
 }
@@ -157,10 +203,11 @@ function SearchToggle() {
 }
 
 /**
- * @param {{count: number | null}}
+ * @param {{count: number | null, inAside: boolean, layoutId: string | undefined}}
  */
-function CartBadge({count}) {
-  const {open} = useAside();
+function CartBadge({count, inAside, layoutId}) {
+  const {open, close, type} = useAside();
+  const isOpen = type === 'cart';
   const {publish, shop, cart, prevCart} = useAnalytics();
 
   return (
@@ -168,7 +215,8 @@ function CartBadge({count}) {
       href="/cart"
       onClick={(e) => {
         e.preventDefault();
-        open('cart');
+        if (isOpen) close();
+        else open('cart');
         publish('cart_viewed', {
           cart,
           prevCart,
@@ -176,8 +224,58 @@ function CartBadge({count}) {
           url: window.location.href || '',
         });
       }}
+      className="header-menu-item"
     >
-      Cart {count === null ? <span>&nbsp;</span> : count}
+      <span
+        style={{
+          display: 'inline-flex',
+          justifyContent: 'center',
+          alignItems: 'center',
+          gap: '0.25rem',
+        }}
+      >
+        <AnimatePresence mode="popLayout">
+          {isOpen && !inAside ? (
+            <motion.span
+              key="close"
+              initial={{opacity: 0}}
+              animate={{opacity: 1}}
+              exit={{opacity: 0}}
+              layoutId={layoutId ? layoutId : undefined}
+              style={{
+                display: 'inline-flex',
+                alignItems: 'center',
+                gap: '0.25rem',
+              }}
+            >
+              {'Close '}
+              <svg
+                width="17"
+                height="14"
+                viewBox="0 0 17 14"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M3.48535 0.687988L8.67188 5.87451L13.8584 0.687988H16.4766L10.1338 7.02979L9.98047 7.18408L10.1338 7.3374L16.4766 13.6792H13.8584L8.67188 8.49268L3.48535 13.6792H0.867188L7.3623 7.18408L7.20898 7.02979L0.867188 0.687988H3.48535Z"
+                  fill="#3C0707"
+                  stroke="white"
+                  strokeWidth="0.434215"
+                />
+              </svg>
+            </motion.span>
+          ) : (
+            <motion.span
+              key="bag"
+              initial={{opacity: 0}}
+              animate={{opacity: 1}}
+              exit={{opacity: 0}}
+              layoutId={inAside ? 'cart-toggle' : undefined}
+            >
+              {`Bag — ${count === null ? 0 : count}`}
+            </motion.span>
+          )}
+      </span>
     </a>
   );
 }
@@ -185,20 +283,26 @@ function CartBadge({count}) {
 /**
  * @param {Pick<HeaderProps, 'cart'>}
  */
-function CartToggle({cart}) {
+export function CartToggle({cart, inAside, layoutId}) {
   return (
     <Suspense fallback={<CartBadge count={null} />}>
       <Await resolve={cart}>
-        <CartBanner />
+        <CartBanner inAside={inAside} layoutId={layoutId} />
       </Await>
     </Suspense>
   );
 }
 
-function CartBanner() {
+function CartBanner({inAside, layoutId}) {
   const originalCart = useAsyncValue();
   const cart = useOptimisticCart(originalCart);
-  return <CartBadge count={cart?.totalQuantity ?? 0} />;
+  return (
+    <CartBadge
+      count={cart?.totalQuantity ?? 0}
+      inAside={inAside}
+      layoutId={layoutId}
+    />
+  );
 }
 
 const FALLBACK_HEADER_MENU = {

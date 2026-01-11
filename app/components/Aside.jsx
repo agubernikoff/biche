@@ -64,9 +64,6 @@ export function Aside({children, heading, type}) {
               />
             </svg>
           </button>
-          <button className="header-logo" onClick={close}>
-            <Wordmark color="var(--color-balsamic)" />
-          </button>
           <div className="header-spacer" />
         </header>
         <main>{children}</main>

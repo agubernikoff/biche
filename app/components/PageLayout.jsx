@@ -2,7 +2,7 @@ import {Await, Link, NavLink} from '@remix-run/react';
 import {Suspense, useId} from 'react';
 import {Aside} from '~/components/Aside';
 import {Footer} from '~/components/Footer';
-import {Header, HeaderMenu} from '~/components/Header';
+import {CartToggle, Header, HeaderMenu} from '~/components/Header';
 import {CartMain} from '~/components/CartMain';
 import {
   SEARCH_ENDPOINT,
@@ -71,7 +71,19 @@ function CartAside({cart}) {
       <Suspense fallback={<p>Loading cart ...</p>}>
         <Await resolve={cart}>
           {(cart) => {
-            return <CartMain cart={cart} layout="aside" />;
+            return (
+              <>
+                <div className="aside-header">
+                  <CartToggle
+                    cart={cart}
+                    inAside={true}
+                    layoutId="cart-toggle"
+                  />
+                  <CartToggle cart={cart} inAside={false} />
+                </div>
+                <CartMain cart={cart} layout="aside" />
+              </>
+            );
           }}
         </Await>
       </Suspense>
