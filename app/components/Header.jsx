@@ -234,7 +234,7 @@ function CartBadge({count, inAside}) {
           gap: '0.25rem',
         }}
       >
-        <AnimatePresence mode="popLayout">
+        <AnimatePresence mode="popLayout" initial={false}>
           {isOpen && !inAside ? (
             <motion.span
               key="close"
