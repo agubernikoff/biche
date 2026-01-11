@@ -1,4 +1,5 @@
 import {createContext, useContext, useEffect, useState} from 'react';
+import {useLocation} from '@remix-run/react';
 import Wordmark from '~/assets/03_Wordmark';
 import logo from '../assets/Isolation_Mode.png';
 import xlogo from '../assets/Menu.png';
@@ -76,6 +77,11 @@ const AsideContext = createContext(null);
 
 Aside.Provider = function AsideProvider({children}) {
   const [type, setType] = useState('closed');
+  const location = useLocation();
+
+  useEffect(() => {
+    setType('closed');
+  }, [location]);
 
   return (
     <AsideContext.Provider
