@@ -8,6 +8,7 @@
   --color-light: #fff;
   --rgb-balsamic: 60, 7, 7;
   --color-balsamic: rgb(var(--rgb-balsamic));
+  --rgb-eggshell: 255, 251, 248;
   --color-eggshell: #fffbf8;
   --header-hover-indicator-color: rgb(var(--rgb-balsamic));
   --biche-palette-stroke: #bfadad;
@@ -246,7 +247,7 @@ button.reset:hover:not(:has(> *)) {
   padding: 0 1rem;
   position: sticky;
   top: 0;
-  z-index: 1;
+  z-index: 10;
   --thickness: 4px;
   background: hsl(0deg 0% 100% / 0.95);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
@@ -2025,6 +2026,32 @@ th {
 }
 
 @media (max-width: 767px) {
+  body:has(.overlay.expanded > aside#cart) .header,
+  body:has(.overlay.expanded > aside#mobile) .header {
+    background: var(--color-eggshell) !important;
+    box-shadow: none !important;
+  }
+  body:has(.overlay.expanded > aside#cart) .header .header-menu-item,
+  body:has(.overlay.expanded > aside#mobile) .header .header-menu-item,
+  body:has(.overlay.expanded > aside#cart) .header .header-menu-mobile-toggle,
+  body:has(.overlay.expanded > aside#mobile) .header .header-menu-mobile-toggle,
+  body:has(.overlay.expanded > aside#mobile) .header-logo path,
+  body:has(.overlay.expanded > aside#cart) .header-logo path {
+    color: var(--color-balsamic) !important;
+    fill: var(--color-balsamic) !important;
+  }
+  body:has(.overlay.expanded > aside#cart) .header-content > p,
+  body:has(.overlay.expanded > aside#mobile) .header-content > p {
+    color: var(--color-balsamic) !important;
+  }
+  body:has(.overlay.expanded > aside#cart),
+  body:has(.overlay.expanded > aside#mobile) {
+    --header-hover-indicator-color: var(--color-balsamic) !important;
+  }
+  .overlay.expanded:has(> aside#cart),
+  .overlay.expanded:has(> aside#mobile) {
+    background: transparent;
+  }
   aside#cart main {
     margin-top: 36px;
   }
