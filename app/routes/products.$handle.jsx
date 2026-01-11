@@ -152,6 +152,7 @@ export default function Product() {
   }
 
   const {product} = data;
+  console.log(product);
   const productPassword = product.password?.value;
   const hasSessionAccess = data.hasAccess;
 

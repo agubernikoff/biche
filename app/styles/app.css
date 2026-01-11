@@ -247,7 +247,7 @@ button.reset:hover:not(:has(> *)) {
   padding: 0 1rem;
   position: sticky;
   top: 0;
-  z-index: 10;
+  z-index: 1;
   --thickness: 4px;
   background: hsl(0deg 0% 100% / 0.95);
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.05);
@@ -2030,6 +2030,7 @@ th {
   body:has(.overlay.expanded > aside#mobile) .header {
     background: var(--color-eggshell) !important;
     box-shadow: none !important;
+    z-index: 10;
   }
   body:has(.overlay.expanded > aside#cart) .header .header-menu-item,
   body:has(.overlay.expanded > aside#mobile) .header .header-menu-item,
