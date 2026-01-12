@@ -1194,6 +1194,12 @@ th {
   margin-top: calc(var(--header-height) + 25px);
 }
 
+@media (min-width: 768px) {
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
 .product-item img {
   height: auto;
   width: 100%;
