@@ -2717,6 +2717,12 @@ th {
   .product-form {
     margin-bottom: 220px;
   }
+  .cart-line-quantity form button span {
+    color: black;
+  }
+  .cart-line-quantity p {
+    width: 20px;
+  }
 }
 
 @media (max-width: 500px) {
