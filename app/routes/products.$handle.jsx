@@ -205,10 +205,10 @@ export default function Product() {
               </div>
             )}
           </div>
-          {/* <ProductPrice
+          <ProductPrice
             price={selectedVariant?.price}
             compareAtPrice={selectedVariant?.compareAtPrice}
-          /> */}
+          />
         </div>
         <div className="product-content-track">
           <div
