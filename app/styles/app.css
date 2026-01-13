@@ -2718,7 +2718,7 @@ th {
     margin-bottom: 220px;
   }
   .cart-line-quantity form button span {
-    color: black;
+    color: var(--color-balsamic);
   }
   .cart-line-quantity p {
     width: 20px;

@@ -80,7 +80,9 @@ export function HeaderMenu({menu, viewport}) {
 
         // if the url is internal, we strip the domain
         const url = item.reference?.slug || item.path;
-        return <HeaderMenuItem key={item._key} url={url} item={item} close={close} />;
+        return (
+          <HeaderMenuItem key={item._key} url={url} item={item} close={close} />
+        );
       })}
     </nav>
   );
@@ -231,6 +233,7 @@ function CartBadge({count, inAside}) {
           justifyContent: 'center',
           alignItems: 'center',
           gap: '0.25rem',
+          strokeWidth: '1px',
         }}
       >
         <AnimatePresence mode="popLayout" initial={false}>
@@ -245,22 +248,36 @@ function CartBadge({count, inAside}) {
                 alignItems: 'center',
                 gap: '0.25rem',
                 opacity: 1,
+                strokeWidth: '1px',
               }}
             >
               {'Close '}
               <svg
-                width="17"
-                height="14"
-                viewBox="0 0 17 14"
+                width="24"
+                height="13"
+                viewBox="0 0 24 13"
                 fill="none"
                 xmlns="http://www.w3.org/2000/svg"
+                style={{strokeWidth: '1px'}}
               >
-                <path
-                  d="M3.48535 0.687988L8.67188 5.87451L13.8584 0.687988H16.4766L10.1338 7.02979L9.98047 7.18408L10.1338 7.3374L16.4766 13.6792H13.8584L8.67188 8.49268L3.48535 13.6792H0.867188L7.3623 7.18408L7.20898 7.02979L0.867188 0.687988H3.48535Z"
-                  fill="#3C0707"
-                  stroke="white"
-                  strokeWidth="0.434215"
-                />
+                <g>
+                  <line
+                    y1="0.5"
+                    x2="24"
+                    y2="0.5"
+                    stroke="currentColor"
+                    transform="translate(0, 5.79) rotate(45 12 0.5)"
+                    style={{strokeWidth: '1px'}}
+                  />
+                  <line
+                    y1="12.0791"
+                    x2="24"
+                    y2="12.0791"
+                    stroke="currentColor"
+                    transform="translate(0, -5.79) rotate(-45 12 12.0791)"
+                    style={{strokeWidth: '1px'}}
+                  />
+                </g>
               </svg>
             </motion.span>
           ) : (
