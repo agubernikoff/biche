@@ -29,7 +29,7 @@ export const homeType = defineField({
         {
           name: 'introText',
           title: 'Intro Text',
-          type: 'text',
+          type: 'portableTextSimple',
         },
         {
           name: 'mainImage',
