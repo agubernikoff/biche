@@ -1,6 +1,6 @@
 import {HomeIcon} from '@sanity/icons'
 import {defineArrayMember, defineField} from 'sanity'
-import { GROUPS } from '../../constants'
+import {GROUPS} from '../../constants'
 
 const TITLE = 'Home'
 
@@ -17,48 +17,76 @@ export const homeType = defineField({
       group: 'editorial',
     }),
     defineField({
-      name:'firstSection',
-      type:'object',
-      group:'editorial',
-      fields:[{
-        name: 'heroTitle',
-        title: 'Hero Title',
-        type: 'string',
+      name: 'firstSection',
+      type: 'object',
+      group: 'editorial',
+      fields: [
+        {
+          name: 'heroTitle',
+          title: 'Hero Title',
+          type: 'string',
         },
-      {
-        name: 'introText',
-        title: 'Intro Text',
-        type: 'text',
-      },
-      {
-        name: 'mainImage',
-        title: 'Main Image',
-        type: 'image',
-        options: {hotspot: true},
-      },
-      {
-        name: 'secondaryImage',
-        title: 'Secondary Image',
-        type: 'image',
-        options: {hotspot: true},
-      },
-    ]
+        {
+          name: 'introText',
+          title: 'Intro Text',
+          type: 'text',
+        },
+        {
+          name: 'mainImage',
+          title: 'Main Image',
+          type: 'object',
+          fields: [
+            {
+              name: 'image',
+              title: 'Image',
+              type: 'image',
+              options: {hotspot: true},
+            },
+            {
+              name: 'altText',
+              title: 'Alt Text',
+              type: 'string',
+            },
+            {name: 'link', type: 'linkInternal'},
+          ],
+        },
+        {
+          name: 'secondaryImage',
+          title: 'Secondary Image',
+          type: 'object',
+          fields: [
+            {
+              name: 'image',
+              title: 'Image',
+              type: 'image',
+              options: {hotspot: true},
+            },
+            {
+              name: 'altText',
+              title: 'Alt Text',
+              type: 'string',
+            },
+            {name: 'link', type: 'linkInternal'},
+          ],
+        },
+      ],
     }),
     defineField({
-      name:'ourStandards',
-      title:'Our Standards',
-      type:'object',
-      group:'editorial',
-      fields:[{
-        name: 'title',
-        title: 'Title',
-        type: 'string',
+      name: 'ourStandards',
+      title: 'Our Standards',
+      type: 'object',
+      group: 'editorial',
+      fields: [
+        {
+          name: 'title',
+          title: 'Title',
+          type: 'string',
         },
         {
           name: 'cards',
           title: 'Cards',
           type: 'array',
-          validation: Rule => Rule.length(3).error('Must have exactly 3 cards'),
+          validation: (Rule) => Rule.length(3).error('Must have exactly 3 cards'),
           of: [
             defineArrayMember({
               type: 'object',
@@ -68,59 +96,59 @@ export const homeType = defineField({
                   title: 'Image',
                   type: 'image',
                   options: {
-                    hotspot: true
-                  }
+                    hotspot: true,
+                  },
                 }),
                 defineField({
                   name: 'title',
                   title: 'Title',
-                  type: 'string'
+                  type: 'string',
                 }),
                 defineField({
                   name: 'blurb',
                   title: 'Short Blurb',
-                  type: 'text'
-                })
-              ]
-            })
-          ]
-        }
-      ]
+                  type: 'text',
+                }),
+              ],
+            }),
+          ],
+        },
+      ],
     }),
     defineField({
-      name:'bottomSection',
-      type:'object',
-      group:'editorial',
-      fields:[
+      name: 'bottomSection',
+      type: 'object',
+      group: 'editorial',
+      fields: [
         {
-          name:'bannerImage',
-          type:'image',
+          name: 'bannerImage',
+          type: 'image',
           options: {
-            hotspot: true
-          }
+            hotspot: true,
+          },
         },
         defineField({
           name: 'title',
           title: 'Title',
-          type: 'string'
+          type: 'string',
         }),
         {
-          name:'blurb',
-          type: 'portableTextSimple'
-        }
-      ]
+          name: 'blurb',
+          type: 'portableTextSimple',
+        },
+      ],
     }),
     defineField({
       name: 'modules',
       type: 'array',
       of: [
-        defineArrayMember({ type: 'accordion' }),
-        defineArrayMember({ type: 'callout' }),
-        defineArrayMember({ type: 'grid' }),
-        defineArrayMember({ type: 'images' }),
-        defineArrayMember({ type: 'imageWithProductHotspots', title: 'Image with Hotspots' }),
-        defineArrayMember({ type: 'instagram' }),
-        defineArrayMember({ type: 'products' }),
+        defineArrayMember({type: 'accordion'}),
+        defineArrayMember({type: 'callout'}),
+        defineArrayMember({type: 'grid'}),
+        defineArrayMember({type: 'images'}),
+        defineArrayMember({type: 'imageWithProductHotspots', title: 'Image with Hotspots'}),
+        defineArrayMember({type: 'instagram'}),
+        defineArrayMember({type: 'products'}),
       ],
       group: 'editorial',
     }),

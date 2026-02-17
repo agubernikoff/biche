@@ -110,10 +110,10 @@ export default function Homepage() {
 
   return (
     <div className="home">
-      <Hero data={data.sanityData.hero} />
-      <FirstSection data={data.sanityData.firstSection} />
-      <OurStandards data={data.sanityData.ourStandards} />
-      <BottomSection data={data.sanityData.bottomSection} />
+      <Hero data={data?.sanityData?.hero} />
+      <FirstSection data={data?.sanityData?.firstSection} />
+      <OurStandards data={data?.sanityData?.ourStandards} />
+      <BottomSection data={data?.sanityData?.bottomSection} />
     </div>
   );
 }
@@ -163,11 +163,11 @@ function Hero({data}) {
   return (
     <section className="hero-section" ref={ref}>
       <div className="hero-image left-image">
-        <img src={`${data.leftImage?.asset.url}`} alt="Left visual" />
+        <img src={`${data?.leftImage?.asset?.url}`} alt="Left visual" />
       </div>
-      <HeroLogo url={`${data.logo?.asset.url}`} />
+      <HeroLogo url={`${data?.logo?.asset?.url}`} />
       <div className="hero-image right-image">
-        <img src={data.rightImage?.asset.url} alt="Right visual" />
+        <img src={data?.rightImage?.asset?.url} alt="Right visual" />
       </div>
     </section>
   );
@@ -195,6 +195,7 @@ function Hero({data}) {
 // }
 
 function FirstSection({data}) {
+  console.log(data);
   return (
     <section
       className="second-section"
@@ -205,14 +206,14 @@ function FirstSection({data}) {
       }}
     >
       <div className="first-section-heading" style={{gridColumn: 'span 4'}}>
-        <h1 className="intro-heading">{data.heroTitle}</h1>
+        <h1 className="intro-heading">{data?.heroTitle}</h1>
       </div>
       <div className="first-section-heading" style={{gridColumn: 'span 4'}}>
         <p className="intro-text" style={{width: '75%', marginBottom: '2rem'}}>
-          {data.introText}
+          {data?.introText}
         </p>
         <Link
-          to={'/about'}
+          to={'/collections/frontpage'}
           className="intro-text"
           style={{
             color: '#3c0707',
@@ -220,7 +221,7 @@ function FirstSection({data}) {
             borderBottom: '1px solid #3c0707',
           }}
         >
-          Learn More →
+          Shop All →
         </Link>
       </div>
       <div
@@ -233,14 +234,42 @@ function FirstSection({data}) {
         }}
       >
         <div style={{gridColumn: 'span 3'}}>
-          <img src={data.mainImage.asset.url} style={{width: '100%'}} alt="" />
+          {data?.mainImage?.link?.slug ? (
+            <Link
+              to={`/${data.mainImage.link.type === 'collection' ? 'collections' : data.mainImage.link.type === 'product' ? 'products' : 'pages'}/${data.mainImage.link.slug}`}
+            >
+              <img
+                src={data?.mainImage?.image?.asset?.url}
+                style={{width: '100%'}}
+                alt={data?.mainImage?.altText || ''}
+              />
+            </Link>
+          ) : (
+            <img
+              src={data?.mainImage?.image?.asset?.url}
+              style={{width: '100%'}}
+              alt={data?.mainImage?.altText || ''}
+            />
+          )}
         </div>
         <div style={{gridColumn: '5 / 7'}}>
-          <img
-            src={data.secondaryImage.asset.url}
-            style={{width: '100%'}}
-            alt=""
-          />
+          {data?.secondaryImage?.link?.slug ? (
+            <Link
+              to={`/${data.secondaryImage.link.type === 'collection' ? 'collections' : data.secondaryImage.link.type === 'product' ? 'products' : 'pages'}/${data.secondaryImage.link.slug}`}
+            >
+              <img
+                src={data?.secondaryImage?.image?.asset?.url}
+                style={{width: '100%'}}
+                alt={data?.secondaryImage?.altText || ''}
+              />
+            </Link>
+          ) : (
+            <img
+              src={data?.secondaryImage?.image?.asset?.url}
+              style={{width: '100%'}}
+              alt={data?.secondaryImage?.altText || ''}
+            />
+          )}
         </div>
         <div
           style={{
@@ -261,10 +290,10 @@ function OurStandards({data}) {
   return (
     <section className="our-standards-section">
       <p className="intro-heading" style={{paddingBlock: '2rem'}}>
-        {data.title}
+        {data?.title}
       </p>
       <div className="our-standards-home">
-        {data.cards.map((card) => (
+        {data?.cards?.map((card) => (
           <OurStandardsCard key={card._key} card={card} />
         ))}
       </div>
@@ -290,13 +319,13 @@ function BottomSection({data}) {
   return (
     <section className="bottom-section-home">
       <div className="bottom-section-text-container">
-        <p className="intro-heading">{data.title}</p>
+        <p className="intro-heading">{data?.title}</p>
         <div>
-          <PortableText value={data.blurb} />
+          <PortableText value={data?.blurb} />
         </div>
       </div>
       <div className="bottom-section-hero-image">
-        <img src={data.bannerImage.asset.url} />
+        <img src={data?.bannerImage?.asset?.url} alt="" />
       </div>
     </section>
   );
