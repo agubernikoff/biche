@@ -9,6 +9,7 @@ import PrimaryLogo from '~/assets/PrimaryLogo';
 import monogram from '~/assets/MONOGRAM.png';
 import {PortableText} from '@portabletext/react';
 import {useInView} from 'motion/react';
+import SanityInternalLink from '~/sanity/SanityInternalLink';
 
 /**
  * @type {MetaFunction}
@@ -209,10 +210,16 @@ function FirstSection({data}) {
         <h1 className="intro-heading">{data?.heroTitle}</h1>
       </div>
       <div className="first-section-heading" style={{gridColumn: 'span 4'}}>
-        <p className="intro-text" style={{width: '75%', marginBottom: '2rem'}}>
-          {data?.introText}
-        </p>
-        <Link
+        <div
+          className="intro-text"
+          style={{width: '75%', marginBottom: '2rem'}}
+        >
+          <PortableText
+            value={data?.introText}
+            components={{marks: {linkInternal: SanityInternalLink}}}
+          />
+        </div>
+        {/* <Link
           to={'/collections/frontpage'}
           className="intro-text"
           style={{
@@ -222,7 +229,7 @@ function FirstSection({data}) {
           }}
         >
           Shop All →
-        </Link>
+        </Link> */}
       </div>
       <div
         className="first-section-images-container"

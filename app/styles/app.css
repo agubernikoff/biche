@@ -959,10 +959,12 @@ a.intro-text:hover {
 .bottom-section-text-container > p {
   margin-bottom: 2rem;
 }
-.bottom-section-text-container > div > p {
+.bottom-section-text-container > div > p,
+.intro-text > p {
   margin-bottom: 1rem;
 }
-.bottom-section-text-container > div > p:last-of-type {
+.bottom-section-text-container > div > p:last-of-type,
+.intro-text > p:last-of-type {
   margin-bottom: 0;
 }
 
