@@ -7,7 +7,7 @@ import {CartMain} from '~/components/CartMain';
  * @type {MetaFunction}
  */
 export const meta = () => {
-  return [{title: `Biche Cart`}];
+  return [{title: `Biche | Cart`}];
 };
 
 /**
@@ -112,8 +112,8 @@ export default function Cart() {
   const cart = useLoaderData();
 
   return (
-    <div className="cart">
-      <h1>Cart</h1>
+    <div className="cart-dedicated">
+      <p className="cart-dedicated-header">Bag ({cart?.totalQuantity || 0})</p>
       <CartMain layout="page" cart={cart} />
     </div>
   );

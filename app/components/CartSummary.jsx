@@ -83,6 +83,9 @@ function CartCheckoutActions({checkoutUrl}) {
 
   return (
     <div>
+      <a href="/cart" onClick={() => close()} className="checkout-btn view">
+        View Cart
+      </a>
       <a href={checkoutUrl} target="_self" className="checkout-btn">
         Checkout
       </a>

@@ -6,19 +6,17 @@ import {useAside} from './Aside';
 import {useState} from 'react';
 import {AnimatePresence, motion} from 'motion/react';
 
-/**
- * A single line item in the cart. It displays the product image, title, price.
- * It also provides controls to update the quantity or remove the line item.
- * @param {{
- *   layout: CartLayout;
- *   line: CartLine;
- * }}
- */
 export function CartLineItem({layout, line}) {
-  const {id, merchandise} = line;
+  const {id, merchandise, isOptimistic} = line;
   const {product, title, image, selectedOptions} = merchandise;
   const lineItemUrl = useVariantUrl(product.handle, selectedOptions);
   const {close} = useAside();
+
+  const hasOptions = !(
+    selectedOptions.length === 1 &&
+    selectedOptions[0].name === 'Title' &&
+    selectedOptions[0].value === 'Default Title'
+  );
 
   return (
     <li key={id} className="cart-line">
@@ -35,53 +33,42 @@ export function CartLineItem({layout, line}) {
 
       <div className="cart-line-details">
         <div className="cart-line-details-title">
-          <Link
-            prefetch="intent"
-            to={lineItemUrl}
-            onClick={() => {
-              if (layout === 'aside') {
-                close();
-              }
-            }}
-          >
+          <Link to={lineItemUrl} onClick={() => layout === 'aside' && close()}>
             {product.title}
           </Link>
-          <ProductPrice price={line?.cost?.totalAmount} />
-        </div>
-        {selectedOptions.length !== 1 &&
-          selectedOptions[0].name !== 'Title' &&
-          selectedOptions[0].value !== 'Default Title' && (
-            <ul>
-              {selectedOptions.map((option) => {
-                if (
-                  option.name === 'Title' &&
-                  option.value === 'Default Title'
-                ) {
-                  return null;
-                }
-                return (
-                  <li key={option.name}>
-                    <small>
-                      {option.name}: {option.value}
-                    </small>
-                  </li>
-                );
-              })}
-            </ul>
+          {/* Price shown inline for aside, moved to subtotal column for page */}
+          {layout === 'aside' && (
+            <ProductPrice price={line?.cost?.totalAmount} />
           )}
-        <CartLineQuantity line={line} />
+        </div>
+
+        {hasOptions && (
+          <ul>
+            {selectedOptions.map((option) => (
+              <li key={option.name}>
+                <small>
+                  {option.name}: {option.value}
+                </small>
+              </li>
+            ))}
+          </ul>
+        )}
+
+        <CartLineQuantity line={line} layout={layout} />
       </div>
+
+      {/* Subtotal column — page layout only */}
+      {layout === 'page' && (
+        <div className="cart-line-subtotal">
+          <ProductPrice price={line?.cost?.totalAmount} />
+          <CartLineRemoveButton lineIds={[id]} disabled={!!isOptimistic} />
+        </div>
+      )}
     </li>
   );
 }
 
-/**
- * Provides the controls to update the quantity of a line item in the cart.
- * These controls are disabled when the line item is new, and the server
- * hasn't yet responded that it was successfully added to the cart.
- * @param {{line: CartLine}}
- */
-function CartLineQuantity({line}) {
+function CartLineQuantity({line, layout}) {
   if (!line || typeof line?.quantity === 'undefined') return null;
   const {id: lineId, quantity, isOptimistic} = line;
   const prevQuantity = Number(Math.max(0, quantity - 1).toFixed(0));
@@ -99,36 +86,31 @@ function CartLineQuantity({line}) {
               name="decrease-quantity"
               value={prevQuantity}
             >
-              <span>&#8722; </span>
+              <span>&#8722;</span>
             </button>
           </CartLineUpdateButton>
           <p>{quantity}</p>
           <CartLineUpdateButton lines={[{id: lineId, quantity: nextQuantity}]}>
             <button
               aria-label="Increase quantity"
+              disabled={!!isOptimistic}
               name="increase-quantity"
               value={nextQuantity}
-              disabled={!!isOptimistic}
             >
               <span>&#43;</span>
             </button>
           </CartLineUpdateButton>
         </div>
       </div>
-      <CartLineRemoveButton lineIds={[lineId]} disabled={!!isOptimistic} />
+
+      {/* Remove button lives here for aside, in subtotal column for page */}
+      {layout !== 'page' && (
+        <CartLineRemoveButton lineIds={[lineId]} disabled={!!isOptimistic} />
+      )}
     </>
   );
 }
 
-/**
- * A button that removes a line item from the cart. It is disabled
- * when the line item is new, and the server hasn't yet responded
- * that it was successfully added to the cart.
- * @param {{
- *   lineIds: string[];
- *   disabled: boolean;
- * }}
- */
 function CartLineRemoveButton({lineIds, disabled}) {
   const [hovered, setHovered] = useState(false);
 
@@ -191,7 +173,6 @@ function Svg() {
           width="15.7031"
           height="15.7002"
           filterUnits="userSpaceOnUse"
-          // color-interpolation-filters="sRGB"
         >
           <feColorMatrix
             in="SourceAlpha"
@@ -223,12 +204,6 @@ function Svg() {
   );
 }
 
-/**
- * @param {{
- *   children: React.ReactNode;
- *   lines: CartLineUpdateInput[];
- * }}
- */
 function CartLineUpdateButton({children, lines}) {
   const lineIds = lines.map((line) => line.id);
 
@@ -244,19 +219,11 @@ function CartLineUpdateButton({children, lines}) {
   );
 }
 
-/**
- * Returns a unique key for the update action. This is used to make sure actions modifying the same line
- * items are not run concurrently, but cancel each other. For example, if the user clicks "Increase quantity"
- * and "Decrease quantity" in rapid succession, the actions will cancel each other and only the last one will run.
- * @returns
- * @param {string[]} lineIds - line ids affected by the update
- */
 function getUpdateKey(lineIds) {
   return [CartForm.ACTIONS.LinesUpdate, ...lineIds].join('-');
 }
 
 /** @typedef {OptimisticCartLine<CartApiQueryFragment>} CartLine */
-
 /** @typedef {import('@shopify/hydrogen/storefront-api-types').CartLineUpdateInput} CartLineUpdateInput */
 /** @typedef {import('~/components/CartMain').CartLayout} CartLayout */
 /** @typedef {import('@shopify/hydrogen').OptimisticCartLine} OptimisticCartLine */
