@@ -142,7 +142,7 @@ export function ProductItem({product, loading}) {
             <div className="product-item-info">
               <div>
                 <p>{product.title}</p>
-                {/* <p>${priceWithoutDecimals}</p> */}
+                <p>${priceWithoutDecimals}</p>
               </div>
               {productBadgeText && (
                 <div className="product-preorder-badge">{productBadgeText}</div>
@@ -160,7 +160,7 @@ export function ProductItem({product, loading}) {
           <>
             <div className="product-item-info">
               <p>{product.title}</p>
-              {/* <p>${priceWithoutDecimals}</p> */}
+              <p>${priceWithoutDecimals}</p>
             </div>
             {productBadgeText && (
               <div className="product-preorder-badge">{productBadgeText}</div>
