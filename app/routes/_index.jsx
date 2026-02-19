@@ -196,7 +196,6 @@ function Hero({data}) {
 // }
 
 function FirstSection({data}) {
-  console.log(data);
   return (
     <section
       className="second-section"
@@ -311,7 +310,15 @@ function OurStandards({data}) {
 function OurStandardsCard({card}) {
   return (
     <div className="our-standards-home-card">
-      <img src={card.image.asset.url} alt="" />
+      {card?.link?.slug ? (
+        <Link
+          to={`/${card.link.type === 'collection' ? 'collections' : card.link.type === 'product' ? 'products' : 'pages'}/${card.link.slug}`}
+        >
+          <img src={card.image.asset.url} alt="" />
+        </Link>
+      ) : (
+        <img src={card.image.asset.url} alt="" />
+      )}
       <div className="standard-card-text-container">
         <p>{card.title}</p>
         <div>

@@ -109,6 +109,12 @@ export const homeType = defineField({
                   title: 'Short Blurb',
                   type: 'text',
                 }),
+                defineField({
+                  name: 'link',
+                  type: 'linkInternal',
+                  description:
+                    'Optional link for the card image. If not set, the card image will not be clickable.',
+                }),
               ],
             }),
           ],

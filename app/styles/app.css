@@ -1273,7 +1273,8 @@ a.intro-text:hover {
   flex: 1;
   position: relative;
 }
-.our-standards-home-card > img {
+.our-standards-home-card > img,
+.our-standards-home-card > a > img {
   width: 100%;
 }
 .our-standards-home-card > div {
