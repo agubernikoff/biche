@@ -14,6 +14,7 @@ export function ProductForm({
   productOptions,
   selectedVariant,
   isPreorder,
+  isBackInStockNotify,
   openEarlyAccess,
 }) {
   const navigate = useNavigate();
@@ -144,11 +145,15 @@ export function ProductForm({
       })}
       <AddToCartButton
         disabled={
-          (!selectedVariant || !selectedVariant.availableForSale) && !isPreorder
+          (!selectedVariant ||
+            (!selectedVariant.availableForSale && !isBackInStockNotify)) &&
+          !isPreorder
         }
         onClick={(e) => {
-          if (isPreorder) {
-            console.log('something');
+          if (
+            isPreorder ||
+            (!selectedVariant.availableForSale && isBackInStockNotify)
+          ) {
             e.preventDefault();
             openEarlyAccess();
           } else open('cart');
@@ -169,7 +174,9 @@ export function ProductForm({
           ? selectedVariant?.availableForSale
             ? 'Add to cart'
             : 'Sold out'
-          : 'EARLY ACCESS'}
+          : !isBackInStockNotify
+            ? 'EARLY ACCESS'
+            : 'NOTIFY ME WHEN BACK IN STOCK'}
       </AddToCartButton>
     </motion.div>
   );

@@ -191,7 +191,8 @@ export default function Product() {
 
   const productBadgeText = product.productBadge?.value;
   const isPreorder = product.tags?.includes('preorder');
-
+  const isBackInStockNotify = product?.tags?.includes('notify back in stock');
+  console.log(product.tags, isBackInStockNotify);
   const keyBenefits = parseRichText(product.Benefits?.value);
   const keyIngredients = parseRichText(product.Ingredients?.value);
   const howToUse = parseRichText(product.howTo?.value);
@@ -267,6 +268,7 @@ export default function Product() {
             productOptions={productOptions}
             selectedVariant={selectedVariant}
             isPreorder={isPreorder}
+            isBackInStockNotify={isBackInStockNotify}
             openEarlyAccess={() => setIsEAOpen(true)}
           />
         </div>
@@ -277,6 +279,7 @@ export default function Product() {
             closePopUp={() => setIsEAOpen(false)}
             selectedVariant={selectedVariant}
             image={product.images.nodes[0]}
+            isBackInStockNotify={isBackInStockNotify}
           />
         ) : null}
       </AnimatePresence>
@@ -366,7 +369,13 @@ function PasswordProtectedView({product, actionData}) {
   );
 }
 
-function EarlyAccessPopUp({closePopUp, selectedVariant, image}) {
+function EarlyAccessPopUp({
+  closePopUp,
+  selectedVariant,
+  image,
+  isBackInStockNotify,
+}) {
+  console.log(selectedVariant);
   const [success, setSuccess] = useState(false);
   const [email, setEmail] = useState();
   useEffect(() => {
@@ -390,29 +399,56 @@ function EarlyAccessPopUp({closePopUp, selectedVariant, image}) {
       }, 1500);
       return;
     }
-    const payload = {
-      data: {
-        type: 'subscription',
-        attributes: {
-          profile: {
-            data: {
-              type: 'profile',
-              attributes: {
-                email: `${email}`,
+    const payload = isBackInStockNotify
+      ? {
+          data: {
+            type: 'back-in-stock-subscription',
+            attributes: {
+              profile: {
+                data: {
+                  type: 'profile',
+                  attributes: {
+                    email: `${email}`,
+                  },
+                },
+              },
+              channels: ['EMAIL'],
+            },
+            relationships: {
+              variant: {
+                data: {
+                  type: 'catalog-variant',
+                  id: `$shopify:::$default:::${
+                    selectedVariant.id.split('ProductVariant/')[1]
+                  }`,
+                },
               },
             },
           },
-        },
-        relationships: {
-          list: {
-            data: {
-              type: 'list',
-              id: 'V9ZSHm',
+        }
+      : {
+          data: {
+            type: 'subscription',
+            attributes: {
+              profile: {
+                data: {
+                  type: 'profile',
+                  attributes: {
+                    email: `${email}`,
+                  },
+                },
+              },
+            },
+            relationships: {
+              list: {
+                data: {
+                  type: 'list',
+                  id: 'V9ZSHm',
+                },
+              },
             },
           },
-        },
-      },
-    };
+        };
 
     var requestOptions = {
       mode: 'cors',
@@ -424,7 +460,7 @@ function EarlyAccessPopUp({closePopUp, selectedVariant, image}) {
       body: JSON.stringify(payload),
     };
     fetch(
-      'https://a.klaviyo.com/client/subscriptions/?company_id=Ws4Y78',
+      `https://a.klaviyo.com/client/${isBackInStockNotify ? 'back-in-stock-subscriptions' : 'subscriptions'}/?company_id=Ws4Y78`,
       requestOptions,
     )
       .then((result) => {
@@ -467,10 +503,13 @@ function EarlyAccessPopUp({closePopUp, selectedVariant, image}) {
               <h3>You're In!</h3>
             ) : (
               <>
-                <h3>Early Access</h3>
+                <h3>
+                  {isBackInStockNotify ? 'Back in Stock' : 'Early Access'}
+                </h3>
                 <p>
-                  Sign up to unlock early access to our debut products, coming
-                  soon.
+                  {isBackInStockNotify
+                    ? `Sign up to get alerted when ${selectedVariant?.product?.title} is back in stock.`
+                    : 'Sign up to unlock early access to our debut products, coming soon.'}
                 </p>
                 <div className="ea-form">
                   <input
