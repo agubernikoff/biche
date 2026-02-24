@@ -2,7 +2,7 @@ import {Await, useLoaderData, Link, useRouteLoaderData} from '@remix-run/react';
 import {Suspense, useState, useEffect, useRef} from 'react';
 import {Image} from '@shopify/hydrogen';
 import {ProductItem} from '~/components/ProductItem';
-import mobileIcon from '~/assets/mobile_icon.jpg';
+import HPSocialShareImg from '~/assets/HP.jpg';
 import {sanityClient} from '~/sanity/sanityClient';
 import {HOME_QUERY} from '~/sanity/queries/comingSoonQuery';
 import PrimaryLogo from '~/assets/PrimaryLogo';
@@ -18,7 +18,7 @@ export const meta = () => {
   return [
     {title: 'Biche | Luxury Pet Grooming'},
     {property: 'og:title', content: 'Biche | Luxury Pet Grooming'},
-    {property: 'og:image', content: mobileIcon},
+    {property: 'og:image', content: HPSocialShareImg},
     {
       name: 'description',
       content:

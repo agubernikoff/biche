@@ -1,11 +1,15 @@
 import {Link, useLoaderData} from '@remix-run/react';
 import {sanityClient} from '~/sanity/sanityClient';
+import EditorialSocialShareImg from '~/assets/Editorial.jpg';
 
 /**
  * @type {MetaFunction}
  */
 export const meta = () => {
-  return [{title: `Biche Editorial`}];
+  return [
+    {title: `Biche Editorial`},
+    {property: 'og:image', content: EditorialSocialShareImg},
+  ];
 };
 
 /**

@@ -4,12 +4,16 @@ import {getPaginationVariables, Analytics} from '@shopify/hydrogen';
 import {PaginatedResourceSection} from '~/components/PaginatedResourceSection';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 import {ProductItem} from '~/components/ProductItem';
+import ShopSocialShareImg from '~/assets/Shop.jpg';
 
 /**
  * @type {MetaFunction<typeof loader>}
  */
 export const meta = ({data}) => {
-  return [{title: `Biche ${data?.collection.title ?? ''} Collection`}];
+  return [
+    {title: `Biche ${data?.collection.title ?? ''} Collection`},
+    {property: 'og:image', content: ShopSocialShareImg},
+  ];
 };
 
 /**

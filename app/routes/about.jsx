@@ -2,7 +2,7 @@ import {useNavigate, useLoaderData, Link, useLocation} from '@remix-run/react';
 import {useRef, useState, useEffect} from 'react';
 import {Image} from '@shopify/hydrogen';
 import {ProductItem} from '~/components/ProductItem';
-import mobileIcon from '~/assets/mobile_icon.jpg';
+import AboutSocialShareImg from '~/assets/About.jpg';
 import {sanityClient} from '~/sanity/sanityClient';
 import {ABOUT_QUERY} from '~/sanity/queries/comingSoonQuery';
 import PrimaryLogo from '~/assets/PrimaryLogo';
@@ -14,7 +14,10 @@ import SanityInternalLink from '~/sanity/SanityInternalLink';
  * @type {MetaFunction}
  */
 export const meta = () => {
-  return [{title: 'Biche | About'}];
+  return [
+    {title: 'Biche | About'},
+    {property: 'og:image', content: AboutSocialShareImg},
+  ];
 };
 
 /**
