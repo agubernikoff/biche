@@ -164,11 +164,27 @@ function Hero({data}) {
   return (
     <section className="hero-section" ref={ref}>
       <div className="hero-image left-image">
-        <img src={`${data?.leftImage?.asset?.url}`} alt="Left visual" />
+        {data?.leftImage?.link?.slug ? (
+          <Link
+            to={`/${data.leftImage.link.type === 'collection' ? 'collections' : data.leftImage.link.type === 'product' ? 'products' : 'pages'}/${data.leftImage.link.slug}`}
+          >
+            <img src={data?.leftImage?.image?.asset?.url} alt={data?.leftImage?.altText || 'Left visual'} />
+          </Link>
+        ) : (
+          <img src={data?.leftImage?.image?.asset?.url} alt={data?.leftImage?.altText || 'Left visual'} />
+        )}
       </div>
       <HeroLogo url={`${data?.logo?.asset?.url}`} />
       <div className="hero-image right-image">
-        <img src={data?.rightImage?.asset?.url} alt="Right visual" />
+        {data?.rightImage?.link?.slug ? (
+          <Link
+            to={`/${data.rightImage.link.type === 'collection' ? 'collections' : data.rightImage.link.type === 'product' ? 'products' : 'pages'}/${data.rightImage.link.slug}`}
+          >
+            <img src={data?.rightImage?.image?.asset?.url} alt={data?.rightImage?.altText || 'Right visual'} />
+          </Link>
+        ) : (
+          <img src={data?.rightImage?.image?.asset?.url} alt={data?.rightImage?.altText || 'Right visual'} />
+        )}
       </div>
     </section>
   );

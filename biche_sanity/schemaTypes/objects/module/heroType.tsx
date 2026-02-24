@@ -8,14 +8,22 @@ export const heroType = defineField({
     {
       name: 'leftImage',
       title: 'Left Image',
-      type: 'image',
-      options: {hotspot: true},
+      type: 'object',
+      fields: [
+        {name: 'image', title: 'Image', type: 'image', options: {hotspot: true}},
+        {name: 'altText', title: 'Alt Text', type: 'string'},
+        {name: 'link', type: 'linkInternal'},
+      ],
     },
     {
       name: 'rightImage',
       title: 'Right Image',
-      type: 'image',
-      options: {hotspot: true},
+      type: 'object',
+      fields: [
+        {name: 'image', title: 'Image', type: 'image', options: {hotspot: true}},
+        {name: 'altText', title: 'Alt Text', type: 'string'},
+        {name: 'link', type: 'linkInternal'},
+      ],
     },
     {
       name: 'logo',

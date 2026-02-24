@@ -13,8 +13,8 @@ export const COMING_SOON_QUERY = `*[_type == "comingSoon"][0]{
 
 export const HOME_QUERY = `*[_type == "home"][0]{
   hero{
-    leftImage{...,asset->{url}},
-    rightImage{...,asset->{url}},
+    leftImage{...,link{...,"slug": coalesce(@.reference->store.slug.current, @.reference->slug.current),"type": @.reference->_type},image{...,asset->{url}}},
+    rightImage{...,link{...,"slug": coalesce(@.reference->store.slug.current, @.reference->slug.current),"type": @.reference->_type},image{...,asset->{url}}},
     logo{...,asset->{url}}
   },
   firstSection{...,introText[]{...,markDefs[]{...,"slug": coalesce(@.reference->store.slug.current, @.reference->slug.current),"type": @.reference->_type}},mainImage{...,link{...,"slug": coalesce(@.reference->store.slug.current, @.reference->slug.current),"type": @.reference->_type},image{...,asset->{url}}}, secondaryImage{...,link{...,"slug": coalesce(@.reference->store.slug.current, @.reference->slug.current),"type": @.reference->_type},image{...,asset->{url}}}},
