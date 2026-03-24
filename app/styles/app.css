@@ -2926,8 +2926,9 @@ th {
   }
 
   .mobile-preview {
-    display: flex;
+    /* display: flex; */
     flex-direction: row;
+    display: none;
   }
 
   .mobile-preview img {
@@ -2939,6 +2940,9 @@ th {
     font-size: 12px;
     font-family: 'neue';
     margin-top: 0.5rem;
+  }
+  .mobile-announcement {
+    display: none;
   }
   aside header .close img {
     width: 100%;

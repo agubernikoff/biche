@@ -223,7 +223,7 @@ function MobileMenuAside({header, publicStoreDomain, settings}) {
           <div className="mobile-preview">
             <img src={mobileBanner} alt="Drop preview 1" />
           </div>
-          <p>{settings.menu.callout}</p>
+          <p className="mobile-announcement">{settings.menu.callout}</p>
         </div>
       </Aside>
     )
