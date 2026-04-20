@@ -12,11 +12,12 @@ export const gridItemType = defineField({
       type: 'string',
       validation: (Rule) => Rule.required(),
     }),
+    defineField({name: 'link', type: 'linkExternal'}),
     defineField({
       name: 'image',
       type: 'image',
       options: {hotspot: true},
-      validation: (Rule) => Rule.required(),
+      // validation: (Rule) => Rule.required(),
     }),
     defineField({
       name: 'body',

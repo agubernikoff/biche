@@ -1,15 +1,18 @@
+import {useState} from 'react';
 import {
   useLoaderData,
   useRouteLoaderData,
   NavLink,
   useParams,
 } from '@remix-run/react';
+import {AnimatePresence, motion} from 'motion/react';
 import {PortableText} from 'node_modules/@portabletext/react/dist/index';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 import {SANITY_PAGE_QUERY} from '~/sanity/queries/comingSoonQuery';
 import {sanityClient} from '~/sanity/sanityClient';
 import SanityEmailLink from '~/sanity/SanityEmailLink.jsx';
 import SanityTable from '~/sanity/SanityTable.jsx';
+import SanityGrid from '~/sanity/SanityGrid.jsx';
 
 /**
  * @type {MetaFunction<typeof loader>}
@@ -92,14 +95,11 @@ export default function Page() {
                   link.reference._type === 'page',
               )
               ?.map((link) => (
-                <NavLink
-                  to={`/pages/${link.reference.slug}`}
-                  style={activeLinkStyle}
-                  className="page-subheader"
+                <SideNavMenuItem
                   key={link._key}
-                >
-                  {link.reference.title}
-                </NavLink>
+                  item={link}
+                  url={`/pages/${link.reference.slug}`}
+                />
               ))}
           </nav>
         )}
@@ -125,7 +125,7 @@ export default function Page() {
               value={sanityPage.body}
               components={{
                 marks: {linkEmail: SanityEmailLink},
-                types: {table: SanityTable},
+                types: {table: SanityTable, grid: SanityGrid},
               }}
             />
           </div>
@@ -133,6 +133,34 @@ export default function Page() {
       </div>
       {/* <main dangerouslySetInnerHTML={{__html: sanityPage.body}} /> */}
     </div>
+  );
+}
+
+function SideNavMenuItem({item, url}) {
+  const [hovered, setHovered] = useState(false);
+  const {handle} = useParams();
+
+  return (
+    <NavLink
+      className="page-subheader header-menu-item"
+      prefetch="intent"
+      to={url}
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+    >
+      {item?.reference?.title || item?.title}
+      <AnimatePresence mode="wait">
+        {(hovered || handle === item?.reference?.slug) && (
+          <motion.div
+            key={item?.title}
+            initial={{left: 0, right: '100%'}}
+            animate={{left: 0, right: 0}}
+            exit={{left: '100%', right: 0}}
+            className="header-hover-indicator"
+          />
+        )}
+      </AnimatePresence>
+    </NavLink>
   );
 }
 
