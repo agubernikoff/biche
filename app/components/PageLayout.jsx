@@ -182,14 +182,14 @@ function SearchAside() {
 function MobileMenuAside({header, publicStoreDomain, settings}) {
   const {close} = useAside();
   return (
-    header.menu &&
-    header.shop.primaryDomain?.url && (
+    header?.menu &&
+    header?.shop?.primaryDomain?.url && (
       <Aside type="mobile" heading="MENU">
         <hr style={{color: '1px solid #e9e9e9'}} />
         <HeaderMenu
-          menu={settings.menu.links}
+          menu={settings?.menu?.links}
           viewport="mobile"
-          primaryDomainUrl={header.shop.primaryDomain.url}
+          primaryDomainUrl={header?.shop?.primaryDomain?.url}
           publicStoreDomain={publicStoreDomain}
         />
         <div className="header-menu-extra">
@@ -202,13 +202,13 @@ function MobileMenuAside({header, publicStoreDomain, settings}) {
             )
             ?.map((link) => (
               <NavLink
-                to={`/pages/${link.reference.slug}`}
+                to={`/pages/${link?.reference?.slug}`}
                 style={activeLinkStyle}
                 className="header-menu-item"
                 key={link._key}
                 onClick={close}
               >
-                {link.reference.title}
+                {link?.reference?.title}
               </NavLink>
             ))}
           <hr />
@@ -223,7 +223,7 @@ function MobileMenuAside({header, publicStoreDomain, settings}) {
           <div className="mobile-preview">
             <img src={mobileBanner} alt="Drop preview 1" />
           </div>
-          <p className="mobile-announcement">{settings.menu.callout}</p>
+          <p className="mobile-announcement">{settings?.menu?.callout}</p>
         </div>
       </Aside>
     )

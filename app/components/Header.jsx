@@ -31,7 +31,7 @@ export function Header({
       <div className="backdrop">
         <div className="header-content">
           <HeaderMenuMobileToggle />
-          <HeaderMenu menu={settings.menu.links} viewport="desktop" />
+          <HeaderMenu menu={settings?.menu?.links} viewport="desktop" />
           <NavLink
             prefetch="intent"
             to="/"
@@ -75,13 +75,18 @@ export function HeaderMenu({menu, viewport}) {
           Home
         </NavLink>
       )} */}
-      {menu.map((item) => {
-        if (!item.reference?.slug && !item.path) return null;
+      {menu?.map((item) => {
+        if (!item?.reference?.slug && !item?.path) return null;
 
         // if the url is internal, we strip the domain
-        const url = item.reference?.slug || item.path;
+        const url = item?.reference?.slug || item?.path;
         return (
-          <HeaderMenuItem key={item._key} url={url} item={item} close={close} />
+          <HeaderMenuItem
+            key={item?._key}
+            url={url}
+            item={item}
+            close={close}
+          />
         );
       })}
     </nav>

@@ -16,10 +16,10 @@ export function Footer({
   return (
     <footer className="footer">
       <Logo color={'var(--color-balsamic)'} />
-      <Newsletter data={settings.footer.newsletter} />
+      <Newsletter data={settings?.footer?.newsletter} />
       <FooterMenu
-        menu={settings.footer.linkColumns}
-        primaryDomainUrl={header.shop.primaryDomain.url}
+        menu={settings?.footer?.linkColumns}
+        primaryDomainUrl={header?.shop?.primaryDomain?.url}
         publicStoreDomain={publicStoreDomain}
       />
     </footer>
@@ -36,19 +36,20 @@ export function Footer({
 function FooterMenu({menu, primaryDomainUrl, publicStoreDomain}) {
   return (
     <div className="link-columns-container">
-      {(menu || FALLBACK_FOOTER_MENU).map((column) => {
-        if (!column.links || column.links.length === 0) return null;
+      {(menu || FALLBACK_FOOTER_MENU.items)?.map((column) => {
+        if (!column?.links || column?.links.length === 0) return null;
         // if the url is internal, we strip the domain
         return (
-          <nav className="footer-menu" role="navigation" key={column._key}>
-            {column.links.map((link) => {
-              const isExternal = link._type === 'linkExternal';
+          <nav className="footer-menu" role="navigation" key={column?._key}>
+            {column?.links.map((link) => {
+              const isExternal = link?._type === 'linkExternal';
               const internalPageLink =
-                link._type === 'linkInternal' && link.reference._type === 'page'
-                  ? `/pages/${link.reference.slug}`
+                link?._type === 'linkInternal' &&
+                link?.reference?._type === 'page'
+                  ? `/pages/${link?.reference?.slug}`
                   : null;
               return isExternal ? (
-                <FooterMenuItemExternal item={link} key={link._key} />
+                <FooterMenuItemExternal item={link} key={link?._key} />
               ) : (
                 // <NavLink
                 //   end
@@ -60,7 +61,7 @@ function FooterMenu({menu, primaryDomainUrl, publicStoreDomain}) {
                 //   {link.reference.title}
                 // </NavLink>
                 <FooterMenuItem
-                  key={link._key}
+                  key={link?._key}
                   item={link}
                   url={internalPageLink}
                   close={() => {}}
@@ -79,7 +80,7 @@ function FooterMenuItem({item, url, close}) {
   return (
     <NavLink
       className="header-menu-item"
-      key={item._key}
+      key={item?._key}
       onClick={close}
       prefetch="intent"
       style={activeLinkStyle}
@@ -87,7 +88,7 @@ function FooterMenuItem({item, url, close}) {
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
     >
-      {item.reference?.title || item.title}
+      {item?.reference?.title || item?.title}
       <AnimatePresence mode="wait">
         {hovered && (
           <motion.div
@@ -106,14 +107,14 @@ function FooterMenuItemExternal({item}) {
 
   return (
     <a
-      href={item.url}
+      href={item?.url}
       rel="noopener noreferrer"
       target="_blank"
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
       className="header-menu-item"
     >
-      {item.text}
+      {item?.text}
       <AnimatePresence mode="wait">
         {hovered && (
           <motion.div

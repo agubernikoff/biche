@@ -75,7 +75,7 @@ export default function Newsletter({data}) {
 
   return (
     <div className="footer-newlsetter">
-      <p>{data.title}</p>
+      <p>{data?.title}</p>
       {success ? (
         <p className="intro-text">{success}</p>
       ) : (
@@ -87,13 +87,13 @@ export default function Newsletter({data}) {
           }}
         >
           <input
-            placeholder={data.placeholder}
+            placeholder={data?.placeholder}
             className="email-input"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
           />
           <button type="submit" className="signup-button">
-            {data.submitText}
+            {data?.submitText}
           </button>
         </form>
       )}
