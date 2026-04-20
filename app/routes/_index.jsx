@@ -1,6 +1,14 @@
-import {Await, useLoaderData, Link, useRouteLoaderData} from '@remix-run/react';
+import {
+  Await,
+  useLoaderData,
+  Link,
+  useRouteLoaderData,
+  useNavigate,
+} from '@remix-run/react';
 import {Suspense, useState, useEffect, useRef} from 'react';
 import {Image} from '@shopify/hydrogen';
+import {AddToCartButton} from '~/components/AddToCartButton';
+import {ProductPrice} from '~/components/ProductPrice';
 import {ProductItem} from '~/components/ProductItem';
 import HPSocialShareImg from '~/assets/HP.jpg';
 import {sanityClient} from '~/sanity/sanityClient';
@@ -66,9 +74,20 @@ async function loadCriticalData({context}) {
   const sanityData = await sanityClient
     .fetch(HOME_QUERY)
     .then((response) => response);
+
+  const productHandle = sanityData?.featuredProduct?.product?.store?.slug;
+  let shopifyFeaturedProduct = null;
+  if (productHandle) {
+    shopifyFeaturedProduct = await context.storefront
+      .query(FEATURED_PRODUCT_QUERY, {variables: {handle: productHandle}})
+      .then((res) => res.product)
+      .catch(() => null);
+  }
+
   return {
     featuredCollection: collections.nodes[0],
     sanityData,
+    shopifyFeaturedProduct,
   };
 }
 
@@ -113,6 +132,10 @@ export default function Homepage() {
     <div className="home">
       <Hero data={data?.sanityData?.hero} />
       <FirstSection data={data?.sanityData?.firstSection} />
+      <FeaturedProduct
+        sanityData={data?.sanityData?.featuredProduct}
+        shopifyProduct={data?.shopifyFeaturedProduct}
+      />
       <OurStandards data={data?.sanityData?.ourStandards} />
       <BottomSection data={data?.sanityData?.bottomSection} />
     </div>
@@ -168,10 +191,16 @@ function Hero({data}) {
           <Link
             to={`/${data.leftImage.link.type === 'collection' ? 'collections' : data.leftImage.link.type === 'product' ? 'products' : 'pages'}/${data.leftImage.link.slug}`}
           >
-            <img src={data?.leftImage?.image?.asset?.url} alt={data?.leftImage?.altText || 'Left visual'} />
+            <img
+              src={data?.leftImage?.image?.asset?.url}
+              alt={data?.leftImage?.altText || 'Left visual'}
+            />
           </Link>
         ) : (
-          <img src={data?.leftImage?.image?.asset?.url} alt={data?.leftImage?.altText || 'Left visual'} />
+          <img
+            src={data?.leftImage?.image?.asset?.url}
+            alt={data?.leftImage?.altText || 'Left visual'}
+          />
         )}
       </div>
       <HeroLogo url={`${data?.logo?.asset?.url}`} />
@@ -180,10 +209,16 @@ function Hero({data}) {
           <Link
             to={`/${data.rightImage.link.type === 'collection' ? 'collections' : data.rightImage.link.type === 'product' ? 'products' : 'pages'}/${data.rightImage.link.slug}`}
           >
-            <img src={data?.rightImage?.image?.asset?.url} alt={data?.rightImage?.altText || 'Right visual'} />
+            <img
+              src={data?.rightImage?.image?.asset?.url}
+              alt={data?.rightImage?.altText || 'Right visual'}
+            />
           </Link>
         ) : (
-          <img src={data?.rightImage?.image?.asset?.url} alt={data?.rightImage?.altText || 'Right visual'} />
+          <img
+            src={data?.rightImage?.image?.asset?.url}
+            alt={data?.rightImage?.altText || 'Right visual'}
+          />
         )}
       </div>
     </section>
@@ -303,6 +338,72 @@ function FirstSection({data}) {
         >
           <img src={monogram} alt="" />
         </div>
+      </div>
+    </section>
+  );
+}
+
+function FeaturedProduct({sanityData, shopifyProduct}) {
+  const nav = useNavigate();
+  if (!shopifyProduct) return null;
+
+  const variants = shopifyProduct.variants.nodes;
+  const isSingleVariant = variants.length === 1;
+  const firstVariant = variants[0];
+  return (
+    <section className="featured-product-section">
+      <p>FEATURED</p>
+      <div className="featured-product-info">
+        <div>
+          <p className="featured-product-name">{shopifyProduct.title}</p>
+          <ProductPrice
+            price={firstVariant?.price}
+            compareAtPrice={firstVariant?.compareAtPrice}
+          />
+        </div>
+        {shopifyProduct.featuredImage && (
+          <Image
+            data={shopifyProduct.featuredImage}
+            sizes="50vw"
+            className="featured-product-image"
+          />
+        )}
+        <div>
+          {sanityData?.description && (
+            <p className="featured-product-description">
+              {sanityData.description}
+            </p>
+          )}
+          {isSingleVariant ? (
+            <AddToCartButton
+              lines={[{merchandiseId: firstVariant.id, quantity: 1}]}
+              onClick={() => nav('/cart')}
+            >
+              Add to Cart →
+            </AddToCartButton>
+          ) : (
+            <Link to={`/products/${shopifyProduct.handle}`}>View Product</Link>
+          )}
+        </div>
+      </div>
+      <div className="featured-product-secondary-image">
+        {sanityData?.secondaryImage?.link?.slug ? (
+          <Link
+            to={`/${sanityData.secondaryImage.link.type === 'collection' ? 'collections' : sanityData.secondaryImage.link.type === 'product' ? 'products' : 'pages'}/${sanityData.secondaryImage.link.slug}`}
+          >
+            <img
+              src={sanityData?.secondaryImage?.image?.asset?.url}
+              style={{width: '100%'}}
+              alt={sanityData?.secondaryImage?.altText || ''}
+            />
+          </Link>
+        ) : (
+          <img
+            src={sanityData?.secondaryImage?.image?.asset?.url}
+            style={{width: '100%'}}
+            alt={sanityData?.secondaryImage?.altText || ''}
+          />
+        )}
       </div>
     </section>
   );
@@ -432,6 +533,36 @@ function HeroLogo({url}) {
     />
   );
 }
+
+const FEATURED_PRODUCT_QUERY = `#graphql
+  query FeaturedProduct($handle: String!, $country: CountryCode, $language: LanguageCode)
+    @inContext(country: $country, language: $language) {
+    product(handle: $handle) {
+      id
+      title
+      handle
+      featuredImage {
+        url
+        altText
+        width
+        height
+      }
+      variants(first: 100) {
+        nodes {
+          id
+          price {
+            amount
+            currencyCode
+          }
+          compareAtPrice {
+            amount
+            currencyCode
+          }
+        }
+      }
+    }
+  }
+`;
 
 const FEATURED_COLLECTION_QUERY = `#graphql
   fragment FeaturedCollection on Collection {

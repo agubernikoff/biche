@@ -18,6 +18,11 @@ export const HOME_QUERY = `*[_type == "home"][0]{
     logo{...,asset->{url}}
   },
   firstSection{...,introText[]{...,markDefs[]{...,"slug": coalesce(@.reference->store.slug.current, @.reference->slug.current),"type": @.reference->_type}},mainImage{...,link{...,"slug": coalesce(@.reference->store.slug.current, @.reference->slug.current),"type": @.reference->_type},image{...,asset->{url}}}, secondaryImage{...,link{...,"slug": coalesce(@.reference->store.slug.current, @.reference->slug.current),"type": @.reference->_type},image{...,asset->{url}}}},
+  featuredProduct{
+    product->{ store{ title, "slug": slug.current } },
+    description,
+    secondaryImage{...,link{...,"slug": coalesce(@.reference->store.slug.current, @.reference->slug.current),"type": @.reference->_type},image{...,asset->{url}}}
+  },
   ourStandards{...,cards[]{...,link{...,"slug": coalesce(@.reference->store.slug.current, @.reference->slug.current),"type": @.reference->_type},image{...,asset->{url}}}},
   bottomSection{...,bannerImage{...,asset->{url}}}
 }`;

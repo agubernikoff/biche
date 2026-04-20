@@ -72,6 +72,45 @@ export const homeType = defineField({
       ],
     }),
     defineField({
+      name: 'featuredProduct',
+      title: 'Featured Product',
+      type: 'object',
+      group: 'editorial',
+      fields: [
+        {
+          name: 'product',
+          title: 'Product',
+          type: 'reference',
+          to: [{type: 'product'}],
+          weak: true,
+        },
+        {
+          name: 'description',
+          title: 'Description',
+          type: 'string',
+        },
+        {
+          name: 'secondaryImage',
+          title: 'Secondary Image',
+          type: 'object',
+          fields: [
+            {
+              name: 'image',
+              title: 'Image',
+              type: 'image',
+              options: {hotspot: true},
+            },
+            {
+              name: 'altText',
+              title: 'Alt Text',
+              type: 'string',
+            },
+            {name: 'link', type: 'linkInternal'},
+          ],
+        },
+      ],
+    }),
+    defineField({
       name: 'ourStandards',
       title: 'Our Standards',
       type: 'object',
