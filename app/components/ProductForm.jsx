@@ -170,13 +170,13 @@ export function ProductForm({
             : []
         }
       >
-        {!isPreorder
-          ? selectedVariant?.availableForSale
+        {isPreorder
+          ? 'EARLY ACCESS'
+          : selectedVariant?.availableForSale
             ? 'Add to cart'
-            : 'Sold out'
-          : !isBackInStockNotify
-            ? 'EARLY ACCESS'
-            : 'NOTIFY ME WHEN BACK IN STOCK'}
+            : isBackInStockNotify
+              ? 'Sold out - Join Waitlist'
+              : 'Sold out'}
       </AddToCartButton>
     </motion.div>
   );

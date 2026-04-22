@@ -504,7 +504,7 @@ function EarlyAccessPopUp({
             ) : (
               <>
                 <h3>
-                  {isBackInStockNotify ? 'Back in Stock' : 'Early Access'}
+                  {isBackInStockNotify ? 'Join the Waitlist' : 'Early Access'}
                 </h3>
                 <p>
                   {isBackInStockNotify
