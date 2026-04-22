@@ -69,6 +69,11 @@ export const homeType = defineField({
             {name: 'link', type: 'linkInternal'},
           ],
         },
+        {
+          name: 'hideImages',
+          title: 'Hide Images',
+          type: 'boolean',
+        },
       ],
     }),
     defineField({

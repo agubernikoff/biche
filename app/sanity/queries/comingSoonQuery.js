@@ -1,4 +1,5 @@
 export const COMING_SOON_QUERY = `*[_type == "comingSoon"][0]{
+  ...,
   heroTitle,
   introText,
   launchMessage,

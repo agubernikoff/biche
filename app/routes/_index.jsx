@@ -281,64 +281,66 @@ function FirstSection({data}) {
           Shop All →
         </Link> */}
       </div>
-      <div
-        className="first-section-images-container"
-        style={{
-          gridColumn: 'span 8',
-          display: 'grid',
-          gridTemplateColumns: 'subgrid',
-          alignItems: 'center',
-        }}
-      >
-        <div style={{gridColumn: 'span 3'}}>
-          {data?.mainImage?.link?.slug ? (
-            <Link
-              to={`/${data.mainImage.link.type === 'collection' ? 'collections' : data.mainImage.link.type === 'product' ? 'products' : 'pages'}/${data.mainImage.link.slug}`}
-            >
+      {!data?.hideImages && (
+        <div
+          className="first-section-images-container"
+          style={{
+            gridColumn: 'span 8',
+            display: 'grid',
+            gridTemplateColumns: 'subgrid',
+            alignItems: 'center',
+          }}
+        >
+          <div style={{gridColumn: 'span 3'}}>
+            {data?.mainImage?.link?.slug ? (
+              <Link
+                to={`/${data.mainImage.link.type === 'collection' ? 'collections' : data.mainImage.link.type === 'product' ? 'products' : 'pages'}/${data.mainImage.link.slug}`}
+              >
+                <img
+                  src={data?.mainImage?.image?.asset?.url}
+                  style={{width: '100%'}}
+                  alt={data?.mainImage?.altText || ''}
+                />
+              </Link>
+            ) : (
               <img
                 src={data?.mainImage?.image?.asset?.url}
                 style={{width: '100%'}}
                 alt={data?.mainImage?.altText || ''}
               />
-            </Link>
-          ) : (
-            <img
-              src={data?.mainImage?.image?.asset?.url}
-              style={{width: '100%'}}
-              alt={data?.mainImage?.altText || ''}
-            />
-          )}
-        </div>
-        <div style={{gridColumn: '5 / 7'}}>
-          {data?.secondaryImage?.link?.slug ? (
-            <Link
-              to={`/${data.secondaryImage.link.type === 'collection' ? 'collections' : data.secondaryImage.link.type === 'product' ? 'products' : 'pages'}/${data.secondaryImage.link.slug}`}
-            >
+            )}
+          </div>
+          <div style={{gridColumn: '5 / 7'}}>
+            {data?.secondaryImage?.link?.slug ? (
+              <Link
+                to={`/${data.secondaryImage.link.type === 'collection' ? 'collections' : data.secondaryImage.link.type === 'product' ? 'products' : 'pages'}/${data.secondaryImage.link.slug}`}
+              >
+                <img
+                  src={data?.secondaryImage?.image?.asset?.url}
+                  style={{width: '100%'}}
+                  alt={data?.secondaryImage?.altText || ''}
+                />
+              </Link>
+            ) : (
               <img
                 src={data?.secondaryImage?.image?.asset?.url}
                 style={{width: '100%'}}
                 alt={data?.secondaryImage?.altText || ''}
               />
-            </Link>
-          ) : (
-            <img
-              src={data?.secondaryImage?.image?.asset?.url}
-              style={{width: '100%'}}
-              alt={data?.secondaryImage?.altText || ''}
-            />
-          )}
+            )}
+          </div>
+          <div
+            style={{
+              gridColumn: '8 / 9',
+              display: 'flex',
+              alignItems: 'flex-end',
+              height: '100%',
+            }}
+          >
+            <img src={monogram} alt="" />
+          </div>
         </div>
-        <div
-          style={{
-            gridColumn: '8 / 9',
-            display: 'flex',
-            alignItems: 'flex-end',
-            height: '100%',
-          }}
-        >
-          <img src={monogram} alt="" />
-        </div>
-      </div>
+      )}
     </section>
   );
 }
