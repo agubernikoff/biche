@@ -356,13 +356,6 @@ function FeaturedProduct({sanityData, shopifyProduct}) {
     <section className="featured-product-section">
       <p>FEATURED</p>
       <div className="featured-product-info">
-        <div>
-          <p className="featured-product-name">{shopifyProduct.title}</p>
-          <ProductPrice
-            price={firstVariant?.price}
-            compareAtPrice={firstVariant?.compareAtPrice}
-          />
-        </div>
         {shopifyProduct.featuredImage && (
           <Image
             data={shopifyProduct.featuredImage}
@@ -370,6 +363,13 @@ function FeaturedProduct({sanityData, shopifyProduct}) {
             className="featured-product-image"
           />
         )}
+        <div>
+          <p className="featured-product-name">{shopifyProduct.title}</p>
+          <ProductPrice
+            price={firstVariant?.price}
+            compareAtPrice={firstVariant?.compareAtPrice}
+          />
+        </div>
         <div>
           {sanityData?.description && (
             <p className="featured-product-description">
