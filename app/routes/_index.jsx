@@ -358,11 +358,13 @@ function FeaturedProduct({sanityData, shopifyProduct}) {
       <p>FEATURED</p>
       <div className="featured-product-info">
         {shopifyProduct.featuredImage && (
-          <Image
-            data={shopifyProduct.featuredImage}
-            sizes="50vw"
-            className="featured-product-image"
-          />
+          <Link to={`/products/${shopifyProduct.handle}`}>
+            <Image
+              data={shopifyProduct.featuredImage}
+              sizes="50vw"
+              className="featured-product-image"
+            />
+          </Link>
         )}
         <div>
           <p className="featured-product-name">{shopifyProduct.title}</p>
