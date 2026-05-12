@@ -363,6 +363,7 @@ function FeaturedProduct({sanityData, shopifyProduct}) {
               data={shopifyProduct.featuredImage}
               sizes="50vw"
               className="featured-product-image"
+              style={{height: 'auto'}}
             />
           </Link>
         )}
