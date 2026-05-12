@@ -19,6 +19,15 @@ import {PortableText} from '@portabletext/react';
 import {useInView} from 'motion/react';
 import SanityInternalLink from '~/sanity/SanityInternalLink';
 
+function getLinkTo(link) {
+  if (!link) return '/';
+  if (link.path) return link.path;
+  if (link.type === 'collection') return `/collections/${link.slug}`;
+  if (link.type === 'product') return `/products/${link.slug}`;
+  if (link.slug?.startsWith('/')) return link.slug;
+  return `/pages/${link.slug}`;
+}
+
 /**
  * @type {MetaFunction}
  */
@@ -188,9 +197,7 @@ function Hero({data}) {
     <section className="hero-section" ref={ref}>
       <div className="hero-image left-image">
         {data?.leftImage?.link?.slug ? (
-          <Link
-            to={`/${data.leftImage.link.type === 'collection' ? 'collections' : data.leftImage.link.type === 'product' ? 'products' : 'pages'}/${data.leftImage.link.slug}`}
-          >
+          <Link to={getLinkTo(data.leftImage.link)}>
             <img
               src={data?.leftImage?.image?.asset?.url}
               alt={data?.leftImage?.altText || 'Left visual'}
@@ -206,9 +213,7 @@ function Hero({data}) {
       <HeroLogo url={`${data?.logo?.asset?.url}`} />
       <div className="hero-image right-image">
         {data?.rightImage?.link?.slug ? (
-          <Link
-            to={`/${data.rightImage.link.type === 'collection' ? 'collections' : data.rightImage.link.type === 'product' ? 'products' : 'pages'}/${data.rightImage.link.slug}`}
-          >
+          <Link to={getLinkTo(data.rightImage.link)}>
             <img
               src={data?.rightImage?.image?.asset?.url}
               alt={data?.rightImage?.altText || 'Right visual'}
@@ -293,9 +298,7 @@ function FirstSection({data}) {
         >
           <div style={{gridColumn: 'span 3'}}>
             {data?.mainImage?.link?.slug ? (
-              <Link
-                to={`/${data.mainImage.link.type === 'collection' ? 'collections' : data.mainImage.link.type === 'product' ? 'products' : 'pages'}/${data.mainImage.link.slug}`}
-              >
+              <Link to={getLinkTo(data.mainImage.link)}>
                 <img
                   src={data?.mainImage?.image?.asset?.url}
                   style={{width: '100%'}}
@@ -312,9 +315,7 @@ function FirstSection({data}) {
           </div>
           <div style={{gridColumn: '5 / 7'}}>
             {data?.secondaryImage?.link?.slug ? (
-              <Link
-                to={`/${data.secondaryImage.link.type === 'collection' ? 'collections' : data.secondaryImage.link.type === 'product' ? 'products' : 'pages'}/${data.secondaryImage.link.slug}`}
-              >
+              <Link to={getLinkTo(data.secondaryImage.link)}>
                 <img
                   src={data?.secondaryImage?.image?.asset?.url}
                   style={{width: '100%'}}
@@ -376,7 +377,7 @@ function FeaturedProduct({sanityData, shopifyProduct}) {
               {sanityData.description}
             </p>
           )}
-          {isSingleVariant ? (
+          {sanityData?.directlyAddToCart && isSingleVariant ? (
             <AddToCartButton
               lines={[{merchandiseId: firstVariant.id, quantity: 1}]}
               onClick={() => nav('/cart')}
@@ -384,15 +385,13 @@ function FeaturedProduct({sanityData, shopifyProduct}) {
               Add to Cart →
             </AddToCartButton>
           ) : (
-            <Link to={`/products/${shopifyProduct.handle}`}>View Product</Link>
+            <Link to={`/products/${shopifyProduct.handle}`}>Shop Now</Link>
           )}
         </div>
       </div>
       <div className="featured-product-secondary-image">
         {sanityData?.secondaryImage?.link?.slug ? (
-          <Link
-            to={`/${sanityData.secondaryImage.link.type === 'collection' ? 'collections' : sanityData.secondaryImage.link.type === 'product' ? 'products' : 'pages'}/${sanityData.secondaryImage.link.slug}`}
-          >
+          <Link to={getLinkTo(sanityData.secondaryImage.link)}>
             <img
               src={sanityData?.secondaryImage?.image?.asset?.url}
               style={{width: '100%'}}
@@ -430,9 +429,7 @@ function OurStandardsCard({card}) {
   return (
     <div className="our-standards-home-card">
       {card?.link?.slug ? (
-        <Link
-          to={`/${card.link.type === 'collection' ? 'collections' : card.link.type === 'product' ? 'products' : 'pages'}/${card.link.slug}`}
-        >
+        <Link to={getLinkTo(card.link)}>
           <img src={card.image.asset.url} alt="" />
         </Link>
       ) : (

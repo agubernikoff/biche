@@ -90,6 +90,13 @@ export const homeType = defineField({
           weak: true,
         },
         {
+          name: 'directlyAddToCart',
+          title: 'Directly Add to Cart',
+          type: 'boolean',
+          description:
+            'If true and the product has only one variant, an Add to Cart button will be shown on the homepage that adds the product to cart and takes the user to the cart page.',
+        },
+        {
           name: 'description',
           title: 'Description',
           type: 'string',
