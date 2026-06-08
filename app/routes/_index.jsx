@@ -143,6 +143,7 @@ export default function Homepage() {
         data={data?.sanityData?.hero}
         firstSection={data?.sanityData?.firstSection}
       />
+      <Partners data={data.partners} />
       {/* <FirstSection data={data?.sanityData?.firstSection} /> */}
       <FeaturedProduct
         sanityData={data?.sanityData?.featuredProduct}
@@ -547,6 +548,46 @@ function HeroLogo({url}) {
       }}
       style={{color: 'white'}}
     />
+  );
+}
+
+function Partners({data}) {
+  // const fields = normalizeMetaobject(data);
+  // const partners = fields?.partners?.references?.nodes || [];
+
+  const renderLogo = (n, i, setIndex) => {
+    const fieldz = normalizeMetaobject(n);
+    return (
+      <div
+        className="partner-logo-container"
+        key={`${n.id}-set${setIndex}-${i}`}
+      >
+        {/* <Image
+          data={{
+            ...fieldz.logo?.reference?.image,
+            altText: fieldz?.name?.value,
+          }}
+          sizes="20vw"
+          className="partner-logo"
+          loading="eager"
+        /> */}
+      </div>
+    );
+  };
+
+  return (
+    <section className="home-partners-section">
+      <div className="partners-carousel-mask">
+        <div className="partners-carousel-track">
+          <div className="partners-set" aria-hidden="false">
+            {/* {partners.map((n, i) => renderLogo(n, i, 0))} */}
+          </div>
+          <div className="partners-set" aria-hidden="true">
+            {/* {partners.map((n, i) => renderLogo(n, i, 1))} */}
+          </div>
+        </div>
+      </div>
+    </section>
   );
 }
 

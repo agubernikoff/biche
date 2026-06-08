@@ -3296,3 +3296,52 @@ th {
     line-height: 130%;
   }
 }
+
+.partners-carousel-mask {
+  overflow: hidden;
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    black 15%,
+    black 85%,
+    transparent
+  );
+  width: 50vw;
+}
+/* Track that scrolls infinitely */
+.partners-carousel-track {
+  display: flex;
+  gap: 3rem;
+  width: max-content;
+  animation: scroll 25s linear infinite;
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+/* Each repeated copy */
+.partners-set {
+  display: flex;
+}
+/* Uniform spacing box for each logo */
+.partner-logo-container {
+  width: 250px; /* Adjust to taste */
+  height: 125px; /* Adjust to taste */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+/* Logo image */
+.partner-logo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+/* Seamless Infinite Scroll */
+@keyframes scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(calc(-50% - 1.5rem));
+  }
+}
