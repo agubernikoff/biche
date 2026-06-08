@@ -139,8 +139,11 @@ export default function Homepage() {
 
   return (
     <div className="home">
-      <Hero data={data?.sanityData?.hero} />
-      <FirstSection data={data?.sanityData?.firstSection} />
+      <Hero
+        data={data?.sanityData?.hero}
+        firstSection={data?.sanityData?.firstSection}
+      />
+      {/* <FirstSection data={data?.sanityData?.firstSection} /> */}
       <FeaturedProduct
         sanityData={data?.sanityData?.featuredProduct}
         shopifyProduct={data?.shopifyFeaturedProduct}
@@ -151,11 +154,12 @@ export default function Homepage() {
   );
 }
 
-function Hero({data}) {
+function Hero({data, firstSection}) {
   const ref = useRef(null);
   const isInView = useInView(ref, {
     margin: '-32px 0px 0px 0px',
   });
+
   useEffect(() => {
     const header = document.querySelector('.header-content');
     const root = document.documentElement;
@@ -193,6 +197,7 @@ function Hero({data}) {
     } else reset();
     return () => reset();
   }, [isInView]);
+
   return (
     <section className="hero-section" ref={ref}>
       <div className="hero-image left-image">
@@ -225,6 +230,16 @@ function Hero({data}) {
             alt={data?.rightImage?.altText || 'Right visual'}
           />
         )}
+      </div>
+
+      <div className="hero-text-overlay">
+        <h1 className="intro-heading">{firstSection?.heroTitle}</h1>
+        <div className="intro-text">
+          <PortableText
+            value={firstSection?.introText}
+            components={{marks: {linkInternal: SanityInternalLink}}}
+          />
+        </div>
       </div>
     </section>
   );
@@ -419,12 +434,17 @@ function FeaturedProduct({sanityData, shopifyProduct}) {
 function OurStandards({data}) {
   return (
     <section className="our-standards-section">
-      <p className="intro-heading" style={{paddingBlock: '2rem'}}>
-        {data?.title}
-      </p>
+      <p>{data?.title}</p>
       <div className="our-standards-home">
         {data?.cards?.map((card) => (
-          <OurStandardsCard key={card._key} card={card} />
+          <p key={card._key + '-title'} className="standard-card-title">
+            {card.title}
+          </p>
+        ))}
+        {data?.cards?.map((card) => (
+          <p key={card._key + '-blurb'} className="standard-card-blurb">
+            {card.blurb}
+          </p>
         ))}
       </div>
     </section>
@@ -434,18 +454,9 @@ function OurStandards({data}) {
 function OurStandardsCard({card}) {
   return (
     <div className="our-standards-home-card">
-      {card?.link?.slug ? (
-        <Link to={getLinkTo(card.link)}>
-          <img src={card.image.asset.url} alt="" />
-        </Link>
-      ) : (
-        <img src={card.image.asset.url} alt="" />
-      )}
       <div className="standard-card-text-container">
-        <p>{card.title}</p>
-        <div>
-          <p>{card.blurb}</p>
-        </div>
+        <p className="standard-card-title">{card.title}</p>
+        <p className="standard-card-blurb">{card.blurb}</p>
       </div>
     </div>
   );
