@@ -2569,6 +2569,7 @@ th {
 .jdgm-rev-widg {
   width: 75%;
   margin: auto !important;
+  padding: 30px 16px !important;
 }
 
 .jdgm-histogram__bar,
@@ -2583,6 +2584,7 @@ th {
 @media (max-width: 767px) {
   .product-reviews {
     margin-left: -0.5rem;
+    margin-top: 0px;
   }
 
   .jdgm-rev-widg {
