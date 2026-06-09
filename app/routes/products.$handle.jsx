@@ -235,6 +235,12 @@ export default function Product() {
               price={selectedVariant?.price}
               compareAtPrice={selectedVariant?.compareAtPrice}
             />
+            <div
+              style={{marginTop: '24px'}}
+              className="jdgm-widget jdgm-preview-badge"
+              data-id={product.id.replace('gid://shopify/Product/', '')}
+              data-product-title={product.title}
+            />
           </div>
           <div className="product-content-track">
             <div
