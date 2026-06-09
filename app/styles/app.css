@@ -2569,7 +2569,7 @@ th {
 .jdgm-rev-widg {
   width: 75%;
   margin: auto !important;
-  padding: 30px 16px !important;
+  padding: 60px 16px !important;
 }
 
 .jdgm-histogram__bar,
@@ -2589,6 +2589,7 @@ th {
 
   .jdgm-rev-widg {
     width: 95% !important;
+    padding: 30px 16px !important;
   }
 
   .jdgm-rev-widg__title {
