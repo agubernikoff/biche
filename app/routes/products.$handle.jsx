@@ -19,6 +19,7 @@ import {ProductImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 import {motion, AnimatePresence} from 'motion/react';
+import {JudgemeReviewWidget} from '@judgeme/shopify-hydrogen';
 
 /**
  * @type {MetaFunction<typeof loader>}
@@ -135,7 +136,6 @@ function loadDeferredData({context, params}) {
 }
 
 export default function Product() {
-  /** @type {LoaderReturnData} */
   const data = useLoaderData();
   const actionData = useActionData();
   const [isEAOpen, setIsEAOpen] = useState(false);
@@ -146,43 +146,62 @@ export default function Product() {
     setOpenDropdown(openDropdown === section ? null : section);
   };
 
-  // Check if password was successfully validated
   useEffect(() => {
     if (actionData?.success) {
       setIsAuthenticated(true);
     }
   }, [actionData]);
 
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+
+    const loadJQuery = () => {
+      return new Promise((resolve) => {
+        if (window.jQuery) return resolve();
+        const script = document.createElement('script');
+        script.src = 'https://code.jquery.com/jquery-3.7.1.min.js';
+        script.onload = resolve;
+        document.head.appendChild(script);
+      });
+    };
+
+    const tryInit = () => {
+      if (window.jdgm) {
+        window.jdgm.reloadAll?.();
+      } else {
+        setTimeout(tryInit, 200);
+      }
+    };
+
+    loadJQuery().then(() => {
+      setTimeout(tryInit, 300);
+    });
+  }, [data?.product?.id]);
+
   if (!data?.product) {
     return null;
   }
 
   const {product} = data;
-  console.log(product);
   const productPassword = product.password?.value;
   const hasSessionAccess = data.hasAccess;
 
-  // Optimistically selects a variant with given available variant information
   const selectedVariant = useOptimisticVariant(
     product.selectedOrFirstAvailableVariant,
     getAdjacentAndFirstAvailableVariants(product),
   );
 
-  // Remove default Title option from URL params
   const selectedOptionsForUrl = selectedVariant.selectedOptions.filter(
     (option) => !(option.name === 'Title' && option.value === 'Default Title'),
   );
 
-  // Sets the search param to the selected variant without navigation
   useSelectedOptionInUrlParam(selectedOptionsForUrl);
 
-  // Get the product options array
   const productOptions = getProductOptions({
     ...product,
     selectedOrFirstAvailableVariant: selectedVariant,
   });
 
-  // Show password form if product has a password and user is not authenticated
   if (productPassword && !isAuthenticated && !hasSessionAccess) {
     return <PasswordProtectedView product={product} actionData={actionData} />;
   }
@@ -192,7 +211,6 @@ export default function Product() {
   const productBadgeText = product.productBadge?.value;
   const isPreorder = product.tags?.includes('preorder');
   const isBackInStockNotify = product?.tags?.includes('notify back in stock');
-  console.log(product.tags, isBackInStockNotify);
   const keyBenefits = parseRichText(product.Benefits?.value);
   const keyIngredients = parseRichText(product.Ingredients?.value);
   const howToUse = parseRichText(product.howTo?.value);
@@ -200,105 +218,114 @@ export default function Product() {
   const aboutFragrance = parseRichText(product.aboutTheFragrance?.value);
 
   return (
-    <div className="product">
-      <ProductImage images={product.images.nodes} />
-      <div className="product-main">
-        <div className="product-title-price-container">
-          <div className="product-title-price">
-            <p>{title}</p>
-            {productBadgeText && (
-              <div className="product-preorder-badge-pdp">
-                {productBadgeText}
-              </div>
-            )}
+    <>
+      <div className="product">
+        <ProductImage images={product.images.nodes} />
+        <div className="product-main">
+          <div className="product-title-price-container">
+            <div className="product-title-price">
+              <p>{title}</p>
+              {productBadgeText && (
+                <div className="product-preorder-badge-pdp">
+                  {productBadgeText}
+                </div>
+              )}
+            </div>
+            <ProductPrice
+              price={selectedVariant?.price}
+              compareAtPrice={selectedVariant?.compareAtPrice}
+            />
           </div>
-          <ProductPrice
-            price={selectedVariant?.price}
-            compareAtPrice={selectedVariant?.compareAtPrice}
-          />
-        </div>
-        <div className="product-content-track">
-          <div
-            className="product-descriptor"
-            dangerouslySetInnerHTML={{__html: descriptionHtml}}
-          />
-          <div className="product-dropdowns">
-            {keyBenefits && (
-              <Expandable
-                title="KEY BENEFITS"
-                details={keyBenefits}
-                openSection={openDropdown}
-                toggleSection={toggleSection}
-              />
-            )}
-            {keyIngredients && (
-              <Expandable
-                title="KEY INGREDIENTS"
-                details={keyIngredients}
-                openSection={openDropdown}
-                toggleSection={toggleSection}
-              />
-            )}
-            {howToUse && (
-              <Expandable
-                title="HOW TO USE"
-                details={howToUse}
-                openSection={openDropdown}
-                toggleSection={toggleSection}
-              />
-            )}
-            {aboutFragrance && (
-              <Expandable
-                title="ABOUT THE FRAGRANCE"
-                details={aboutFragrance}
-                openSection={openDropdown}
-                toggleSection={toggleSection}
-              />
-            )}
-            {shipping && (
-              <Expandable
-                title="SHIPPING"
-                details={shipping}
-                openSection={openDropdown}
-                toggleSection={toggleSection}
-              />
-            )}
+          <div className="product-content-track">
+            <div
+              className="product-descriptor"
+              dangerouslySetInnerHTML={{__html: descriptionHtml}}
+            />
+            <div className="product-dropdowns">
+              {keyBenefits && (
+                <Expandable
+                  title="KEY BENEFITS"
+                  details={keyBenefits}
+                  openSection={openDropdown}
+                  toggleSection={toggleSection}
+                />
+              )}
+              {keyIngredients && (
+                <Expandable
+                  title="KEY INGREDIENTS"
+                  details={keyIngredients}
+                  openSection={openDropdown}
+                  toggleSection={toggleSection}
+                />
+              )}
+              {howToUse && (
+                <Expandable
+                  title="HOW TO USE"
+                  details={howToUse}
+                  openSection={openDropdown}
+                  toggleSection={toggleSection}
+                />
+              )}
+              {aboutFragrance && (
+                <Expandable
+                  title="ABOUT THE FRAGRANCE"
+                  details={aboutFragrance}
+                  openSection={openDropdown}
+                  toggleSection={toggleSection}
+                />
+              )}
+              {shipping && (
+                <Expandable
+                  title="SHIPPING"
+                  details={shipping}
+                  openSection={openDropdown}
+                  toggleSection={toggleSection}
+                />
+              )}
+            </div>
+            <ProductForm
+              productOptions={productOptions}
+              selectedVariant={selectedVariant}
+              isPreorder={isPreorder}
+              isBackInStockNotify={isBackInStockNotify}
+              openEarlyAccess={() => setIsEAOpen(true)}
+            />
           </div>
-          <ProductForm
-            productOptions={productOptions}
-            selectedVariant={selectedVariant}
-            isPreorder={isPreorder}
-            isBackInStockNotify={isBackInStockNotify}
-            openEarlyAccess={() => setIsEAOpen(true)}
-          />
         </div>
+        <AnimatePresence>
+          {isEAOpen ? (
+            <EarlyAccessPopUp
+              closePopUp={() => setIsEAOpen(false)}
+              selectedVariant={selectedVariant}
+              image={product.images.nodes[0]}
+              isBackInStockNotify={isBackInStockNotify}
+            />
+          ) : null}
+        </AnimatePresence>
       </div>
-      <AnimatePresence>
-        {isEAOpen ? (
-          <EarlyAccessPopUp
-            closePopUp={() => setIsEAOpen(false)}
-            selectedVariant={selectedVariant}
-            image={product.images.nodes[0]}
-            isBackInStockNotify={isBackInStockNotify}
-          />
-        ) : null}
-      </AnimatePresence>
-      <Analytics.ProductView
-        data={{
-          products: [
-            {
-              id: product.id,
-              title: product.title,
-              price: selectedVariant?.price.amount || '0',
-              vendor: product.vendor,
-              variantId: selectedVariant?.id || '',
-              variantTitle: selectedVariant?.title || '',
-              quantity: 1,
-            },
-          ],
-        }}
-      />
-    </div>
+      <div className="product-reviews">
+        <div
+          className="jdgm-widget jdgm-review-widget jdgm-outside-widget"
+          data-id={product.id.replace('gid://shopify/Product/', '')}
+          data-product-title={product.title}
+        />
+        <Analytics.ProductView
+          data={{
+            products: [
+              {
+                id: product.id,
+                title: product.title,
+                price: selectedVariant?.price.amount || '0',
+                vendor: product.vendor,
+                variantId: selectedVariant?.id || '',
+                variantTitle: selectedVariant?.title || '',
+                quantity: 1,
+              },
+            ],
+          }}
+        />
+      </div>
+    </>
   );
 }
 
@@ -375,7 +402,6 @@ function EarlyAccessPopUp({
   image,
   isBackInStockNotify,
 }) {
-  console.log(selectedVariant);
   const [success, setSuccess] = useState(false);
   const [email, setEmail] = useState();
   useEffect(() => {

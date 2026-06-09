@@ -3,13 +3,6 @@ import {isbot} from 'isbot';
 import {renderToReadableStream} from 'react-dom/server';
 import {createContentSecurityPolicy} from '@shopify/hydrogen';
 
-/**
- * @param {Request} request
- * @param {number} responseStatusCode
- * @param {Headers} responseHeaders
- * @param {EntryContext} remixContext
- * @param {AppLoadContext} context
- */
 export default async function handleRequest(
   request,
   responseStatusCode,
@@ -41,9 +34,14 @@ export default async function handleRequest(
       'https://tpc.googlesyndication.com',
       'https://*.googletagmanager.com',
       'https://*.google-analytics.com',
+      'https://judge.me',
+      'https://*.judge.me',
+      'https://cdnwidget.judge.me',
+      'https://cache.judge.me',
     ],
     imgSrc: [
       "'self'",
+      'data:',
       'https://cdn.shopify.com',
       'https://shopify.com',
       'https://cdn.sanity.io',
@@ -56,6 +54,8 @@ export default async function handleRequest(
       'https://www.googletagmanager.com',
       'https://*.googletagmanager.com',
       'https://*.google-analytics.com',
+      'https://*.judge.me',
+      'https://judgeme-public-images.imgix.net',
     ],
     frameSrc: [
       "'self'",
@@ -76,6 +76,7 @@ export default async function handleRequest(
     defaultSrc: ["'self'"],
     scriptSrc: [
       "'self'",
+      "'unsafe-eval'",
       'https://static.klaviyo.com',
       'https://static-tracking.klaviyo.com',
       'https://klaviyo.com',
@@ -86,6 +87,9 @@ export default async function handleRequest(
       'https://www.googleadservices.com',
       'https://*.googletagmanager.com',
       'https://*.google-analytics.com',
+      'https://cdn.judge.me',
+      'https://*.judge.me',
+      'https://cdnwidget.judge.me',
     ],
     scriptSrcElem: [
       "'self'",
@@ -102,6 +106,10 @@ export default async function handleRequest(
       'https://googleads.g.doubleclick.net',
       'https://*.googletagmanager.com',
       'https://*.google-analytics.com',
+      'https://cdn.judge.me',
+      'https://*.judge.me',
+      'https://cdnwidget.judge.me',
+      'https://code.jquery.com',
     ],
     styleSrc: [
       "'self'",
@@ -109,6 +117,8 @@ export default async function handleRequest(
       'https://fonts.googleapis.com',
       'https://cdn.shopify.com',
       'https://static.klaviyo.com',
+      'https://cdn.judge.me',
+      'https://*.judge.me',
     ],
     styleSrcElem: [
       "'self'",
@@ -117,12 +127,17 @@ export default async function handleRequest(
       'https://cdn.shopify.com',
       'https://static-tracking.klaviyo.com',
       'https://static.klaviyo.com',
+      'https://cdn.judge.me',
+      'https://*.judge.me',
     ],
     fontSrc: [
       "'self'",
+      'data:',
       'https://fonts.gstatic.com',
       'https://cdn.shopify.com',
       'https://shopify.com',
+      'https://cdn.judge.me',
+      'https://*.judge.me',
     ],
   });
 

@@ -2541,6 +2541,38 @@ th {
 
 /*
 * --------------------------------------------------
+* reviews
+* --------------------------------------------------
+*/
+
+.product-reviews {
+  width: 100vw;
+  margin-left: -28px;
+  background: #fffbf8;
+  margin-top: 145px;
+}
+
+.jdgm-rev-widg__title {
+  font-family: 'heldane' !important;
+  font-size: 37px !important;
+  font-style: normal !important;
+  font-weight: 400 !important;
+  line-height: 140% !important;
+}
+
+.jdgm-row-actions,
+.jdgm-verified-checkmark,
+.jdgm-rev__icon {
+  display: none !important;
+}
+
+.jdgm-rev-widg {
+  width: 75%;
+  margin: auto !important;
+}
+
+/*
+* --------------------------------------------------
 * media queries
 * --------------------------------------------------
 */

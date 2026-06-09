@@ -9,6 +9,7 @@ import {
   ScrollRestoration,
   useRouteLoaderData,
   NavLink,
+  useLoaderData,
 } from '@remix-run/react';
 import {useEffect} from 'react';
 import favicon from '~/assets/favicon.png';
@@ -20,11 +21,8 @@ import {PageLayout} from './components/PageLayout';
 import {sanityClient} from './sanity/sanityClient';
 import {SETTINGS_QUERY} from './sanity/queries/comingSoonQuery';
 import {Script} from '@shopify/hydrogen';
+import {useJudgeme} from '@judgeme/shopify-hydrogen';
 
-/**
- * This is important to avoid re-fetching root queries on sub-navigations
- * @type {ShouldRevalidateFunction}
- */
 export const shouldRevalidate = ({formMethod, currentUrl, nextUrl}) => {
   if (formMethod && formMethod !== 'GET') return true;
   if (currentUrl.toString() === nextUrl.toString()) return true;
@@ -33,21 +31,12 @@ export const shouldRevalidate = ({formMethod, currentUrl, nextUrl}) => {
 
 export function links() {
   return [
-    {
-      rel: 'preconnect',
-      href: 'https://cdn.shopify.com',
-    },
-    {
-      rel: 'preconnect',
-      href: 'https://shop.app',
-    },
+    {rel: 'preconnect', href: 'https://cdn.shopify.com'},
+    {rel: 'preconnect', href: 'https://shop.app'},
     {rel: 'icon', type: 'image/svg+xml', href: favicon},
   ];
 }
 
-/**
- * @type {MetaFunction}
- */
 export const meta = () => {
   return [
     {title: 'Biche | Luxury Pet Grooming'},
@@ -95,6 +84,12 @@ export async function loader(args) {
       country: args.context.storefront.i18n.country,
       language: args.context.storefront.i18n.language,
     },
+    judgeme: {
+      shopDomain: '9fi6u1-st.myshopify.com',
+      publicToken: 'QDf8nyEcTy_oElEh-TNwUOiBl68',
+      cdnHost: 'https://cdnwidget.judge.me',
+      delay: 500,
+    },
   };
 }
 
@@ -137,7 +132,6 @@ function loadDeferredData({context}) {
 
 export function Layout({children}) {
   const nonce = useNonce();
-  /** @type {RootLoader} */
   const data = useRouteLoaderData('root');
 
   useEffect(() => {
@@ -159,6 +153,9 @@ export function Layout({children}) {
     gtagScript.src =
       'https://www.googletagmanager.com/gtag/js?id=AW-17280171207';
     document.head.appendChild(gtagScript);
+
+    // Judge.me platform-independent
+    const nonce = document.documentElement.getAttribute('data-nonce') || '';
   }, []);
 
   return (
@@ -166,7 +163,6 @@ export function Layout({children}) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        {/* Removed the hardcoded og:description meta tag - now handled by meta() function */}
         <link rel="stylesheet" href={resetStyles}></link>
         <link rel="stylesheet" href={appStyles}></link>
         <Meta />
@@ -177,7 +173,6 @@ export function Layout({children}) {
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-
               gtag('config', 'AW-17280171207');
             `,
           }}
@@ -216,6 +211,8 @@ export function Layout({children}) {
 }
 
 export default function App() {
+  const data = useLoaderData();
+  useJudgeme(data.judgeme);
   return <Outlet />;
 }
 
