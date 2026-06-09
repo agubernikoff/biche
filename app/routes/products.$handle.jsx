@@ -19,7 +19,6 @@ import {ProductImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 import {motion, AnimatePresence} from 'motion/react';
-import {JudgemeReviewWidget} from '@judgeme/shopify-hydrogen';
 
 /**
  * @type {MetaFunction<typeof loader>}
@@ -155,27 +154,51 @@ export default function Product() {
   useEffect(() => {
     if (typeof window === 'undefined') return;
 
-    const loadJQuery = () => {
-      return new Promise((resolve) => {
-        if (window.jQuery) return resolve();
-        const script = document.createElement('script');
-        script.src = 'https://code.jquery.com/jquery-3.7.1.min.js';
-        script.onload = resolve;
-        document.head.appendChild(script);
+    const bindFiltering = () => {
+      const histogram = document.querySelector('.jdgm-histogram');
+      if (!histogram) {
+        setTimeout(bindFiltering, 300);
+        return;
+      }
+
+      if (histogram.dataset.filterBound) return;
+      histogram.dataset.filterBound = 'true';
+
+      histogram.addEventListener('click', (e) => {
+        const row = e.target.closest('.jdgm-histogram__row');
+        if (!row) return;
+
+        const rating = row.getAttribute('data-rating');
+        const reviews = document.querySelectorAll('.jdgm-rev');
+
+        if (!rating || rating === 'null') {
+          reviews.forEach((r) => (r.style.display = ''));
+          document
+            .querySelectorAll('.jdgm-histogram__row')
+            .forEach((r) => r.classList.remove('jdgm--selected'));
+          return;
+        }
+
+        const isAlreadySelected = row.classList.contains('jdgm--selected');
+        document
+          .querySelectorAll('.jdgm-histogram__row')
+          .forEach((r) => r.classList.remove('jdgm--selected'));
+
+        if (isAlreadySelected) {
+          reviews.forEach((r) => (r.style.display = ''));
+        } else {
+          row.classList.add('jdgm--selected');
+          reviews.forEach((r) => {
+            const score = r
+              .querySelector('.jdgm-rev__rating')
+              ?.getAttribute('data-score');
+            r.style.display = score === rating ? '' : 'none';
+          });
+        }
       });
     };
 
-    const tryInit = () => {
-      if (window.jdgm) {
-        window.jdgm.reloadAll?.();
-      } else {
-        setTimeout(tryInit, 200);
-      }
-    };
-
-    loadJQuery().then(() => {
-      setTimeout(tryInit, 300);
-    });
+    setTimeout(bindFiltering, 800);
   }, [data?.product?.id]);
 
   if (!data?.product) {

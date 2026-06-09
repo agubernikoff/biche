@@ -9,7 +9,6 @@ import {
   ScrollRestoration,
   useRouteLoaderData,
   NavLink,
-  useLoaderData,
 } from '@remix-run/react';
 import {useEffect} from 'react';
 import favicon from '~/assets/favicon.png';
@@ -21,7 +20,6 @@ import {PageLayout} from './components/PageLayout';
 import {sanityClient} from './sanity/sanityClient';
 import {SETTINGS_QUERY} from './sanity/queries/comingSoonQuery';
 import {Script} from '@shopify/hydrogen';
-import {useJudgeme} from '@judgeme/shopify-hydrogen';
 
 export const shouldRevalidate = ({formMethod, currentUrl, nextUrl}) => {
   if (formMethod && formMethod !== 'GET') return true;
@@ -83,12 +81,6 @@ export async function loader(args) {
       withPrivacyBanner: true,
       country: args.context.storefront.i18n.country,
       language: args.context.storefront.i18n.language,
-    },
-    judgeme: {
-      shopDomain: '9fi6u1-st.myshopify.com',
-      publicToken: 'QDf8nyEcTy_oElEh-TNwUOiBl68',
-      cdnHost: 'https://cdnwidget.judge.me',
-      delay: 500,
     },
   };
 }
@@ -154,8 +146,15 @@ export function Layout({children}) {
       'https://www.googletagmanager.com/gtag/js?id=AW-17280171207';
     document.head.appendChild(gtagScript);
 
-    // Judge.me platform-independent
-    const nonce = document.documentElement.getAttribute('data-nonce') || '';
+    window.jdgm = window.jdgm || {};
+    window.jdgm.SHOP_DOMAIN = '9fi6u1-st.myshopify.com';
+    window.jdgm.PLATFORM = 'shopify';
+    window.jdgm.PUBLIC_TOKEN = 'QDf8nyEcTy_oElEh-TNwUOiBl68';
+
+    const jdgmScript = document.createElement('script');
+    jdgmScript.setAttribute('data-cfasync', 'false');
+    jdgmScript.src = 'https://cdnwidget.judge.me/widget_preloader.js';
+    document.head.appendChild(jdgmScript);
   }, []);
 
   return (
@@ -211,8 +210,6 @@ export function Layout({children}) {
 }
 
 export default function App() {
-  const data = useLoaderData();
-  useJudgeme(data.judgeme);
   return <Outlet />;
 }
 

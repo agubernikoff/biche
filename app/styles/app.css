@@ -2571,6 +2571,39 @@ th {
   margin: auto !important;
 }
 
+.jdgm-histogram__bar,
+.jdgm-histogram__bar-content {
+  pointer-events: none;
+}
+
+.jdgm-rev-widg__reviews {
+  min-height: 200px;
+}
+
+@media (max-width: 767px) {
+  .product-reviews {
+    margin-left: -0.5rem;
+  }
+
+  .jdgm-rev-widg {
+    width: 95% !important;
+  }
+
+  .jdgm-rev-widg__title {
+    font-size: 24px !important;
+    line-height: 120% !important;
+  }
+
+  .jdgm-histogram__frequency,
+  .jdgm-histogram__percentage {
+    display: none;
+  }
+
+  .jdgm-write-rev-link.jdgm-write-rev-link {
+    width: 75% !important;
+  }
+}
+
 /*
 * --------------------------------------------------
 * media queries
