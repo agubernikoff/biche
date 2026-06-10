@@ -185,6 +185,10 @@ export const homeType = defineField({
             hotspot: true,
           },
         },
+        {
+          name: 'imageCaption',
+          type: 'portableTextSimple',
+        },
         defineField({
           name: 'title',
           title: 'Title',

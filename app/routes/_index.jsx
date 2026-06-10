@@ -360,16 +360,18 @@ function OurStandardsCard({card}) {
 }
 
 function BottomSection({data}) {
+  console.log('bottom section data', data);
   return (
     <section className="bottom-section-home">
+      <p className="intro-heading">{data?.title}</p>
       <div className="bottom-section-text-container">
-        <p className="intro-heading">{data?.title}</p>
         <div>
           <PortableText value={data?.blurb} />
         </div>
       </div>
       <div className="bottom-section-hero-image">
         <img src={data?.bannerImage?.asset?.url} alt="" />
+        <PortableText value={data?.imageCaption} />
       </div>
     </section>
   );
