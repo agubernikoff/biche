@@ -78,6 +78,29 @@ export const homeType = defineField({
       ],
     }),
     defineField({
+      name: 'imageCarousel',
+      type: 'array',
+      group: 'editorial',
+      of: [
+        defineArrayMember({
+          type: 'object',
+          fields: [
+            {
+              name: 'image',
+              title: 'Image',
+              type: 'image',
+              options: {hotspot: true},
+            },
+            {
+              name: 'altText',
+              title: 'Alt Text',
+              type: 'string',
+            },
+          ],
+        }),
+      ],
+    }),
+    defineField({
       name: 'featuredProduct',
       title: 'Featured Product',
       type: 'object',
