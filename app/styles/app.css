@@ -1340,10 +1340,19 @@ a.intro-text:hover {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: auto auto;
-  column-gap: 130px;
-  row-gap: 12px;
-  padding: 83.5px 99px;
+  column-gap: 30px;
+  padding: 83.5px 30px;
   box-sizing: border-box;
+}
+.our-standards-home-card {
+  max-width: 352px;
+  text-align: center;
+  justify-self: center;
+}
+.standard-card-text-container {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .standard-card-title {
@@ -1354,7 +1363,7 @@ a.intro-text:hover {
   line-height: 120%;
   text-align: center;
   align-self: end;
-  width: 258px;
+  max-width: 258px;
   margin: auto;
 }
 
@@ -2882,9 +2891,6 @@ th {
   }
   .our-standards-home-card > div > p {
     font-size: 16px !important;
-  }
-  .standard-card-text-container {
-    background-color: white !important;
   }
   .bottom-section-home {
     margin-top: 100px !important;

@@ -438,14 +438,7 @@ function OurStandards({data}) {
       <p>{data?.title}</p>
       <div className="our-standards-home">
         {data?.cards?.map((card) => (
-          <p key={card._key + '-title'} className="standard-card-title">
-            {card.title}
-          </p>
-        ))}
-        {data?.cards?.map((card) => (
-          <p key={card._key + '-blurb'} className="standard-card-blurb">
-            {card.blurb}
-          </p>
+          <OurStandardsCard key={card._key} card={card} />
         ))}
       </div>
     </section>
