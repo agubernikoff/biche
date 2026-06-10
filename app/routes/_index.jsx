@@ -13,8 +13,6 @@ import {ProductItem} from '~/components/ProductItem';
 import HPSocialShareImg from '~/assets/HP.jpg';
 import {sanityClient} from '~/sanity/sanityClient';
 import {HOME_QUERY} from '~/sanity/queries/comingSoonQuery';
-import PrimaryLogo from '~/assets/PrimaryLogo';
-import monogram from '~/assets/MONOGRAM.png';
 import {PortableText} from '@portabletext/react';
 import {useInView} from 'motion/react';
 import SanityInternalLink from '~/sanity/SanityInternalLink';
@@ -266,101 +264,6 @@ function Hero({data, firstSection}) {
 //     />
 //   );
 // }
-
-function FirstSection({data}) {
-  return (
-    <section
-      className="second-section"
-      style={{
-        display: 'grid',
-        gridTemplateColumns: 'repeat(8,1fr)',
-        rowGap: '8rem',
-      }}
-    >
-      <div className="first-section-heading" style={{gridColumn: 'span 4'}}>
-        <h1 className="intro-heading">{data?.heroTitle}</h1>
-      </div>
-      <div className="first-section-heading" style={{gridColumn: 'span 4'}}>
-        <div
-          className="intro-text"
-          style={{width: '75%', marginBottom: '2rem'}}
-        >
-          <PortableText
-            value={data?.introText}
-            components={{marks: {linkInternal: SanityInternalLink}}}
-          />
-        </div>
-        {/* <Link
-          to={'/collections/frontpage'}
-          className="intro-text"
-          style={{
-            color: '#3c0707',
-            padding: '.5rem',
-            borderBottom: '1px solid #3c0707',
-          }}
-        >
-          Shop All →
-        </Link> */}
-      </div>
-      {!data?.hideImages && (
-        <div
-          className="first-section-images-container"
-          style={{
-            gridColumn: 'span 8',
-            display: 'grid',
-            gridTemplateColumns: 'subgrid',
-            alignItems: 'center',
-          }}
-        >
-          <div style={{gridColumn: 'span 3'}}>
-            {data?.mainImage?.link?.slug ? (
-              <Link to={getLinkTo(data.mainImage.link)}>
-                <img
-                  src={data?.mainImage?.image?.asset?.url}
-                  style={{width: '100%'}}
-                  alt={data?.mainImage?.altText || ''}
-                />
-              </Link>
-            ) : (
-              <img
-                src={data?.mainImage?.image?.asset?.url}
-                style={{width: '100%'}}
-                alt={data?.mainImage?.altText || ''}
-              />
-            )}
-          </div>
-          <div style={{gridColumn: '5 / 7'}}>
-            {data?.secondaryImage?.link?.slug ? (
-              <Link to={getLinkTo(data.secondaryImage.link)}>
-                <img
-                  src={data?.secondaryImage?.image?.asset?.url}
-                  style={{width: '100%'}}
-                  alt={data?.secondaryImage?.altText || ''}
-                />
-              </Link>
-            ) : (
-              <img
-                src={data?.secondaryImage?.image?.asset?.url}
-                style={{width: '100%'}}
-                alt={data?.secondaryImage?.altText || ''}
-              />
-            )}
-          </div>
-          <div
-            style={{
-              gridColumn: '8 / 9',
-              display: 'flex',
-              alignItems: 'flex-end',
-              height: '100%',
-            }}
-          >
-            <img src={monogram} alt="" />
-          </div>
-        </div>
-      )}
-    </section>
-  );
-}
 
 function FeaturedProduct({sanityData, shopifyProduct}) {
   const nav = useNavigate();
