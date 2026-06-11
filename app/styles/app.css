@@ -1091,7 +1091,7 @@ p.cart-subtotal {
 }
 
 .hero-text-overlay h1.intro-heading {
-  margin-bottom: 0.75rem;
+  margin-bottom: 0.7px;
   color: var(--color-eggshell);
   font-size: 33px;
   font-style: normal;
@@ -1101,7 +1101,7 @@ p.cart-subtotal {
 
 .hero-text-overlay .intro-text p {
   color: var(--color-eggshell);
-  margin-bottom: 0.75rem;
+  margin-bottom: 24px;
   font-family: 'Helvetica Neue';
   font-size: 15px;
   font-style: normal;
@@ -1173,6 +1173,7 @@ h1.intro-heading {
 .signup-button {
   color: var(--color-balsamic);
   font-family: 'neue';
+  opacity: 0.5;
 }
 
 .launch-message {
@@ -1202,13 +1203,13 @@ h1.intro-heading {
 
 .email-form {
   display: flex;
-  gap: 0.5rem;
+  gap: 5px;
 }
 
 .email-input {
   flex: 1;
   border: none;
-  border-bottom: 1px solid #000;
+  border: 1px solid #eae6e8;
   padding: 0.5rem;
   background: transparent;
   font-size: 13px;
@@ -1216,11 +1217,17 @@ h1.intro-heading {
 }
 
 .signup-button {
-  border: none;
-  border-bottom: 1px solid #000;
-  background: transparent;
+  background: #eae6e8;
   cursor: pointer;
   padding: 0.5rem;
+  border: none;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+  letter-spacing: 0.66px;
+  text-transform: uppercase;
+  opacity: 1;
 }
 
 .founder-section {
@@ -1490,7 +1497,7 @@ a.intro-text:hover {
   font-size: 12px;
   line-height: 130%;
   letter-spacing: 0%;
-  margin-top: 12px;
+  margin-top: 10px;
 }
 .bottom-section-hero-image > p > em {
   font-style: normal;
@@ -1518,6 +1525,7 @@ a.intro-text:hover {
 .bottom-section-text-container > div > p,
 .intro-text > p {
   margin-bottom: 1rem;
+  font-size: 14px;
 }
 .bottom-section-text-container > div > p:last-of-type,
 .intro-text > p:last-of-type {
