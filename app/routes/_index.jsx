@@ -12,6 +12,7 @@ import {ProductPrice} from '~/components/ProductPrice';
 import {ProductItem} from '~/components/ProductItem';
 import HPSocialShareImg from '~/assets/HP.jpg';
 import black_poodle from '~/assets/black_poodle.png';
+import mandog from '~/assets/man&dog.png';
 import {sanityClient} from '~/sanity/sanityClient';
 import {HOME_QUERY} from '~/sanity/queries/comingSoonQuery';
 import {PortableText} from '@portabletext/react';
@@ -378,6 +379,11 @@ function OffsetPills() {
       <p>Formulated for their wellness, designed for your taste</p>
       <img
         src={black_poodle}
+        alt="black poodle lying down looking off to the right"
+      />
+      <img
+        className="hide-on-desktop"
+        src={mandog}
         alt="black poodle lying down looking off to the right"
       />
       <div>
