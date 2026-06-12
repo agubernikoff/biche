@@ -8,6 +8,7 @@ export const portableTextSimpleType = defineField({
       lists: [
         {title: 'Bullet', value: 'bullet'},
         {title: 'Numbered', value: 'number'},
+        {title: 'Pills', value: 'pills'},
       ],
       marks: {
         decorators: [

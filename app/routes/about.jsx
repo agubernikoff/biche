@@ -6,7 +6,6 @@ import AboutSocialShareImg from '~/assets/About.jpg';
 import {sanityClient} from '~/sanity/sanityClient';
 import {ABOUT_QUERY} from '~/sanity/queries/comingSoonQuery';
 import PrimaryLogo from '~/assets/PrimaryLogo';
-import monogram from '~/assets/MONOGRAM.png';
 import {PortableText} from '@portabletext/react';
 import SanityInternalLink from '~/sanity/SanityInternalLink';
 
@@ -151,22 +150,20 @@ function OurStandards({data}) {
           <div style={{marginBottom: '1rem'}}>
             <PortableText
               value={data.blurb}
-              components={{marks: {linkInternal: SanityInternalLink}}}
+              components={{
+                marks: {linkInternal: SanityInternalLink},
+                list: {
+                  pills: ({children}) => (
+                    <ul className="pt-pills">{children}</ul>
+                  ),
+                },
+              }}
             />
           </div>
         </div>
-
-        <img src={monogram} alt="monogram: BNY" />
       </div>
       <div className="our-standards-about-images-container">
-        <div className="our-standards-about-square-images-container">
-          {data.squareImages.map((image, index) => (
-            <img key={index} src={image.asset.url} alt="" />
-          ))}
-        </div>
-        <div className="our-standards-about-primary-image-container">
-          <img src={data.primaryImage.asset.url} alt="" />
-        </div>
+        <img src={data.primaryImage.asset.url} alt="" />
       </div>
     </section>
   );

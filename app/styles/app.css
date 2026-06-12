@@ -12,6 +12,7 @@
   --color-eggshell: #fffbf8;
   --header-hover-indicator-color: rgb(var(--rgb-balsamic));
   --biche-palette-stroke: #bfadad;
+  --color-lilac-dimmed: #eae6e8;
 }
 
 @font-face {
@@ -1209,7 +1210,7 @@ h1.intro-heading {
 .email-input {
   flex: 1;
   border: none;
-  border: 1px solid #eae6e8;
+  border: 1px solid var(--color-lilac-dimmed);
   padding: 0.5rem;
   background: transparent;
   font-size: 13px;
@@ -1217,7 +1218,7 @@ h1.intro-heading {
 }
 
 .signup-button {
-  background: #eae6e8;
+  background: var(--color-lilac-dimmed);
   cursor: pointer;
   padding: 0.5rem;
   border: none;
@@ -1719,14 +1720,59 @@ div:has(> .featured-product-name) {
 }
 .about-text-container {
   width: 50vw;
-  height: 100vh;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   gap: 2rem;
 }
-.about-text-container > div:last-of-type {
-  width: 70%;
+.about-text-container .intro-heading {
+  font-size: 33px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 120%;
+}
+.about-text-container h4 {
+  font-weight: normal;
+  text-transform: uppercase;
+  border-top: 1px solid var(--color-lilac-dimmed);
+  padding-top: 1rem;
+  margin-top: 0;
+  margin-bottom: 12px;
+}
+.about-text-container a.intro-text {
+  background: var(--color-lilac-dimmed);
+  cursor: pointer;
+  padding: 0.5rem;
+  border: none;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 140%;
+  letter-spacing: 0.66px;
+  text-transform: uppercase;
+  opacity: 1;
+}
+.pt-pills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+.pt-pills li {
+  line-height: 140%;
+  background: var(--color-balsamic);
+  border-radius: 999px;
+  padding: 10px 12px;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 6%;
+  text-transform: uppercase;
+  line-height: 140%;
+  color: var(--color-eggshell);
+}
+.about-text-container .bottom-section-text-container > div {
+  max-width: 663px;
 }
 .about .quote-text {
   width: 75%;
@@ -1768,10 +1814,10 @@ div:has(> .featured-product-name) {
 }
 .about-our-standards {
   display: flex;
+  gap: 30px;
 }
 .about-our-standards > .about-text-container {
   position: relative;
-  height: calc(100vh - var(--header-height) - 4px);
 }
 .about-our-standards > .about-text-container > img {
   width: 50px;
@@ -1785,20 +1831,10 @@ div:has(> .featured-product-name) {
   justify-content: space-between;
   width: 50%;
 }
-.our-standards-about-square-images-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  width: 30%;
-}
-.our-standards-about-square-images-container > img {
-  aspect-ratio: 1/1;
+.our-standards-about-images-container > img {
+  width: 100%;
+  height: auto;
   object-fit: cover;
-}
-.our-standards-about-primary-image-container {
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-end;
 }
 .team-member-container {
   display: grid;
@@ -2814,18 +2850,9 @@ th {
 * --------------------------------------------------
 */
 @media (min-width: 768px) {
-  .our-standards-about-square-images-container {
-    gap: 2px;
-  }
   .team-member:nth-child(3),
   .team-member:nth-child(4) {
     flex-direction: row-reverse;
-  }
-  .our-standards-about-primary-image-container {
-    align-items: center;
-  }
-  .our-standards-about-primary-image-container > img {
-    width: 50%;
   }
   .team-member-text-container > div > p:first-of-type {
     font-size: 19px;
@@ -3154,7 +3181,7 @@ th {
   }
 
   .about-our-standards {
-    flex-direction: column;
+    flex-direction: column-reverse;
     gap: 2rem;
   }
   .about-our-standards .about-text-container {
@@ -3174,24 +3201,6 @@ th {
   .about-text-container:has(+ .our-standards-about-images-container)
     > .bottom-section-text-container {
     margin-bottom: 0;
-  }
-  .our-standards-about-square-images-container {
-    height: fit-content;
-    flex-direction: row;
-    flex: 2;
-    gap: 1px;
-  }
-  .our-standards-about-square-images-container > img {
-    width: calc(50%);
-    aspect-ratio: 1/1.2;
-  }
-  .our-standards-about-primary-image-container {
-    flex: 1;
-  }
-  .our-standards-about-primary-image-container > img {
-    width: 100%;
-    aspect-ratio: 1/1.2;
-    object-fit: cover;
   }
 
   .team-member-container {
