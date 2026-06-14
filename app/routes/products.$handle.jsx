@@ -201,10 +201,6 @@ export default function Product() {
     setTimeout(bindFiltering, 800);
   }, [data?.product?.id]);
 
-  if (!data?.product) {
-    return null;
-  }
-
   const {product} = data;
   const productPassword = product.password?.value;
   const hasSessionAccess = data.hasAccess;
@@ -220,6 +216,9 @@ export default function Product() {
 
   useSelectedOptionInUrlParam(selectedOptionsForUrl);
 
+  if (!data?.product) {
+    return null;
+  }
   const productOptions = getProductOptions({
     ...product,
     selectedOrFirstAvailableVariant: selectedVariant,
