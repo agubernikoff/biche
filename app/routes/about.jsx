@@ -191,8 +191,8 @@ function TeamMember({data}) {
       </div>
       <div className="team-member-text-container">
         <div>
-          <p>{`${data.name}, ${data.title}`}</p>
-          <p>{data.petInfo}</p>
+          <p>{data.name}</p>
+          <p>{data.title}</p>
         </div>
         <p>{data.shortBio}</p>
       </div>
