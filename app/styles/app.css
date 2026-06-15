@@ -3666,6 +3666,7 @@ section.home-partners-section {
 /* Each repeated copy */
 .partners-set {
   display: flex;
+  gap: 3rem;
 }
 /* Uniform spacing box for each logo */
 .partner-logo-container {
