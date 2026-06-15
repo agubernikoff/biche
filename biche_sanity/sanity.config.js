@@ -18,7 +18,7 @@ export default defineConfig({
   title: 'Biche',
 
   projectId: '3c8olga9',
-  dataset: 'dev',
+  dataset: 'production',
 
   plugins: [
     structureTool({structure}),
