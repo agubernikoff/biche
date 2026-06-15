@@ -1052,6 +1052,10 @@ p.cart-subtotal {
   margin-left: -28px;
 }
 
+.hero-section .intro-text p {
+  font-size: 15px !important;
+}
+
 .hero-section.mobile {
   flex-direction: column;
   height: auto;
