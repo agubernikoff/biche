@@ -1814,7 +1814,7 @@ div:has(> .featured-product-name) {
   width: 75%;
 }
 .image-and-copy > .bottom-section-text-container > div > p {
-  font-size: 32px;
+  font-size: 33px !important;
   font-style: normal;
   font-weight: 400;
   line-height: 120%;
@@ -1877,6 +1877,9 @@ div:has(> .featured-product-name) {
 .team-member-text-container > div > p:nth-of-type(2) {
   margin-bottom: 1rem;
   opacity: 0.5;
+}
+.team-member-text-container > p {
+  width: 83.33%;
 }
 
 /*
@@ -2138,14 +2141,15 @@ th {
   top: 26px;
   right: 26px;
   z-index: 0;
-  padding: 0.3125rem 0.625rem;
+  padding: 10px 12px;
   background: transparent;
-  border: 1px solid var(--color-balsamic);
+  border: 1px solid var(--color-lilac-dimmed);
   font-family: 'neue';
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
-  line-height: 140%;
+  line-height: 120%;
+  border-radius: 100px;
 }
 
 .product-plp-description {
@@ -2191,18 +2195,19 @@ th {
 
 .product-preorder-badge-pdp {
   background: transparent;
-  border: 1px solid var(--color-balsamic);
+  border: 1px solid var(--color-lilac-dimmed);
   font-family: 'neue';
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
-  line-height: 140%;
-  padding: 0.3125rem 0.625rem;
+  line-height: 120%;
+  padding: 10px 12px;
   width: fit-content;
   display: flex;
   align-items: center;
   flex-shrink: 0;
   height: fit-content;
+  border-radius: 100px;
 }
 
 .product-descriptor {
@@ -2242,6 +2247,7 @@ th {
   text-align: left;
   cursor: pointer;
   color: var(--color-balsamic);
+  letter-spacing: 6%;
 }
 
 .product-dropdown-icon {
