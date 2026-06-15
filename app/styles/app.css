@@ -2836,6 +2836,20 @@ th {
   min-height: 200px;
 }
 
+.jdgm-star,
+.jdgm-histogram__row,
+.jdgm-histogram__star,
+.jdgm-histogram__bar,
+.jdgm-histogram__bar-content,
+.jdgm-rev__author {
+  color: var(--color-balsamic) !important;
+}
+
+.jdgm-histogram__bar-content,
+.jdgm-write-rev-link {
+  background-color: var(--color-balsamic) !important;
+}
+
 @media (max-width: 767px) {
   .product-reviews {
     margin-left: -0.5rem;
