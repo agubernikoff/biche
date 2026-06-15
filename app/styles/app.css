@@ -1731,7 +1731,7 @@ div:has(> .featured-product-name) {
   justify-content: center;
   background: white;
 }
-.about-text-container div {
+.about-text-container div:not(.bottom-section-text-container) {
   max-width: 480px;
 }
 .about-text-container p:not(.intro-heading) {
