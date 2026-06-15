@@ -1086,7 +1086,6 @@ p.cart-subtotal {
   position: absolute;
   bottom: 2rem;
   left: 2rem;
-  z-index: 10;
   color: var(--color-eggshell);
   max-width: 658px;
 }
