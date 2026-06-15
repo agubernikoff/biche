@@ -1095,7 +1095,7 @@ p.cart-subtotal {
 }
 
 .hero-text-overlay h1.intro-heading {
-  margin-bottom: 0.7px;
+  margin-bottom: 7px;
   color: var(--color-eggshell);
 }
 
@@ -1571,6 +1571,10 @@ a.intro-text:hover {
 }
 .bottom-section-text-container > div {
   max-width: 544px;
+}
+
+.bottom-section-text-container > div > p:last-of-type {
+  margin-top: 24px;
 }
 
 .bottom-section-home > .intro-heading {
@@ -2871,6 +2875,10 @@ th {
   text-decoration: none !important;
 }
 
+.jdgm-row-stars {
+  padding-bottom: 100px !important;
+}
+
 @media (max-width: 767px) {
   .product-reviews {
     margin-left: -0.5rem;
@@ -2894,6 +2902,9 @@ th {
 
   .jdgm-write-rev-link.jdgm-write-rev-link {
     width: 75% !important;
+  }
+  .jdgm-row-stars {
+    padding-bottom: 10px !important;
   }
 }
 
