@@ -2860,6 +2860,16 @@ th {
   background-color: var(--color-balsamic) !important;
 }
 
+.jdgm-write-rev-link {
+  border: none !important;
+}
+
+.jdgm-write-rev-link:hover {
+  background-color: black !important;
+  opacity: 1 !important;
+  text-decoration: none !important;
+}
+
 @media (max-width: 767px) {
   .product-reviews {
     margin-left: -0.5rem;
