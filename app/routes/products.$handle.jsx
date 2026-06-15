@@ -153,93 +153,10 @@ export default function Product() {
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
+    if (!window.jdgmSettings || !window.jdgmCacheServer) return;
 
-    let cancelled = false;
-
-    const bindFiltering = () => {
-      if (cancelled) return;
-      const histogram = document.querySelector('.jdgm-histogram');
-      if (!histogram) {
-        setTimeout(bindFiltering, 300);
-        return;
-      }
-      if (histogram.dataset.filterBound) return;
-      histogram.dataset.filterBound = 'true';
-
-      histogram.addEventListener('click', (e) => {
-        const row = e.target.closest('.jdgm-histogram__row');
-        if (!row) return;
-        const rating = row.getAttribute('data-rating');
-        const reviews = document.querySelectorAll('.jdgm-rev');
-        if (!rating || rating === 'null') {
-          reviews.forEach((r) => (r.style.display = ''));
-          document
-            .querySelectorAll('.jdgm-histogram__row')
-            .forEach((r) => r.classList.remove('jdgm--selected'));
-          return;
-        }
-        const isAlreadySelected = row.classList.contains('jdgm--selected');
-        document
-          .querySelectorAll('.jdgm-histogram__row')
-          .forEach((r) => r.classList.remove('jdgm--selected'));
-        if (isAlreadySelected) {
-          reviews.forEach((r) => (r.style.display = ''));
-        } else {
-          row.classList.add('jdgm--selected');
-          reviews.forEach((r) => {
-            const score = r
-              .querySelector('.jdgm-rev__rating')
-              ?.getAttribute('data-score');
-            r.style.display = score === rating ? '' : 'none';
-          });
-        }
-      });
-    };
-
-    const init = () => {
-      if (cancelled) return;
-      document
-        .querySelectorAll('.jdgm-review-widget, .jdgm-preview-badge')
-        .forEach((el) => {
-          el.innerHTML = '';
-        });
-      delete window.jdgmSettings;
-      window.jdgmCacheServer?.reloadAll();
-      setTimeout(bindFiltering, 800);
-    };
-
-    const timer = setTimeout(() => {
-      if (cancelled) return;
-
-      const widget = document.querySelector('.jdgm-review-widget');
-      const alreadyRendered = widget && widget.children.length > 0;
-
-      if (alreadyRendered) {
-        // Refresh case — Judge.me already rendered correctly, just bind filtering
-        setTimeout(bindFiltering, 100);
-      } else {
-        // First load / client navigation — widget is empty, force render
-        if (window.jdgmCacheServer?.reloadAll) {
-          init();
-        } else {
-          const interval = setInterval(() => {
-            if (cancelled) {
-              clearInterval(interval);
-              return;
-            }
-            if (window.jdgmCacheServer?.reloadAll) {
-              clearInterval(interval);
-              init();
-            }
-          }, 100);
-        }
-      }
-    }, 50);
-
-    return () => {
-      cancelled = true;
-      clearTimeout(timer);
-    };
+    delete window.jdgmSettings;
+    window.jdgmCacheServer.reloadAll();
   }, [data?.product?.id]);
 
   const {product} = data;
