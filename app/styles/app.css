@@ -3069,6 +3069,7 @@ th {
 
   .hero-text-overlay {
     left: 0.5rem;
+    bottom: 1rem;
   }
   .hero-section {
     margin-left: -0.5rem;
