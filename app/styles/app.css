@@ -2887,6 +2887,7 @@ th {
   .product-reviews {
     margin-left: -0.5rem;
     margin-top: 0px;
+    margin-bottom: 50px;
   }
 
   .jdgm-rev-widg {
@@ -3170,7 +3171,7 @@ th {
     margin-top: 0.5rem;
   }
   .home > section {
-    margin-top: 100px;
+    margin-top: 25px;
   }
   .email-form > input::placeholder {
     color: #9d8383;
