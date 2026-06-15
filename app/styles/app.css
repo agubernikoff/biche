@@ -1729,6 +1729,7 @@ div:has(> .featured-product-name) {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  background: white;
 }
 .about-text-container div {
   max-width: 480px;
