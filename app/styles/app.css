@@ -3071,7 +3071,6 @@ th {
     height: 60vh;
   }
   .hero-image.left-image {
-    height: 60vh;
     width: 100vw;
   }
   .hero-image.right-image {
@@ -3494,9 +3493,6 @@ th {
   .image-and-copy > .bottom-section-text-container > div > p {
     font-size: 33px;
     text-align: center;
-  }
-  .team-member-text-container > p {
-    font-size: clamp(8px, 2vw, 13px);
   }
   .footer-newlsetter > p {
     font-size: 12px;
