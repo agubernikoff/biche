@@ -126,7 +126,7 @@ export default function ComingSoon() {
                   onChange={(e) => setEmail(e.target.value)}
                 />
                 <button type="submit" className="signup-button">
-                  Sign Up →
+                  Sign Up
                 </button>
               </form>
             )}

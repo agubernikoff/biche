@@ -216,7 +216,7 @@ function MobileMenuAside({header, publicStoreDomain, settings}) {
             data={{
               title: 'Newsletter',
               placeholder: 'Email',
-              submitText: 'Sign Up →',
+              submitText: 'Sign Up',
             }}
           />
           <hr />
