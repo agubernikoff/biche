@@ -2862,6 +2862,7 @@ th {
 
 .jdgm-write-rev-link {
   border: none !important;
+  border-radius: 100px !important;
 }
 
 .jdgm-write-rev-link:hover {
