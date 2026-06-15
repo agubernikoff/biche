@@ -3064,8 +3064,7 @@ th {
   }
   .hero-section {
     margin-left: -0.5rem;
-    height: 75vh;
-    height: fit-content;
+    height: auto;
   }
   .hero-section.mobile {
     height: 60vh;
