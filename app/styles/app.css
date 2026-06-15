@@ -2889,6 +2889,9 @@ th {
   .hero-logo {
     width: 15%;
   }
+  .product-form {
+    transform: none !important;
+  }
 }
 
 @media (max-width: 1000px) {
