@@ -476,7 +476,7 @@ function HeroLogo({url}) {
         .catch(console.error);
     }
   }, [url]);
-  return (
+  return svg ? (
     <div
       className="hero-logo"
       dangerouslySetInnerHTML={{
@@ -484,6 +484,10 @@ function HeroLogo({url}) {
       }}
       style={{color: 'white'}}
     />
+  ) : (
+    <div className="hero-logo" style={{top: '50%'}}>
+      <img src={url} alt="" />
+    </div>
   );
 }
 
