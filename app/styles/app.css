@@ -1312,7 +1312,7 @@ h1.intro-heading {
 }
 
 .home > section {
-  margin-top: 8rem;
+  margin-top: 57px;
 }
 .home .hero-section {
   width: 100vw;
@@ -1723,6 +1723,9 @@ div:has(> .featured-product-name) {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+.about-our-standards .about-text-container {
+  justify-content: flex-start;
 }
 .about-text-container {
   width: 50vw;
@@ -3631,7 +3634,7 @@ th {
 }
 
 section.home-partners-section {
-  padding-block: 1rem;
+  padding-block: 12px;
   background: #fffbf8;
   width: 100vw;
   margin-left: -28px;
@@ -3656,7 +3659,7 @@ section.home-partners-section {
 /* Track that scrolls infinitely */
 .partners-carousel-track {
   display: flex;
-  gap: 3rem;
+  gap: 75px;
   width: max-content;
   animation: scroll 25s linear infinite;
   will-change: transform;
@@ -3666,12 +3669,12 @@ section.home-partners-section {
 /* Each repeated copy */
 .partners-set {
   display: flex;
-  gap: 3rem;
+  gap: 75px;
 }
 /* Uniform spacing box for each logo */
 .partner-logo-container {
-  width: 250px; /* Adjust to taste */
-  height: 125px; /* Adjust to taste */
+  width: 90px; /* Adjust to taste */
+  height: 90px; /* Adjust to taste */
   display: flex;
   justify-content: center;
   align-items: center;
