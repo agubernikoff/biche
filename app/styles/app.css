@@ -2127,6 +2127,14 @@ th {
 .product-item-image-wrapper.has-secondary-image:hover .primary-image {
   opacity: 0;
 }
+@media (max-width: 499px) {
+  .primary-image {
+    opacity: 1 !important;
+  }
+  .secondary-image {
+    display: none;
+  }
+}
 
 .product-item-info {
   position: absolute;

@@ -3,6 +3,13 @@ import {Image} from '@shopify/hydrogen';
 
 export function ProductImage({images}) {
   const [imageIndex, setImageIndex] = useState(0);
+  const trackRef = useRef(null);
+
+  useEffect(() => {
+    if (trackRef.current) {
+      trackRef.current.scrollLeft = 0;
+    }
+  }, [images]);
 
   if (!images || images.length === 0) return null;
 
@@ -34,6 +41,7 @@ export function ProductImage({images}) {
   return (
     <div className="product-image-container">
       <div
+        ref={trackRef}
         className="product-image-track"
         onScroll={(e) =>
           handleScroll(e.target.scrollWidth, e.target.scrollLeft)
