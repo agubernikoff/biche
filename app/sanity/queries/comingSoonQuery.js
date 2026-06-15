@@ -25,7 +25,8 @@ export const HOME_QUERY = `*[_type == "home"][0]{
     secondaryImage{...,link{...,"slug": coalesce(@.reference->store.slug.current, @.reference->slug.current),"type": @.reference->_type},image{...,asset->{url}}}
   },
   ourStandards{...,cards[]{...,link{...,"slug": coalesce(@.reference->store.slug.current, @.reference->slug.current),"type": @.reference->_type},image{...,asset->{url}}}},
-  bottomSection{...,bannerImage{...,asset->{url}}}
+  bottomSection{...,bannerImage{...,asset->{url}}},
+  imageCarousel[]{...,image{...,asset->{url}}}
 }`;
 
 export const MONOGRAM_AND_FOOTER_QUERY = `*[_type == "settings"][0]{

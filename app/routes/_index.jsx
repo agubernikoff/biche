@@ -143,7 +143,7 @@ export default function Homepage() {
         data={data?.sanityData?.hero}
         firstSection={data?.sanityData?.firstSection}
       />
-      <Partners data={data.partners} />
+      <Partners data={data?.sanityData?.imageCarousel} />
       {/* <FirstSection data={data?.sanityData?.firstSection} /> */}
       <FeaturedProduct
         sanityData={data?.sanityData?.featuredProduct}
@@ -488,38 +488,31 @@ function HeroLogo({url}) {
 }
 
 function Partners({data}) {
-  // const fields = normalizeMetaobject(data);
-  // const partners = fields?.partners?.references?.nodes || [];
+  const images = data || [];
 
-  const renderLogo = (n, i, setIndex) => {
-    const fieldz = normalizeMetaobject(n);
-    return (
-      <div
-        className="partner-logo-container"
-        key={`${n.id}-set${setIndex}-${i}`}
-      >
-        {/* <Image
-          data={{
-            ...fieldz.logo?.reference?.image,
-            altText: fieldz?.name?.value,
-          }}
-          sizes="20vw"
-          className="partner-logo"
-          loading="eager"
-        /> */}
-      </div>
-    );
-  };
+  const renderImage = (item, setIndex, i) => (
+    <div
+      className="partner-logo-container"
+      key={`${item._key}-set${setIndex}-${i}`}
+    >
+      <img
+        src={item.image?.asset?.url}
+        alt={item.altText || ''}
+        className="partner-logo"
+        loading="eager"
+      />
+    </div>
+  );
 
   return (
     <section className="home-partners-section">
       <div className="partners-carousel-mask">
         <div className="partners-carousel-track">
           <div className="partners-set" aria-hidden="false">
-            {/* {partners.map((n, i) => renderLogo(n, i, 0))} */}
+            {images.map((item, i) => renderImage(item, 0, i))}
           </div>
           <div className="partners-set" aria-hidden="true">
-            {/* {partners.map((n, i) => renderLogo(n, i, 1))} */}
+            {images.map((item, i) => renderImage(item, 1, i))}
           </div>
         </div>
       </div>

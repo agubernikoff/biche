@@ -3581,6 +3581,18 @@ th {
   }
 }
 
+section.home-partners-section {
+  padding-block: 1rem;
+  background: #fffbf8;
+  width: 100vw;
+  margin-left: -28px;
+  margin-top: 0;
+}
+@media (max-width: 767px) {
+  section.home-partners-section {
+    margin-left: -0.5rem;
+  }
+}
 .partners-carousel-mask {
   overflow: hidden;
   mask-image: linear-gradient(
@@ -3590,7 +3602,7 @@ th {
     black 85%,
     transparent
   );
-  width: 50vw;
+  width: 100vw;
 }
 /* Track that scrolls infinitely */
 .partners-carousel-track {
