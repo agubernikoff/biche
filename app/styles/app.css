@@ -3490,7 +3490,7 @@ th {
   }
 
   .product-preorder-badge {
-    /* position: static; */
+    position: static;
     top: 6px;
     right: 6px;
     padding: 6px 6px;
