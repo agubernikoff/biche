@@ -466,27 +466,14 @@ function RecommendedProducts({products}) {
 }
 
 function HeroLogo({url}) {
-  const [svg, setSvg] = useState(null);
-
-  useEffect(() => {
-    if (url && url.includes('.svg')) {
-      fetch(url)
-        .then((res) => res.text())
-        .then(setSvg)
-        .catch(console.error);
-    }
-  }, [url]);
-  return svg ? (
-    <div
-      className="hero-logo"
-      dangerouslySetInnerHTML={{
-        __html: svg?.replace(/fill="[^"]*"/g, ''),
-      }}
-      style={{color: 'white'}}
-    />
-  ) : (
-    <div className="hero-logo" style={{top: '50%'}}>
-      <img src={url} alt="" />
+  if (!url) return null;
+  return (
+    <div className="hero-logo" style={{color: 'white'}}>
+      <img
+        src={url}
+        alt="Biche"
+        style={{width: '100%', height: '100%', objectFit: 'contain'}}
+      />
     </div>
   );
 }
