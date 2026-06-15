@@ -124,21 +124,21 @@ export const aboutType = defineField({
           name: 'blurb',
           type: 'portableTextSimple',
         },
-        {
-          name: 'squareImages',
-          type: 'array',
-          description: 'Aspect ratio will be coerced to 1/1',
-          validation: (Rule) => Rule.length(2).error('Must have exactly 2 images'),
-          of: [
-            defineArrayMember({
-              name: 'image',
-              type: 'image',
-              options: {
-                hotspot: true,
-              },
-            }),
-          ],
-        },
+        // {
+        //   name: 'squareImages',
+        //   type: 'array',
+        //   description: 'Aspect ratio will be coerced to 1/1',
+        //   validation: (Rule) => Rule.length(2).error('Must have exactly 2 images'),
+        //   of: [
+        //     defineArrayMember({
+        //       name: 'image',
+        //       type: 'image',
+        //       options: {
+        //         hotspot: true,
+        //       },
+        //     }),
+        //   ],
+        // },
         {
           name: 'primaryImage',
           type: 'image',

@@ -21,10 +21,6 @@ import {sanityClient} from './sanity/sanityClient';
 import {SETTINGS_QUERY} from './sanity/queries/comingSoonQuery';
 import {Script} from '@shopify/hydrogen';
 
-/**
- * This is important to avoid re-fetching root queries on sub-navigations
- * @type {ShouldRevalidateFunction}
- */
 export const shouldRevalidate = ({formMethod, currentUrl, nextUrl}) => {
   if (formMethod && formMethod !== 'GET') return true;
   if (currentUrl.toString() === nextUrl.toString()) return true;
@@ -33,21 +29,12 @@ export const shouldRevalidate = ({formMethod, currentUrl, nextUrl}) => {
 
 export function links() {
   return [
-    {
-      rel: 'preconnect',
-      href: 'https://cdn.shopify.com',
-    },
-    {
-      rel: 'preconnect',
-      href: 'https://shop.app',
-    },
+    {rel: 'preconnect', href: 'https://cdn.shopify.com'},
+    {rel: 'preconnect', href: 'https://shop.app'},
     {rel: 'icon', type: 'image/svg+xml', href: favicon},
   ];
 }
 
-/**
- * @type {MetaFunction}
- */
 export const meta = () => {
   return [
     {title: 'Biche | Luxury Pet Grooming'},
@@ -137,7 +124,6 @@ function loadDeferredData({context}) {
 
 export function Layout({children}) {
   const nonce = useNonce();
-  /** @type {RootLoader} */
   const data = useRouteLoaderData('root');
 
   useEffect(() => {
@@ -159,6 +145,16 @@ export function Layout({children}) {
     gtagScript.src =
       'https://www.googletagmanager.com/gtag/js?id=AW-17280171207';
     document.head.appendChild(gtagScript);
+
+    window.jdgm = window.jdgm || {};
+    window.jdgm.SHOP_DOMAIN = '9fi6u1-st.myshopify.com';
+    window.jdgm.PLATFORM = 'shopify';
+    window.jdgm.PUBLIC_TOKEN = 'QDf8nyEcTy_oElEh-TNwUOiBl68';
+
+    const jdgmScript = document.createElement('script');
+    jdgmScript.setAttribute('data-cfasync', 'false');
+    jdgmScript.src = 'https://cdnwidget.judge.me/widget_preloader.js';
+    document.head.appendChild(jdgmScript);
   }, []);
 
   return (
@@ -166,7 +162,6 @@ export function Layout({children}) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
-        {/* Removed the hardcoded og:description meta tag - now handled by meta() function */}
         <link rel="stylesheet" href={resetStyles}></link>
         <link rel="stylesheet" href={appStyles}></link>
         <Meta />
@@ -177,7 +172,6 @@ export function Layout({children}) {
               window.dataLayer = window.dataLayer || [];
               function gtag(){dataLayer.push(arguments);}
               gtag('js', new Date());
-
               gtag('config', 'AW-17280171207');
             `,
           }}

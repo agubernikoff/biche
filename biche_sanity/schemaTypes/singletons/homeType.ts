@@ -18,6 +18,7 @@ export const homeType = defineField({
     }),
     defineField({
       name: 'firstSection',
+      title: 'Hero Text',
       type: 'object',
       group: 'editorial',
       fields: [
@@ -31,9 +32,57 @@ export const homeType = defineField({
           title: 'Intro Text',
           type: 'portableTextSimple',
         },
-        {
-          name: 'mainImage',
-          title: 'Main Image',
+        // {
+        //   name: 'mainImage',
+        //   title: 'Main Image',
+        //   type: 'object',
+        //   fields: [
+        //     {
+        //       name: 'image',
+        //       title: 'Image',
+        //       type: 'image',
+        //       options: {hotspot: true},
+        //     },
+        //     {
+        //       name: 'altText',
+        //       title: 'Alt Text',
+        //       type: 'string',
+        //     },
+        //     {name: 'link', type: 'linkInternal'},
+        //   ],
+        // },
+        // {
+        //   name: 'secondaryImage',
+        //   title: 'Secondary Image',
+        //   type: 'object',
+        //   fields: [
+        //     {
+        //       name: 'image',
+        //       title: 'Image',
+        //       type: 'image',
+        //       options: {hotspot: true},
+        //     },
+        //     {
+        //       name: 'altText',
+        //       title: 'Alt Text',
+        //       type: 'string',
+        //     },
+        //     {name: 'link', type: 'linkInternal'},
+        //   ],
+        // },
+        // {
+        //   name: 'hideImages',
+        //   title: 'Hide Images',
+        //   type: 'boolean',
+        // },
+      ],
+    }),
+    defineField({
+      name: 'imageCarousel',
+      type: 'array',
+      group: 'editorial',
+      of: [
+        defineArrayMember({
           type: 'object',
           fields: [
             {
@@ -47,33 +96,8 @@ export const homeType = defineField({
               title: 'Alt Text',
               type: 'string',
             },
-            {name: 'link', type: 'linkInternal'},
           ],
-        },
-        {
-          name: 'secondaryImage',
-          title: 'Secondary Image',
-          type: 'object',
-          fields: [
-            {
-              name: 'image',
-              title: 'Image',
-              type: 'image',
-              options: {hotspot: true},
-            },
-            {
-              name: 'altText',
-              title: 'Alt Text',
-              type: 'string',
-            },
-            {name: 'link', type: 'linkInternal'},
-          ],
-        },
-        {
-          name: 'hideImages',
-          title: 'Hide Images',
-          type: 'boolean',
-        },
+        }),
       ],
     }),
     defineField({
@@ -183,6 +207,10 @@ export const homeType = defineField({
           options: {
             hotspot: true,
           },
+        },
+        {
+          name: 'imageCaption',
+          type: 'portableTextSimple',
         },
         defineField({
           name: 'title',
