@@ -3073,7 +3073,7 @@ th {
   }
   .hero-section {
     margin-left: -0.5rem;
-    /* height: 100vh; */
+    height: 100dvh;
   }
   .hero-section.mobile {
     height: 60vh;
