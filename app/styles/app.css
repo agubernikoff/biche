@@ -3075,6 +3075,9 @@ th {
     left: 20px;
     bottom: 1rem;
   }
+  .hero-text-overlay .intro-text {
+    margin-top: 7px;
+  }
   .hero-section {
     margin-left: -20px;
     height: 100svh;
