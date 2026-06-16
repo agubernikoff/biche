@@ -51,7 +51,7 @@ export function ProductImage({images}) {
       >
         {images?.map((image) => (
           <div className="product-image-wrapper" key={image.id}>
-            <Image src={image.url} alt={image.altText} />
+            <Image src={image.url} alt={image.altText} sizes="(min-width: 768px) 40vw, 100vw" />
           </div>
         ))}
       </div>
