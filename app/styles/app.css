@@ -2239,6 +2239,9 @@ th {
   margin-top: 40px;
   margin-bottom: 40px;
 }
+.product-dropdowns:empty {
+  margin: 0;
+}
 
 .product-dropdown {
   border-top: 1px solid rgba(var(--rgb-balsamic), 0.2);
