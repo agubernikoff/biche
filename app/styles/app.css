@@ -3603,9 +3603,9 @@ th {
     }
   }
   .product-image-wrapper {
-    width: calc(100vw - 1rem);
+    width: calc(100vw - 40px);
     flex-shrink: 0;
-    scroll-snap-align: center;
+    scroll-snap-align: start;
   }
   .product-image-container .mapped-indicators {
     position: absolute;
