@@ -3234,7 +3234,8 @@ th {
     width: 100vw !important;
     margin-left: -0.5rem;
     padding-block: 0;
-    padding: 40px 0rem 40px 0rem;
+    padding: 90px 0rem 90px 0rem;
+    margin-top: 120px !important;
   }
 
   .image-and-copy > .bottom-section-text-container {
@@ -3250,6 +3251,7 @@ th {
   .about-our-standards {
     flex-direction: column-reverse;
     gap: 2rem;
+    margin-top: 80px;
   }
   .about-our-standards .about-text-container {
     width: 100%;
@@ -3490,12 +3492,16 @@ th {
     font-size: 25px !important;
   }
 
+  .about-our-team-section {
+    margin-top: 80px !important;
+  }
+
   .about-our-team-section .intro-heading {
     margin-bottom: 2rem !important;
   }
   .team-member-container {
     grid-template-columns: repeat(2, 1fr);
-    gap: 0.5rem;
+    gap: 64px;
   }
 
   .image-and-copy > .bottom-section-text-container > div > p {
