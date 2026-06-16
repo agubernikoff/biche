@@ -1899,6 +1899,7 @@ div:has(> .featured-product-name) {
 .page {
   padding: 8rem 0;
   display: flex;
+  justify-content: center;
 }
 .page > div:first-of-type {
   flex: 0.5;

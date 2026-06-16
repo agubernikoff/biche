@@ -85,8 +85,8 @@ export default function Page() {
 
   return (
     <div className="page">
-      <div>
-        {sanityPage.hasSideNav && (
+      {sanityPage.hasSideNav && (
+        <div>
           <nav className="page-side-nav">
             {settings?.pagesSideNav?.links
               ?.filter(
@@ -102,8 +102,8 @@ export default function Page() {
                 />
               ))}
           </nav>
-        )}
-      </div>
+        </div>
+      )}
       <div>
         <header>
           <p className="intro-heading">{sanityPage.title}</p>
