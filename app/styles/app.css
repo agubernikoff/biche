@@ -3530,7 +3530,7 @@ th {
   .product-item-info {
     position: static;
     padding: 0;
-    margin-top: 5px;
+    margin-top: 16px;
     color: var(--color-balsamic);
     display: flex;
     justify-content: space-between;
@@ -3606,6 +3606,10 @@ th {
   .product-form {
     margin-bottom: 220px;
   }
+  .product-dropdown-content li,
+  .product-dropdown-content p {
+    font-size: 14px;
+  }
   .cart-line-quantity form button span {
     color: var(--color-balsamic);
   }
@@ -3615,6 +3619,10 @@ th {
 
   .checkout-btn.view {
     display: none;
+  }
+
+  .products-grid {
+    gap: 16px;
   }
 }
 
