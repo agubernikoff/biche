@@ -1390,12 +1390,12 @@ a.intro-text:hover {
 
 @media (max-width: 767px) {
   .our-standards-section {
-    margin-left: -0.5rem;
+    margin-left: -20px;
     padding-bottom: 100px;
   }
   .our-standards-section > p {
     padding-top: 20px;
-    margin-inline: 0.5rem;
+    margin-inline: 20px;
   }
   .our-standards-home {
     grid-template-columns: 1fr;
@@ -1515,13 +1515,13 @@ a.intro-text:hover {
 @media (max-width: 767px) {
   .offset-pills > p {
     top: 20px;
-    left: 0.5rem;
+    left: 20px;
   }
   .offset-pills > img:not(.hide-on-desktop) {
     display: none;
   }
   .home > section.offset-pills {
-    margin-left: -0.5rem;
+    margin-left: -20px;
   }
   .offset-pill {
     background: #fffbf833;
@@ -1611,7 +1611,7 @@ a.intro-text:hover {
     width: 100%;
   }
   .bottom-section-hero-image {
-    width: calc(100vw - 1rem);
+    width: 100%;
   }
   .bottom-section-text-container > div > p {
     font-size: 13px;
@@ -2893,7 +2893,7 @@ th {
 
 @media (max-width: 767px) {
   .product-reviews {
-    margin-left: -0.5rem;
+    margin-left: -20px;
     margin-top: 0px;
     margin-bottom: 50px;
   }
@@ -2940,7 +2940,7 @@ th {
     display: flex;
     flex-direction: column;
     gap: 40px;
-    padding: 0rem 0.5rem 40px 0.5rem;
+    padding: 0rem 20px 40px 20px;
   }
   .link-columns-container {
     flex-direction: column;
@@ -3027,7 +3027,7 @@ th {
     justify-content: flex-end;
   }
   .header-content {
-    padding-inline: 0.5rem;
+    padding-inline: 20px;
   }
   .header-menu-desktop,
   .header-content > p,
@@ -3056,11 +3056,14 @@ th {
     font-size: 13px;
   }
   body > main {
-    margin: calc(var(--header-height) * -1) 0.5rem 1rem 0.5rem;
+    margin: calc(var(--header-height) * -1) 20px 1rem 20px;
     min-height: 100vh;
   }
+  aside main {
+    margin-inline: 20px;
+  }
   aside header {
-    padding: 0 0.5rem;
+    padding: 0 20px;
   }
   aside header .close {
     color: var(--color-balsamic);
@@ -3068,11 +3071,11 @@ th {
   }
 
   .hero-text-overlay {
-    left: 0.5rem;
+    left: 20px;
     bottom: 1rem;
   }
   .hero-section {
-    margin-left: -0.5rem;
+    margin-left: -20px;
     height: 100dvh;
   }
   .hero-section.mobile {
@@ -3236,7 +3239,7 @@ th {
     flex-direction: column;
     gap: 2rem;
     width: 100vw !important;
-    margin-left: -0.5rem;
+    margin-left: -20px;
     padding-block: 0;
     padding: 90px 0rem 90px 0rem;
     margin-top: 120px !important;
@@ -3671,7 +3674,7 @@ section.home-partners-section {
 }
 @media (max-width: 767px) {
   section.home-partners-section {
-    margin-left: -0.5rem;
+    margin-left: -20px;
   }
 }
 .partners-carousel-mask {
