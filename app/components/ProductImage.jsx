@@ -6,9 +6,11 @@ export function ProductImage({images}) {
   const trackRef = useRef(null);
 
   useEffect(() => {
+    let timer;
     if (trackRef.current) {
-      trackRef.current.scrollLeft = 0;
+      timer = setTimeout(() => (trackRef.current.scrollLeft = 0), 300);
     }
+    return () => clearTimeout(timer);
   }, [images]);
 
   if (!images || images.length === 0) return null;
