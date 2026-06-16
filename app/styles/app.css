@@ -3549,6 +3549,13 @@ th {
   .product-item-info p {
     margin: 0rem 0;
   }
+  .product-item-price:has(> s) {
+    display: flex;
+    gap: 0.5rem;
+  }
+  .product-item-price > s {
+    opacity: 0.2;
+  }
 
   .product-plp-description {
     position: static;

@@ -93,6 +93,11 @@ export function ProductItem({product, loading}) {
 
   const price = product.priceRange.minVariantPrice;
   const priceWithoutDecimals = Math.floor(parseFloat(price.amount));
+  const compareAtPrice = product.compareAtPriceRange?.minVariantPrice;
+  const compareAtAmount = compareAtPrice
+    ? Math.floor(parseFloat(compareAtPrice.amount))
+    : null;
+  const isOnSale = compareAtAmount && compareAtAmount > priceWithoutDecimals;
   const plpDescription = parseRichText(product.descriptionPLP?.value);
 
   const [isMobile, setIsMobile] = useState(false);
@@ -142,7 +147,16 @@ export function ProductItem({product, loading}) {
             <div className="product-item-info">
               <div>
                 <p>{product.title}</p>
-                <p>${priceWithoutDecimals}</p>
+                <p className="product-item-price">
+                  {isOnSale ? (
+                    <>
+                      <span>${priceWithoutDecimals}</span>
+                      <s>${compareAtAmount}</s>
+                    </>
+                  ) : (
+                    <span>${priceWithoutDecimals}</span>
+                  )}
+                </p>
               </div>
               {productBadgeText && (
                 <div className="product-preorder-badge">{productBadgeText}</div>
@@ -160,7 +174,16 @@ export function ProductItem({product, loading}) {
           <>
             <div className="product-item-info">
               <p>{product.title}</p>
-              <p>${priceWithoutDecimals}</p>
+              <p className="product-item-price">
+                {isOnSale ? (
+                  <>
+                    <span>${priceWithoutDecimals}</span>
+                    <s>${compareAtAmount}</s>
+                  </>
+                ) : (
+                  <span>${priceWithoutDecimals}</span>
+                )}
+              </p>
             </div>
             {productBadgeText && (
               <div className="product-preorder-badge">{productBadgeText}</div>
