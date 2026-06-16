@@ -3538,6 +3538,11 @@ th {
     gap: 1rem;
   }
 
+  .product-item-info div p:first-of-type {
+    line-height: 110%;
+    margin-top: 5px;
+  }
+
   .product-item-info p {
     margin: 0rem 0;
   }
@@ -3546,6 +3551,7 @@ th {
     position: static;
     color: var(--color-balsamic);
     font-size: 13px;
+    margin-top: 6px;
   }
 
   .product-plp-description p {
