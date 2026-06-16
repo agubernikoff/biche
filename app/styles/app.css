@@ -3077,7 +3077,7 @@ th {
   }
   .hero-section {
     margin-left: -20px;
-    height: 100dvh;
+    height: 100vh;
   }
   .hero-section.mobile {
     height: 60vh;
