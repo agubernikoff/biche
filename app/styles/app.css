@@ -3053,7 +3053,7 @@ th {
 
   p,
   time {
-    font-size: 11px;
+    font-size: 13px;
   }
   body > main {
     margin: calc(var(--header-height) * -1) 0.5rem 1rem 0.5rem;
@@ -3139,7 +3139,10 @@ th {
   }
   .intro-heading {
     margin-bottom: 0 !important;
-    font-size: 30px;
+    font-size: 33px;
+  }
+  .team-member-text-container p {
+    font-size: 13px;
   }
   .first-section-heading > p {
     width: 90% !important;
@@ -3311,7 +3314,7 @@ th {
   }
   .back-to-articles {
     position: relative;
-    font-size: 11px;
+    font-size: 13px;
     transform: none;
     top: auto;
     left: auto;
@@ -3483,7 +3486,7 @@ th {
   .page-portable-text > p,
   .page-portable-text > ul > li,
   .page-portable-text > a {
-    font-size: 11px !important;
+    font-size: 13px !important;
   }
   .about .quote-text {
     font-size: 15px !important;
