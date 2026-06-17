@@ -19,6 +19,7 @@ import {ProductImage} from '~/components/ProductImage';
 import {ProductForm} from '~/components/ProductForm';
 import {redirectIfHandleIsLocalized} from '~/lib/redirect';
 import {motion, AnimatePresence} from 'motion/react';
+import {ReviewGallery} from '~/components/ReviewGallery';
 
 /**
  * @type {MetaFunction<typeof loader>}
@@ -294,6 +295,9 @@ export default function Product() {
           className="jdgm-widget jdgm-review-widget jdgm-outside-widget"
           data-id={product.id.replace('gid://shopify/Product/', '')}
           data-product-title={product.title}
+        />
+        <ReviewGallery
+          productId={product.id.replace('gid://shopify/Product/', '')}
         />
         <Analytics.ProductView
           data={{
