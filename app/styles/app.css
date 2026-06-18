@@ -2863,7 +2863,7 @@ th {
 .jdgm-rev-widg {
   width: 75%;
   margin: auto !important;
-  padding: 60px 16px 0px 60px !important;
+  padding: 0;
 }
 
 .jdgm-histogram__bar,
@@ -2880,7 +2880,8 @@ th {
 .jdgm-histogram__star,
 .jdgm-histogram__bar,
 .jdgm-histogram__bar-content,
-.jdgm-rev__author {
+.jdgm-rev__author,
+.jdgm-gallery-title {
   color: var(--color-balsamic) !important;
 }
 
@@ -2919,6 +2920,14 @@ th {
 }
 .jdgm-rev__cf-ans {
   font-size: 13px;
+}
+
+.jdgm-row-media {
+  justify-content: space-between !important;
+}
+
+.jdgm-gallery-wrapper {
+  padding-bottom: 0 !important;
 }
 
 @media (max-width: 767px) {

@@ -56,6 +56,7 @@ export default async function handleRequest(
       'https://*.google-analytics.com',
       'https://*.judge.me',
       'https://judgeme-public-images.imgix.net',
+      'https://judgeme.imgix.net',
     ],
     frameSrc: [
       "'self'",
