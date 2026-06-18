@@ -43,6 +43,7 @@ export default async function handleRequest(
       'https://*.judge.me',
       'https://cdnwidget.judge.me',
       'https://cache.judge.me',
+      'https://s3.amazonaws.com/me.judge.temp-files',
     ],
     imgSrc: [
       "'self'",
