@@ -2962,6 +2962,10 @@ th {
 .jdgm-rev-widg__body {
   display: none;
 }
+.jdgm-histogram {
+  pointer-events: none;
+  touch-action: none;
+}
 .review-gallery {
   width: 75%;
   margin: auto;
