@@ -31,6 +31,18 @@ function parseWidget(html) {
     while ((cfMatch = cfPattern.exec(chunk)) !== null) {
       customFields.push({label: cfMatch[1].trim(), value: cfMatch[2].trim()});
     }
+
+    const pictures = [];
+    const picPattern =
+      /jdgm-rev__pic-link[^>]*href='([^']+)'[\s\S]*?data-src='([^']+)'/g;
+    let picMatch;
+    while ((picMatch = picPattern.exec(chunk)) !== null) {
+      pictures.push({
+        full: picMatch[1].replace(/&amp;/g, '&'),
+        thumb: picMatch[2].replace(/&amp;/g, '&'),
+      });
+    }
+
     return {
       id: idMatch?.[1] || '',
       verified: verifiedMatch?.[1] === 'true',
@@ -40,6 +52,7 @@ function parseWidget(html) {
       body: bodyMatch ? bodyMatch[1].replace(/<[^>]+>/g, '').trim() : '',
       title: titleMatch ? titleMatch[1].trim() : '',
       customFields,
+      pictures,
     };
   });
 

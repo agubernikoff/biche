@@ -3145,6 +3145,105 @@ th {
   gap: 0.25rem;
 }
 
+.review-card__pictures {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.review-card__picture-btn {
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  width: 64px;
+  height: 64px;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.review-card__picture-btn img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: opacity 0.15s;
+}
+
+.review-card__picture-btn:hover img {
+  opacity: 0.85;
+}
+
+.review-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.85);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.review-lightbox__close {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px 8px;
+  opacity: 0.8;
+}
+
+.review-lightbox__close:hover {
+  opacity: 1;
+}
+
+.review-lightbox__content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.review-lightbox__img {
+  max-width: 90vw;
+  max-height: 90vh;
+  object-fit: contain;
+  display: block;
+}
+
+.review-lightbox__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255, 255, 255, 0.15);
+  border: none;
+  color: #fff;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 12px 16px;
+  line-height: 1;
+}
+
+.review-lightbox__nav:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.review-lightbox__nav--prev {
+  left: -64px;
+}
+
+.review-lightbox__nav--next {
+  right: -64px;
+}
+
 @media (max-width: 767px) {
   .review-gallery {
     width: 95%;

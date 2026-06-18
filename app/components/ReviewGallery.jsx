@@ -6,6 +6,7 @@ const PER_PAGE = 5;
 export function ReviewGallery({productId}) {
   const fetcher = useFetcher();
   const [page, setPage] = useState(1);
+  const [lightbox, setLightbox] = useState(null); // {images, index}
   const galleryRef = useRef(null);
   const shouldScrollRef = useRef(false);
 
@@ -42,11 +43,20 @@ export function ReviewGallery({productId}) {
     setPage(next);
   };
 
+  const openLightbox = (images, index) => setLightbox({images, index});
+  const closeLightbox = () => setLightbox(null);
+  const lightboxNext = () =>
+    setLightbox((l) => ({...l, index: (l.index + 1) % l.images.length}));
+  const lightboxPrev = () =>
+    setLightbox((l) => ({
+      ...l,
+      index: (l.index - 1 + l.images.length) % l.images.length,
+    }));
+
   if (!loading && reviews.length === 0 && fetcher.data) return null;
 
   return (
     <div className="review-gallery" ref={galleryRef}>
-      {/* <h2 className="review-gallery__title">Reviews</h2> */}
       {loading || !fetcher.data ? (
         <div className="review-gallery__loading">
           {[...Array(PER_PAGE)].map((_, i) => (
@@ -57,7 +67,11 @@ export function ReviewGallery({productId}) {
         <>
           <div className="review-gallery__list">
             {reviews.map((review) => (
-              <ReviewCard key={review.id} review={review} />
+              <ReviewCard
+                key={review.id}
+                review={review}
+                onImageClick={openLightbox}
+              />
             ))}
           </div>
           {totalPages > 1 && (
@@ -85,6 +99,15 @@ export function ReviewGallery({productId}) {
           )}
         </>
       )}
+      {lightbox && (
+        <Lightbox
+          images={lightbox.images}
+          index={lightbox.index}
+          onClose={closeLightbox}
+          onNext={lightboxNext}
+          onPrev={lightboxPrev}
+        />
+      )}
     </div>
   );
 }
@@ -102,8 +125,10 @@ function StarRating({rating}) {
   );
 }
 
-function ReviewCard({review}) {
-  const date = new Date(review.created_at.replace(' ', 'T').replace(' UTC', 'Z')).toLocaleDateString('en-US', {
+function ReviewCard({review, onImageClick}) {
+  const date = new Date(
+    review.created_at.replace(' ', 'T').replace(' UTC', 'Z'),
+  ).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
@@ -129,6 +154,65 @@ function ReviewCard({review}) {
           {cf.value}
         </p>
       ))}
+      {review.pictures?.length > 0 && (
+        <div className="review-card__pictures">
+          {review.pictures.map((pic, i) => (
+            <button
+              key={pic.thumb}
+              className="review-card__picture-btn"
+              onClick={() => onImageClick(review.pictures, i)}
+              aria-label={`View attachment ${i + 1}`}
+            >
+              <img src={pic.thumb} alt="" loading="lazy" />
+            </button>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function Lightbox({images, index, onClose, onNext, onPrev}) {
+  useEffect(() => {
+    const handleKey = (e) => {
+      if (e.key === 'Escape') onClose();
+      if (e.key === 'ArrowRight') onNext();
+      if (e.key === 'ArrowLeft') onPrev();
+    };
+    document.addEventListener('keydown', handleKey);
+    return () => document.removeEventListener('keydown', handleKey);
+  }, [onClose, onNext, onPrev]);
+
+  return (
+    <div className="review-lightbox" role="dialog" aria-modal="true" aria-label="Review attachment">
+      <button className="review-lightbox__close" onClick={onClose} aria-label="Close">
+        ✕
+      </button>
+      <div className="review-lightbox__content">
+        <img
+          src={images[index].full}
+          alt=""
+          className="review-lightbox__img"
+        />
+        {images.length > 1 && (
+          <>
+            <button
+              className="review-lightbox__nav review-lightbox__nav--prev"
+              onClick={onPrev}
+              aria-label="Previous image"
+            >
+              ←
+            </button>
+            <button
+              className="review-lightbox__nav review-lightbox__nav--next"
+              onClick={onNext}
+              aria-label="Next image"
+            >
+              →
+            </button>
+          </>
+        )}
+      </div>
     </div>
   );
 }
