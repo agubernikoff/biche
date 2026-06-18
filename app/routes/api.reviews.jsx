@@ -16,8 +16,12 @@ function parseWidget(html) {
     const verifiedMatch = chunk.match(/data-verified-buyer='([^']+)'/);
     const ratingMatch = chunk.match(/data-score='(\d+)'/);
     const timestampMatch = chunk.match(/data-content='([^']+)'/);
-    const authorMatch = chunk.match(/<span class='jdgm-rev__author'>([^<]+)<\/span>/);
-    const bodyMatch = chunk.match(/<div class='jdgm-rev__body'>([\s\S]*?)<\/div>/);
+    const authorMatch = chunk.match(
+      /<span class='jdgm-rev__author'>([^<]+)<\/span>/,
+    );
+    const bodyMatch = chunk.match(
+      /<div class='jdgm-rev__body'>([\s\S]*?)<\/div>/,
+    );
     const titleMatch = chunk.match(/<b class='jdgm-rev__title'>([^<]*)<\/b>/);
 
     const customFields = [];
@@ -27,7 +31,6 @@ function parseWidget(html) {
     while ((cfMatch = cfPattern.exec(chunk)) !== null) {
       customFields.push({label: cfMatch[1].trim(), value: cfMatch[2].trim()});
     }
-
     return {
       id: idMatch?.[1] || '',
       verified: verifiedMatch?.[1] === 'true',

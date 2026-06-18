@@ -103,7 +103,7 @@ function StarRating({rating}) {
 }
 
 function ReviewCard({review}) {
-  const date = new Date(review.created_at).toLocaleDateString('en-US', {
+  const date = new Date(review.created_at.replace(' ', 'T').replace(' UTC', 'Z')).toLocaleDateString('en-US', {
     year: 'numeric',
     month: 'long',
     day: 'numeric',
