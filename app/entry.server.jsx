@@ -67,6 +67,8 @@ export default async function handleRequest(
     ],
     frameSrc: [
       "'self'",
+      'https://www.facebook.com',
+      'https://*.facebook.com',
       'https://td.doubleclick.net',
       'https://*.doubleclick.net',
       'https://*.google.com',
