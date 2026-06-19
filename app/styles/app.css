@@ -3153,6 +3153,7 @@ th {
 }
 
 .review-card__picture-btn {
+  position: relative;
   background: none;
   border: none;
   padding: 0;
@@ -3219,10 +3220,47 @@ th {
   display: block;
 }
 
-.review-lightbox__nav {
+.review-lightbox__iframe {
+  width: 80vw;
+  height: 45vw;
+  max-width: 900px;
+  max-height: 506px;
+  border: none;
+  display: block;
+}
+
+.review-card__play-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: #fff;
+  text-shadow: 0 1px 4px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+}
+
+.review-card__play-icon--video {
+  position: static;
+  width: 100%;
+  height: 100%;
+  background: var(--color-lilac-dimmed);
+}
+
+.review-lightbox__nav-row {
   position: absolute;
   top: 50%;
+  left: 0;
+  right: 0;
   transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
+  pointer-events: none;
+}
+
+.review-lightbox__nav {
+  position: relative;
   background: rgba(255, 255, 255, 0.15);
   border: none;
   color: #fff;
@@ -3230,18 +3268,11 @@ th {
   cursor: pointer;
   padding: 12px 16px;
   line-height: 1;
+  pointer-events: all;
 }
 
 .review-lightbox__nav:hover {
   background: rgba(255, 255, 255, 0.3);
-}
-
-.review-lightbox__nav--prev {
-  left: -64px;
-}
-
-.review-lightbox__nav--next {
-  right: -64px;
 }
 
 @media (max-width: 767px) {
@@ -3259,6 +3290,21 @@ th {
   .review-gallery__list,
   .review-gallery__loading {
     grid-template-columns: 1fr;
+  }
+
+  .review-lightbox__content {
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+    max-height: 95vh;
+  }
+
+  .review-lightbox__nav-row {
+    position: static;
+    transform: none;
+    width: 100%;
+    justify-content: center;
+    gap: 32px;
   }
 }
 

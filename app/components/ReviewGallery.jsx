@@ -70,7 +70,7 @@ export function ReviewGallery({productId}) {
               <ReviewCard
                 key={review.id}
                 review={review}
-                onImageClick={openLightbox}
+                onMediaClick={openLightbox}
               />
             ))}
           </div>
@@ -125,7 +125,7 @@ function StarRating({rating}) {
   );
 }
 
-function ReviewCard({review, onImageClick}) {
+function ReviewCard({review, onMediaClick}) {
   const date = new Date(
     review.created_at.replace(' ', 'T').replace(' UTC', 'Z'),
   ).toLocaleDateString('en-US', {
@@ -154,22 +154,66 @@ function ReviewCard({review, onImageClick}) {
           {cf.value}
         </p>
       ))}
-      {review.pictures?.length > 0 && (
+      {review.media?.length > 0 && (
         <div className="review-card__pictures">
-          {review.pictures.map((pic, i) => (
+          {review.media.map((item, i) => (
             <button
-              key={pic.thumb}
+              key={item.thumb || item.id || item.externalId}
               className="review-card__picture-btn"
-              onClick={() => onImageClick(review.pictures, i)}
+              onClick={() => onMediaClick(review.media, i)}
               aria-label={`View attachment ${i + 1}`}
             >
-              <img src={pic.thumb} alt="" loading="lazy" />
+              {item.type === 'image' && (
+                <img src={item.thumb} alt="" loading="lazy" />
+              )}
+              {item.type === 'youtube' && (
+                <>
+                  <img src={item.thumb} alt="" loading="lazy" />
+                  <span className="review-card__play-icon">▶</span>
+                </>
+              )}
+              {item.type === 'video' && (
+                <>
+                  <img
+                    src={`https://customer-6q3jjmkvywtsdrs6.cloudflarestream.com/${item.externalId}/thumbnails/thumbnail.jpg?height=720`}
+                    alt=""
+                    loading="lazy"
+                  />
+                  <span className="review-card__play-icon">▶</span>
+                </>
+              )}
             </button>
           ))}
         </div>
       )}
     </div>
   );
+}
+
+function LightboxMedia({item}) {
+  if (item.type === 'youtube') {
+    return (
+      <iframe
+        className="review-lightbox__iframe"
+        src={`https://www.youtube.com/embed/${item.id}?autoplay=1`}
+        title="Review video"
+        allow="autoplay; fullscreen"
+        allowFullScreen
+      />
+    );
+  }
+  if (item.type === 'video') {
+    return (
+      <iframe
+        className="review-lightbox__iframe"
+        src={`https://iframe.videodelivery.net/${item.externalId}`}
+        title="Review video"
+        allow="autoplay; fullscreen"
+        allowFullScreen
+      />
+    );
+  }
+  return <img src={item.full} alt="" className="review-lightbox__img" />;
 }
 
 function Lightbox({images, index, onClose, onNext, onPrev}) {
@@ -189,13 +233,9 @@ function Lightbox({images, index, onClose, onNext, onPrev}) {
         ✕
       </button>
       <div className="review-lightbox__content">
-        <img
-          src={images[index].full}
-          alt=""
-          className="review-lightbox__img"
-        />
+        <LightboxMedia item={images[index]} />
         {images.length > 1 && (
-          <>
+          <div className="review-lightbox__nav-row">
             <button
               className="review-lightbox__nav review-lightbox__nav--prev"
               onClick={onPrev}
@@ -210,7 +250,7 @@ function Lightbox({images, index, onClose, onNext, onPrev}) {
             >
               →
             </button>
-          </>
+          </div>
         )}
       </div>
     </div>

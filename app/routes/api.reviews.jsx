@@ -32,14 +32,32 @@ function parseWidget(html) {
       customFields.push({label: cfMatch[1].trim(), value: cfMatch[2].trim()});
     }
 
-    const pictures = [];
+    const media = [];
+
     const picPattern =
       /jdgm-rev__pic-link[^>]*href='([^']+)'[\s\S]*?data-src='([^']+)'/g;
     let picMatch;
     while ((picMatch = picPattern.exec(chunk)) !== null) {
-      pictures.push({
+      media.push({
+        type: 'image',
         full: picMatch[1].replace(/&amp;/g, '&'),
         thumb: picMatch[2].replace(/&amp;/g, '&'),
+      });
+    }
+
+    const vidPattern = /data-external-id=([^\s>'"]+)/g;
+    let vidMatch;
+    while ((vidMatch = vidPattern.exec(chunk)) !== null) {
+      media.push({type: 'video', externalId: vidMatch[1]});
+    }
+
+    const ytPattern = /jdgm-yt-video[^>]*data-id="([^"]+)"/g;
+    let ytMatch;
+    while ((ytMatch = ytPattern.exec(chunk)) !== null) {
+      media.push({
+        type: 'youtube',
+        id: ytMatch[1],
+        thumb: `https://img.youtube.com/vi/${ytMatch[1]}/sddefault.jpg`,
       });
     }
 
@@ -52,7 +70,7 @@ function parseWidget(html) {
       body: bodyMatch ? bodyMatch[1].replace(/<[^>]+>/g, '').trim() : '',
       title: titleMatch ? titleMatch[1].trim() : '',
       customFields,
-      pictures,
+      media,
     };
   });
 
