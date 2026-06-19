@@ -212,13 +212,7 @@ function MobileMenuAside({header, publicStoreDomain, settings}) {
               </NavLink>
             ))}
           <hr />
-          <Newsletter
-            data={{
-              title: 'Newsletter',
-              placeholder: 'Email',
-              submitText: 'Sign Up',
-            }}
-          />
+          <Newsletter data={settings?.footer?.newsletter} />
           <hr />
           <div className="mobile-preview">
             <img src={mobileBanner} alt="Drop preview 1" />
