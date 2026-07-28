@@ -5,7 +5,7 @@ function SanityInternalLink({value, children}) {
   return (
     <Link
       to={`/${value.type}s/${value.slug}`}
-      className="intro-text"
+      className="intro-text internal-link"
       style={{
         color: '#3c0707',
         padding: '.5rem',

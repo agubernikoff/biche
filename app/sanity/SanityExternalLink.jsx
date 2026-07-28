@@ -1,6 +1,6 @@
-import React from "react";
+import React from 'react';
 
-function SanityExternalLink({ value, children }) {
+function SanityExternalLink({value, children}) {
   return (
     <a href={value.url} rel="noopener noreferrer" target="_blank">
       {children[0]}

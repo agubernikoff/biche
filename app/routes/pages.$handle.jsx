@@ -13,6 +13,8 @@ import {sanityClient} from '~/sanity/sanityClient';
 import SanityEmailLink from '~/sanity/SanityEmailLink.jsx';
 import SanityTable from '~/sanity/SanityTable.jsx';
 import SanityGrid from '~/sanity/SanityGrid.jsx';
+import SanityExternalLink from '~/sanity/SanityExternalLink';
+import SanityInternalLink from '~/sanity/SanityInternalLink';
 
 /**
  * @type {MetaFunction<typeof loader>}
@@ -124,7 +126,11 @@ export default function Page() {
             <PortableText
               value={sanityPage.body}
               components={{
-                marks: {linkEmail: SanityEmailLink},
+                marks: {
+                  linkEmail: SanityEmailLink,
+                  linkExternal: SanityExternalLink,
+                  linkInternal: SanityInternalLink,
+                },
                 types: {table: SanityTable, grid: SanityGrid},
               }}
             />
@@ -198,7 +204,13 @@ function DividerSectionContent({content}) {
       <div>
         <PortableText
           value={content.body}
-          components={{marks: {linkEmail: SanityEmailLink}}}
+          components={{
+            marks: {
+              linkEmail: SanityEmailLink,
+              linkExternal: SanityExternalLink,
+              linkInternal: SanityInternalLink,
+            },
+          }}
         />
       </div>
       {content.email && (

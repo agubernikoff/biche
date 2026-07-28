@@ -51,7 +51,33 @@ export const ABOUT_QUERY = `*[_type == "about"][0]{
 
 export const SANITY_PAGE_QUERY = `*[_type == "page" && slug.current == $slug][0]{
   ...,
-  "slug": slug.current
+  "slug": slug.current,
+  body[]{
+    ...,
+    markDefs[]{
+      ...,
+      _type == "linkInternal" => {
+        "slug": coalesce(@.reference->store.slug.current, @.reference->slug.current),
+        "type": @.reference->_type
+      }
+    }
+  },
+  dividerSections[]{
+    ...,
+    content[]{
+      ...,
+      body[]{
+        ...,
+        markDefs[]{
+          ...,
+          _type == "linkInternal" => {
+            "slug": coalesce(@.reference->store.slug.current, @.reference->slug.current),
+            "type": @.reference->_type
+          }
+        }
+      }
+    }
+  }
 }`;
 
 export const SETTINGS_QUERY = `*[_type == "settings"][0]{

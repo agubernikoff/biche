@@ -1942,6 +1942,13 @@ div:has(> .featured-product-name) {
 .divider-content > p {
   margin-bottom: 1rem;
 }
+.divider-content .internal-link {
+  padding: 0 !important;
+  color: inherit !important;
+}
+.divider-content .internal-link:hover {
+  text-decoration: underline !important;
+}
 .divider-content-email {
   position: absolute;
   top: 1rem;
