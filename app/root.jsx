@@ -162,6 +162,10 @@ export function Layout({children}) {
       <head>
         <meta charSet="utf-8" />
         <meta name="viewport" content="width=device-width,initial-scale=1" />
+        <meta
+          name="google-site-verification"
+          content="dkRNWDf3bdOix9jIRl7vZ45XgnK12Fx9SKaDs6fBomw"
+        />
         <link rel="stylesheet" href={resetStyles}></link>
         <link rel="stylesheet" href={appStyles}></link>
         <Meta />
